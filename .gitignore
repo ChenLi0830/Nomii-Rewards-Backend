@@ -1,1 +1,16 @@
+# webstorm
 .idea
+
+
+# build
+build/
+api/graphql
+api/config.js
+
+.DS_Store
+node_modules
+npm-debug.log
+
+# serverless zip
+.serverless
+
