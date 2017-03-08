@@ -9,7 +9,7 @@
     "dev-client": "webpack -d --watch",
     "host-server": "nodemon ./serverless/dev/server.js",
     "host-client": "cd client && firebase serve",
-    "host-fake-db": "json-server --watch ./dev/db.json"
+    "host-fake-db": "json-server --watch ./serverless/dev/db.json"
   },
   "repository": {
     "type": "git",
