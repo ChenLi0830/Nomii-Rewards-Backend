@@ -5,6 +5,7 @@ const getUser = require('./getUser');
 const upsertUser = require('./upsertUser');
 const addPromoToUser = require('./addPromoToUser');
 const getCard = require('./getCard');
+const stampCard = require('./stampCard');
 
 module.exports = {
   getAllCards,
@@ -13,4 +14,5 @@ module.exports = {
   upsertUser,
   addPromoToUser,
   getCard,
+  stampCard,
 };

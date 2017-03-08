@@ -69,7 +69,7 @@ const RootQuery = new GraphQLObjectType({
     // },
     userCardEdges: {
       type: new GraphQLList(UserCardEdge),
-      args: {userId: {type: GraphQLString}},
+      args: {userId: {type: GraphQLID}},
       resolve: (parentValue, args) => {
         return db.getUserCards(args.userId);
       }
@@ -107,13 +107,13 @@ const mutation = new GraphQLObjectType({
       }
     },
     stampCard: { // Stamp a card for a user
-      type: CardType,
+      type: UserType,
       args: {
         userId: {type: GraphQLID},
         cardId: {type: GraphQLID},
-        stampCount: {type: GraphQLInt},
       },
       resolve: (parentValue, args) => {
+        return db.stampCard(args.userId, args.cardId);
       },
     },
   }
