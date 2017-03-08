@@ -19,8 +19,8 @@ service: Nomii-Rewards-Serverless
 
 custom:
   defaultStage: dev
-  productionStream: arn:aws:dynamodb:us-west-2:151302725877:table/Users/stream/2016-12-16T22:04:17.359
-  devStream: arn:aws:dynamodb:us-west-2:594750710208:table/Users/stream/2016-12-27T16:29:37.237
+#  productionStream: arn:aws:dynamodb:us-west-2:151302725877:table/Users/stream/2016-12-16T22:04:17.359
+#  devStream: arn:aws:dynamodb:us-west-2:594750710208:table/Users/stream/2016-12-27T16:29:37.237
 
 provider:
   name: aws
@@ -56,7 +56,9 @@ provider:
 #    variable1: value1
 
 # you can add packaging information here
-#package:
+package:
+  exclude:
+    - dev/**
 #  include:
 #    - include-me.js
 #    - include-me-dir/**
@@ -65,13 +67,7 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-#  hello:
-#    handler: handler.hello
-#    events:
-#      - http:
-#          path: hello # hello
-#          method: get
-#          cors: true
+
   graphql:
     handler: handler.graphql
     events:
@@ -119,3 +115,21 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+resources:
+  Resources:
+    UsersTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: N
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        TableName: 'Nomii-Rewards-Users'
