@@ -3,10 +3,14 @@ const getAllCards = require('./getAllCards');
 const getUserCards = require('./getUserCards');
 const getUser = require('./getUser');
 const upsertUser = require('./upsertUser');
+const addPromoToUser = require('./addPromoToUser');
+const getCard = require('./getCard');
 
 module.exports = {
   getAllCards,
   getUserCards,
   getUser,
   upsertUser,
+  addPromoToUser,
+  getCard,
 };

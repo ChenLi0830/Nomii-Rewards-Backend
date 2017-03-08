@@ -16,7 +16,7 @@ const upsertUser = (id, fbName) => {
           throw new Error("Bad response from server");
         }
         return response.json();
-      });
+      })
 };
 
 module.exports = upsertUser;

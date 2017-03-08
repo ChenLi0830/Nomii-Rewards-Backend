@@ -17,10 +17,14 @@ const graphql = require('graphql'),
 const UserCardEdge = new GraphQLObjectType({
   name: "UserCardEdge",
   fields: () => ({
+    id: {type: GraphQLID},
     stampCount: {type: GraphQLInt},
     lastStampAt: {type: GraphQLString},
     card: {
       type: CardType,
+      resolve(parentValue, args){
+        return db.getCard(parentValue.id);
+      },
     }
   })
 });
@@ -44,41 +48,25 @@ const UserType = new GraphQLObjectType({
     fbName: {type: GraphQLString},
     cards: {
       type: new GraphQLList(UserCardEdge),
-      resolve(parentValue, args){
-        return db.getUserCards(parentValue.id);
-      },
     }
-    // cards: {
-    //   type: CardType,
-    //   resolve(parentValue, args){
-    //     // console.log("parentValue.companyId", parentValue.companyId);
-    //     return fetch(`http://localhost:3000/companies/${parentValue.companyId}`)
-    //         .then((response) => {
-    //           if (response.status >= 400) {
-    //             throw new Error("Bad response from server");
-    //           }
-    //           return response.json();
-    //         });
-    //   },
-    // }
   })
 });
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
-    users: {
-      type: new GraphQLList(UserType),
-      resolve: () => {
-        return fetch(`http://localhost:3000/users`)
-            .then((response) => {
-              if (response.status >= 400) {
-                throw new Error("Bad response from server");
-              }
-              return response.json();
-            });
-      }
-    },
+    // users: {
+    //   type: new GraphQLList(UserType),
+    //   resolve: () => {
+    //     return fetch(`http://localhost:3000/users`)
+    //         .then((response) => {
+    //           if (response.status >= 400) {
+    //             throw new Error("Bad response from server");
+    //           }
+    //           return response.json();
+    //         });
+    //   }
+    // },
     userCardEdges: {
       type: new GraphQLList(UserCardEdge),
       args: {userId: {type: GraphQLString}},
@@ -109,6 +97,15 @@ const mutation = new GraphQLObjectType({
         return db.upsertUser(args.id, args.fbName);
       }
     },
+    redeemPromo: { // Redeem the promo code for a user, and add an additional stamp for all theuser's cards
+      type: UserType,
+      args: {
+        userId: {type: GraphQLID},
+      },
+      resolve: (parentValue, args)=>{
+        return db.addPromoToUser(args.userId);
+      }
+    },
     stampCard: { // Stamp a card for a user
       type: CardType,
       args: {
@@ -117,13 +114,6 @@ const mutation = new GraphQLObjectType({
         stampCount: {type: GraphQLInt},
       },
       resolve: (parentValue, args) => {
-        
-      },
-    },
-    redeemPromo: { // Redeem the promo code for a user, and add an additional stamp for all theuser's cards
-      type: UserType,
-      args: {
-        userId: {type: GraphQLID},
       },
     },
   }
