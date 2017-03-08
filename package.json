@@ -4,9 +4,12 @@
   "description": "The serverless backend using GraphQL for Nomii-Rewards App",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy production": "cd serverless && serverless --stage=production deploy",
+    "deploy-dev": "cd serverless && serverless deploy",
+    "deploy-production": "cd serverless && serverless --stage=production deploy",
     "dev-client": "webpack -d --watch",
-    "host-client": "cd client && firebase serve"
+    "host-server": "nodemon ./serverless/dev/server.js",
+    "host-client": "cd client && firebase serve",
+    "host-fake-db": "json-server --watch ./dev/db.json"
   },
   "repository": {
     "type": "git",

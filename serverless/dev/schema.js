@@ -1,5 +1,5 @@
 // import 'babel-polyfill'; // needed to for async/await
-const graphql = require('../serverless/node_modules/graphql');
+const graphql = require('graphql');
 const {
     GraphQLSchema,
     GraphQLObjectType,

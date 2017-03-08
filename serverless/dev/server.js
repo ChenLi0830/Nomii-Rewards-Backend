@@ -1,6 +1,7 @@
 const express = require('express');
 const expressGraphQL = require('express-graphql');
-const schema = require('../serverless/graphql/schema');
+const schema = require('../graphql/schema');
+// const schema = require('./schema');
 
 const app = express();
 

@@ -1,0 +1,23 @@
+{
+    "users": [
+        {
+            "fbId": 1,
+            "fbName": "Medusa",
+            "cards": [
+                {"id": 1, "stampCount": 5, "lastStampAt": 1488907940932},
+                {"id": 2, "stampCount": 0, "lastStampAt": 1488907940232}
+            ]
+        },
+        {
+            "fbId": 2,
+            "fbName": "Zeus",
+            "cards": [
+                {"id": 3, "stampCount": 2, "lastStampAt": 1488907938932},
+                {"id": 1, "stampCount": 3, "lastStampAt": 1488907940332}
+            ]
+        }
+    ],
+    "otherTable": [
+        { "id": 1, "body": "some comment", "postId": 1 }
+    ]
+}
