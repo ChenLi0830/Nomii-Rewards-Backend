@@ -1,3 +1,4 @@
+'use strict';
 const graphql = require('graphql').graphql;
 const Schema = require('./schema');
 
