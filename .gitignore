@@ -3,9 +3,7 @@
 
 
 # build
-build/
-api/graphql
-api/config.js
+client/dist
 
 .DS_Store
 node_modules
