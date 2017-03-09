@@ -38,10 +38,15 @@ const updateDB = (userId, newCards) => {
       })
 };
 
-const stampCard = (userId, cardId) => {
-  return getUser(userId)
-      .then(user => {return getUserCards(user, cardId)})
-      .then(newCards => {return updateDB(userId, newCards)})
+const stampCard = (userId, cardId, pin) => {
+  // console.log("strampCard userId, cardId, pin", userId, cardId, pin);
+  if (pin === "2587"){
+    return getUser(userId)
+        .then(user => {return getUserCards(user, cardId)})
+        .then(newCards => {return updateDB(userId, newCards)})
+  } else {
+    throw new Error('Invalid PIN');
+  }
 };
 
 module.exports = stampCard;

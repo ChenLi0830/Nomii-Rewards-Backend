@@ -49,7 +49,7 @@ const updateDB = (newCardEdges, userId) => {
 };
 
 const addPromoToUser = (userId, code) => {
-  console.log("addPromoToUser userId, code", userId, code);
+  // console.log("addPromoToUser userId, code", userId, code);
   if (code === "code"){
     return getUser(userId)
         .then(user => {return getNewCardEdges(user)})

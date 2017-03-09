@@ -122,9 +122,10 @@ const mutation = new GraphQLObjectType({
       args: {
         userId: {type: GraphQLID},
         cardId: {type: GraphQLID},
+        pin: {type: GraphQLString}
       },
       resolve: (parentValue, args) => {
-        return db.stampCard(args.userId, args.cardId);
+        return db.stampCard(args.userId, args.cardId, args.pin);
       },
     },
   }
