@@ -84,6 +84,13 @@ const RootQuery = new GraphQLObjectType({
         return db.getUser(args.id);
       },
     },
+    edgesOfAllCards: {
+      type: new GraphQLList(UserCardEdge),
+      args: {userId: {type: GraphQLID}},
+      resolve: (parentValue, args) => {
+        return db.getAllCardEdges(args.userId);
+      }
+    }
   }
 });
 
