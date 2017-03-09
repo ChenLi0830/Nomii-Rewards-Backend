@@ -111,9 +111,10 @@ const mutation = new GraphQLObjectType({
       type: UserType,
       args: {
         userId: {type: GraphQLID},
+        code: {type: GraphQLString}
       },
       resolve: (parentValue, args)=>{
-        return db.addPromoToUser(args.userId);
+        return db.addPromoToUser(args.userId, args.code);
       }
     },
     stampCard: { // Stamp a card for a user
@@ -127,78 +128,6 @@ const mutation = new GraphQLObjectType({
       },
     },
   }
-  //   addCard: {
-  //     type: CardType,
-  //     args: {
-  //       firstName: {type: new GraphQLNonNull(GraphQLString)},
-  //       age: {type: new GraphQLNonNull(GraphQLInt)},
-  //       companyId: {type: GraphQLString}
-  //     },
-  //     resolve(parentValue, {firstName, age, companyId}){
-  //       return fetch(`http://localhost:3000/users`, {
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/json'
-  //         },
-  //         body: JSON.stringify({
-  //           firstName,
-  //           age,
-  //           companyId
-  //         })
-  //       })
-  //           .then((response) => {
-  //             if (response.status >= 400) {
-  //               throw new Error("Bad response from server");
-  //             }
-  //             return response.json();
-  //           });
-  //     }
-  //   },
-  //   deleteUser: {
-  //     type: UserType,
-  //     args: {
-  //       id: {type: new GraphQLNonNull(GraphQLString)},
-  //     },
-  //     resolve(parentValue, args){
-  //       return fetch(`http://localhost:3000/users/${args.id}`, {
-  //         method: 'DELETE',
-  //         headers: {
-  //           'Content-Type': 'application/json'
-  //         }
-  //       })
-  //           .then((response) => {
-  //             if (response.status >= 400) {
-  //               throw new Error("Bad response from server");
-  //             }
-  //             return response.json();
-  //           });
-  //     }
-  //   },
-  //   editUser: {
-  //     type: UserType,
-  //     args: {
-  //       id: {type: new GraphQLNonNull(GraphQLString)},
-  //       firstName: {type: GraphQLString},
-  //       age: {type: GraphQLInt},
-  //       companyId: {type: GraphQLString},
-  //     },
-  //     resolve(parentValue, args){
-  //       return fetch(`http://localhost:3000/users/${args.id}`, {
-  //         method: 'PATCH',
-  //         headers: {
-  //           'Content-Type': 'application/json'
-  //         },
-  //         body: JSON.stringify(args)
-  //       })
-  //           .then((response) => {
-  //             if (response.status >= 400) {
-  //               throw new Error("Bad response from server");
-  //             }
-  //             return response.json();
-  //           });
-  //     }
-  //   }
-  // },
 });
 
 module.exports = new GraphQLSchema({

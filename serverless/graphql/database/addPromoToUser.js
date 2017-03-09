@@ -48,10 +48,15 @@ const updateDB = (newCardEdges, userId) => {
       })
 };
 
-const addPromoToUser = (userId) => {
-  return getUser(userId)
-      .then(user => {return getNewCardEdges(user)})
-      .then(newCardEdges => {return updateDB(newCardEdges, userId)});
+const addPromoToUser = (userId, code) => {
+  console.log("addPromoToUser userId, code", userId, code);
+  if (code === "code"){
+    return getUser(userId)
+        .then(user => {return getNewCardEdges(user)})
+        .then(newCardEdges => {return updateDB(newCardEdges, userId)});
+  } else {
+    throw new Error('Invalid Code');
+  }
 };
 
 module.exports = addPromoToUser;
