@@ -6,7 +6,7 @@ const upsertUser = require('./upsertUser');
 // const addPromoToUser = require('./addPromoToUser');
 const getCard = require('./getCard');
 const stampCard = require('./stampCard');
-// const getAllCardEdges = require('./getAllCardEdges');
+const getAllCardEdges = require('./getAllCardEdges');
 
 module.exports = {
   getAllCards,
@@ -16,5 +16,5 @@ module.exports = {
   // addPromoToUser,
   getCard,
   stampCard,
-  // getAllCardEdges,
+  getAllCardEdges,
 };
