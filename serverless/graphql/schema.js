@@ -3,7 +3,7 @@
 require('isomorphic-fetch');
 
 const _ = require('lodash');
-const db = require('./database');
+const db = require('./jsonDB');
 const graphql = require('graphql'),
     GraphQLObjectType = graphql.GraphQLObjectType,
     GraphQLString = graphql.GraphQLString,
