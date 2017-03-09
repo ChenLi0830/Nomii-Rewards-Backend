@@ -1,10 +1,12 @@
 'use strict';
-let AWS = require("aws-sdk");
+const UserTableName = require('./config').UserTableName;
+let AWS = require('./config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
+
 
 const getUser = (userId) => {
   let params = {
-    TableName: "Nomii-Rewards-Users",
+    TableName: UserTableName,
     Key: {
       id: userId
     },
