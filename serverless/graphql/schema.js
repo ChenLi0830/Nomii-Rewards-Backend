@@ -70,13 +70,13 @@ const RootQuery = new GraphQLObjectType({
     //         });
     //   }
     // },
-    userCardEdges: {
-      type: new GraphQLList(UserCardEdge),
-      args: {userId: {type: GraphQLID}},
-      resolve: (parentValue, args) => {
-        return db.getUserCards(args.userId);
-      }
-    },
+    // userCardEdges: {
+    //   type: new GraphQLList(UserCardEdge),
+    //   args: {userId: {type: GraphQLID}},
+    //   resolve: (parentValue, args) => {
+    //     return db.getUserCards(args.userId);
+    //   }
+    // },
     user: {
       type: UserType,
       args: {id: {type: GraphQLID}},

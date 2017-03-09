@@ -14,3 +14,4 @@ npm-debug.log
 
 firebase-debug.log
 db.json
+shared-local-instance.db
