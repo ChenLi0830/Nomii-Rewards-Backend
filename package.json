@@ -4,7 +4,8 @@
   "description": "The serverless backend using GraphQL for Nomii-Rewards App",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy-dev": "cd serverless && serverless deploy",
+    "deploy": "cd serverless && serverless deploy",
+    "log": "cd serverless && sls logs -f graphql --tail",
     "deploy-production": "cd serverless && serverless --stage=production deploy",
     "dev-client": "webpack -d --watch",
     "host-server": "nodemon ./serverless/dev/server.js",
