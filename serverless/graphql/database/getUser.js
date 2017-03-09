@@ -19,7 +19,7 @@ const getUser = (userId) => {
         return reject(err);
       }
       let user = data.Item;
-      console.log("user", user);
+      // console.log("user", user);
       if (!user) user = {};
       // console.log("GetItem succeeded:", JSON.stringify(item));
       resolve(user);
