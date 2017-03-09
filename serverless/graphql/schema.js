@@ -48,6 +48,9 @@ const UserType = new GraphQLObjectType({
     fbName: {type: GraphQLString},
     cards: {
       type: new GraphQLList(UserCardEdge),
+      // resolve(parentValue, args){
+      //   return db.getUserCards(parentValue.id);
+      // },
     }
   })
 });
