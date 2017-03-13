@@ -130,3 +130,60 @@ resources:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
         TableName: 'Nomii-Rewards-Users'
+
+    RestaurantsTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 2
+        TableName: 'Nomii-Rewards-Restaurants'
+
+    CouponsTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: code
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: code
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 2
+        TableName: 'Nomii-Rewards-Coupons'
+
+    StampEventsTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: restaurantId
+            AttributeType: S
+          -
+            AttributeName: StampedAt
+            AttributeType: N
+        KeySchema:
+          -
+            AttributeName: restaurantId
+            KeyType: HASH
+          -
+            AttributeName: StampedAt
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 10
+          WriteCapacityUnits: 5
+        TableName: 'Nomii-Rewards-Stamp-Events'
