@@ -1,11 +1,11 @@
 'use strict';
-const UserTableName = require('./config').UserTableName;
+const UserTable = require('./config').UserTable;
 let AWS = require('./config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
 
 const getUserFromDB = (id)=>{
   let params = {
-    TableName: UserTableName,
+    TableName: UserTable,
     Key: {
       id: id
     },
@@ -34,7 +34,7 @@ const insertUserToDB = (id, fbName) => {
   };
   return new Promise((resolve, reject) => {
     let params = {
-      TableName: UserTableName,
+      TableName: UserTable,
       Item: user,
     };
     docClient.put(params, (err, data) => {

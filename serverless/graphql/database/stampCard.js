@@ -1,5 +1,5 @@
 'use strict';
-const UserTableName = require('./config').UserTableName;
+const UserTable = require('./config').UserTable;
 let AWS = require('./config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
 const _ = require('lodash');
@@ -26,7 +26,7 @@ const updateDB = (userId, newCards, newUser) => {// Todo update just one card in
   // console.log("newCards", newCards);
   return new Promise((resolve, reject) => {
     let params = {
-      TableName: UserTableName,
+      TableName: UserTable,
       Key: {id: userId},
       UpdateExpression: "set cards = :cards",
       ExpressionAttributeValues:{
