@@ -13,5 +13,8 @@ AWS.config.update({
 });
 
 const UserTable = "Nomii-Rewards-Users";
+const RestaurantTable = "Nomii-Rewards-Restaurants";
+const CouponTable = "Nomii-Rewards-Coupons";
+const StampEventTable = "Nomii-Rewards-Stamp-Events";
 
-module.exports = {UserTable, AWS};
+module.exports = {UserTable, RestaurantTable, CouponTable, StampEventTable, AWS};

@@ -48,7 +48,7 @@ const RestaurantType = new GraphQLObjectType({
     longitude: {type: GraphQLFloat},
     latitude: {type: GraphQLFloat},
     description: {type: GraphQLString},
-    PINS: {
+    PINs: {
       type: new GraphQLList(PINType),
       resolve(parentValue, args){
         // return db.getRestaurantPin(parentValue.id),
@@ -194,7 +194,7 @@ const RootQuery = new GraphQLObjectType({
       type: RestaurantType,
       args: {id: {type: GraphQLID}},
       resolve: (parentValue, args) => {
-        // return db.getRestaurant(args.id);
+        return db.getRestaurant(args.id);
       }
     },
     stampEvents: {
@@ -252,7 +252,7 @@ const mutation = new GraphQLObjectType({
         employeeName: {type: GraphQLString},
       },
       resolve: (parentValue, args) => {
-        // return db.addNewPIN(args.restaurantId, args.PIN, args.employeeName);
+        // return db.createPIN(args.restaurantId, args.PIN, args.employeeName);
       }
     },
     createCoupon: {
@@ -264,9 +264,24 @@ const mutation = new GraphQLObjectType({
         numberOfCoupons: {type: GraphQLInt},
       },
       resolve: (parentValue, args) => {
-        // return db.addNewCoupon(args.isForAllRestaurants, args.restaurantId, args.expireAt, args.numberOfCoupons )
+        // return db.createCoupon(args.isForAllRestaurants, args.restaurantId, args.expireAt,
+        // args.numberOfCoupons )
       }
     },
+    createRestaurant:{
+      type: RestaurantType,
+      args: {
+        name: {type: GraphQLString},
+        imageURL: {type: GraphQLString},
+        longitude: {type: GraphQLFloat},
+        latitude: {type: GraphQLFloat},
+        description: {type: GraphQLString},
+      },
+      resolve: (parentValue, args) => {
+        return db.createRestaurant(args.name, args.imageURL, args.longitude, args.latitude, args.description);
+      }
+    },
+    
   }
 });
 

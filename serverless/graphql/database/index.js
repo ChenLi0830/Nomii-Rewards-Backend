@@ -6,6 +6,7 @@ const addPromoToUser = require('./addPromoToUser');
 const getRestaurant = require('./getRestaurant');
 const stampCard = require('./stampCard');
 const getAllCardEdges = require('./getAllCardEdges');
+const createRestaurant = require('./createRestaurant');
 
 module.exports = {
   getAllRestaurants,
@@ -15,4 +16,5 @@ module.exports = {
   getRestaurant,
   stampCard,
   getAllCardEdges,
+  createRestaurant,
 };
