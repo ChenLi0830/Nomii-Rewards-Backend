@@ -17,7 +17,7 @@ const updateCardEdges = (user) => {
   });
   
   allCards.forEach(card => {
-    if (idEdgeMap.has(card.id) && typeof idEdgeMap.get(card.id).lastStampAt === "string") {
+    if (idEdgeMap.has(card.id) && typeof idEdgeMap.get(card.id).lastStampAt === "number") {
       // let oldEdge = idEdgeMap.get(card.id);
       // oldEdge.stampCount++;
     } else {
@@ -62,6 +62,7 @@ const updateDB = (newCardEdges, userId, newUser) => {
 const addPromoToUser = (userId, code) => {
   // console.log("addPromoToUser userId, code", userId, code);
   let newUser;
+  // const coupon = retrieveCouponFromCode(code);
   if (code === "code"){
     return getUser(userId)
         .then(user => {

@@ -18,7 +18,7 @@ const updateUserCards = (user, cardId) => {
   }
   
   card.stampCount++;
-  card.lastStampAt = String(new Date().getTime());
+  card.lastStampAt = Math.trunc(new Date().getTime()/1000);
   return user.cards;
 };
 

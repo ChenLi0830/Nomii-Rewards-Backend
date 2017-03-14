@@ -12,20 +12,31 @@ const graphql = require('graphql'),
     GraphQLList = graphql.GraphQLList,
     GraphQLNonNull = graphql.GraphQLNonNull,
     GraphQLFloat = graphql.GraphQLFloat,
+    GraphQLBoolean = graphql.GraphQLBoolean,
     GraphQLID = graphql.GraphQLID;
+
+const PINType = new GraphQLObjectType({
+  name: "PIN",
+  fields: () => ({
+    code: {type: GraphQLString},
+    employeeName: {type: GraphQLString},
+    numberOfUse: {type: GraphQLInt},
+  }),
+});
 
 const UserCardEdge = new GraphQLObjectType({
   name: "UserCardEdge",
   fields: () => ({
     id: {type: GraphQLID},
     stampCount: {type: GraphQLInt},
-    lastStampAt: {type: GraphQLString},
+    lastStampAt: {type: GraphQLInt},
     card: {
       type: CardType,
+      args: {isValidCard: {type: GraphQLBoolean}},
       resolve(parentValue, args){
-        return db.getCard(parentValue.id);
+        return db.getCard(parentValue.id, args.isValidCard);
       },
-    }
+    },
   })
 });
 
@@ -38,21 +49,79 @@ const CardType = new GraphQLObjectType({
     longitude: {type: GraphQLFloat},
     latitude: {type: GraphQLFloat},
     description: {type: GraphQLString},
-  })
+    PINS: {
+      type: new GraphQLList(PINType),
+      resolve(parentValue, args){
+        // return db.getRestaurantPin(parentValue.id),
+      },
+    },
+  }),
+});
+
+
+const UserCouponEdge = new GraphQLObjectType({
+  name: "UserCouponEdge",
+  fields: () => ({
+    redeemedAt: {type: GraphQLInt},
+    couponCode: {type: GraphQLString},
+    coupon: {
+      type: CouponType,
+      resolve(parentValue, args){
+        //return db.getCoupon(parentValue.couponCode);
+      },
+    }
+  }),
+});
+
+const CouponType = new GraphQLObjectType({
+  name: "Coupon",
+  fields: () => ({
+    code: {type: GraphQLString},
+    isForAllRestaurants: {type: GraphQLBoolean},
+    restaurantId: {type: GraphQLID},
+    expireAt: {type: GraphQLInt},
+    couponsLeft: {type: GraphQLInt},
+  }),
 });
 
 const UserType = new GraphQLObjectType({
-  name: 'User', //这个是object名
+  name: "User",
   fields: () => ({
     id: {type: GraphQLID},
     fbName: {type: GraphQLString},
+    registeredAt: {type: GraphQLInt},
+    lastLoginAt: {type: GraphQLInt},
     cards: {
       type: new GraphQLList(UserCardEdge),
+    },
+    usedCards: {
+      type: new GraphQLList(UserCardEdge),
+    },
+    redeemedCoupons: {
+      type: new GraphQLList(UserCouponEdge),
       // resolve(parentValue, args){
-      //   return db.getUserCards(parentValue.id);
+      //   // return
       // },
+    },
+    visitedRestaurants:{
+      type: new GraphQLList(GraphQLString),
+    },
+    ownedRestaurants: {
+      type: new GraphQLList(GraphQLString),
     }
   })
+});
+
+
+const StampEventsType = new GraphQLObjectType({
+  name: "StampEvents",
+  fields: () => ({
+    restaurantId: {type: GraphQLString},
+    stampedAt: {type: GraphQLInt},
+    userId: {type: GraphQLID},
+    isNewUser: {type: GraphQLBoolean},
+    restaurantName: {type: GraphQLString},
+  }),
 });
 
 const RootQuery = new GraphQLObjectType({
