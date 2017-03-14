@@ -2,9 +2,9 @@
 const getAllRestaurants = require('./getAllRestaurants');
 const _ = require('lodash');
 
-const getCard = (cardId) => {
-  const allCards = getAllRestaurants();
-  return _.find(allCards, {id: cardId});
+const getRestaurant = (id) => {
+  const allRestaurants = getAllRestaurants();
+  return _.find(allRestaurants, {id: id});
 };
 
-module.exports = getCard;
+module.exports = getRestaurant;
