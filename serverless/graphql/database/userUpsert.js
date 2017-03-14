@@ -2,29 +2,8 @@
 const UserTable = require('./config').UserTable;
 let AWS = require('./config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
+const getUser = require('./userGet');
 const api = require('../api');
-
-const getUserFromDB = (id)=>{
-  let params = {
-    TableName: UserTable,
-    Key: {
-      id: id
-    },
-  };
-  
-  return new Promise((resolve, reject) => {
-    docClient.get(params, (err, data) => {
-      if (err) {
-        console.error("Unable to get user. Error JSON:", JSON.stringify(err), err.stack);
-        return reject(err);
-      }
-      let user = data.Item;
-      console.log("user", user);
-      // console.log("GetItem succeeded:", JSON.stringify(item));
-      resolve(user);
-    });
-  })
-};
 
 const insertUserToDB = (user) => {
   return new Promise((resolve, reject) => {
@@ -71,7 +50,7 @@ const updateUserInDB = (user) => {
 };
 
 const upsertUser = (id, fbName) => {
-  return getUserFromDB(id)
+  return getUser(id)
       .then(user => {
         //Create user
         if (!user) {

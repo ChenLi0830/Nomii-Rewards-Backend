@@ -6,7 +6,7 @@ const uuidV4 = require('uuid/v4');
 const _ = require('lodash');
 const api = require('../api');
 
-const getAllRestaurants = require('../database/getAllRestaurants');
+const getAllRestaurants = require('../database/restaurantsGetAll');
 
 const insertRestaurantToDB = (restaurant) => {
   return new Promise((resolve, reject) => {

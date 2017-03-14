@@ -3,7 +3,7 @@ const UserTable = require('./config').UserTable;
 let AWS = require('./config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
 const _ = require('lodash');
-const getUser = require('./getUser');
+const getUser = require('./userGet');
 
 const updateUserCards = (user, cardId) => {
   // console.log("user.cards", user.cards);

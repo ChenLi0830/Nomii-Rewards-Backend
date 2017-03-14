@@ -1,24 +1,26 @@
 'use strict';
-const getAllRestaurants = require('./getAllRestaurants');
-const getUser = require('./getUser');
-const upsertUser = require('./upsertUser');
-const addPromoToUser = require('./addPromoToUser');
-const getRestaurant = require('./getRestaurant');
-const stampCard = require('./stampCard');
-const getAllCardEdges = require('./getAllCardEdges');
-const createRestaurant = require('./createRestaurant');
-const createCoupon = require('./createCoupon');
-const getAllCoupons = require('./getAllCoupons');
+const restaurantsGetAll = require('./restaurantsGetAll');
+const restaurantGet = require('./restaurantGet');
+const restaurantCreate = require('./restaurantCreate');
+
+const userGet = require('./userGet');
+const userUpsert = require('./userUpsert');
+const userRedeemCoupon = require('./userRedeemCoupon');
+const userStampCard = require('./userStampCard');
+const userCardGetAll = require('./userCardGetAll');
+
+const couponCreate = require('./couponCreate');
+const couponGetAll = require('./couponGetAll');
 
 module.exports = {
-  getAllRestaurants,
-  getUser,
-  upsertUser,
-  addPromoToUser,
-  getRestaurant,
-  stampCard,
-  getAllCardEdges,
-  createRestaurant,
-  createCoupon,
-  getAllCoupons,
+  restaurantsGetAll,
+  restaurantCreate,
+  restaurantGet,
+  userGet,
+  userUpsert,
+  userRedeemCoupon,
+  userStampCard,
+  userCardGetAll,
+  couponCreate,
+  couponGetAll,
 };

@@ -33,7 +33,7 @@ const CardType = new GraphQLObjectType({
     restaurant: {
       type: RestaurantType,
       resolve(parentValue){
-        return db.getRestaurant(parentValue.id);
+        return db.restaurantGet(parentValue.id);
       },
     },
   })
@@ -174,27 +174,27 @@ const RootQuery = new GraphQLObjectType({
       type: UserType,
       args: {id: {type: GraphQLID}},
       resolve: (parentValue, args) => {
-        return db.getUser(args.id);
+        return db.userGet(args.id);
       },
     },
     allRestaurantCards: {
       type: new GraphQLList(CardType),
       args: {userId: {type: GraphQLID}},
       resolve: (parentValue, args) => {
-        return db.getAllCardEdges(args.userId);
+        return db.userCardGetAll(args.userId);
       }
     },
     coupons: {
       type: new GraphQLList(CouponType),
       resolve: (parentValue, args) => {
-        return db.getAllCoupons();
+        return db.couponGetAll();
       }
     },
     restaurant: {
       type: RestaurantType,
       args: {id: {type: GraphQLID}},
       resolve: (parentValue, args) => {
-        return db.getRestaurant(args.id);
+        return db.restaurantGet(args.id);
       }
     },
     stampEvents: {
@@ -220,7 +220,7 @@ const mutation = new GraphQLObjectType({
         fbName: {type: GraphQLString},
       },
       resolve: (parentValue, args) => {
-        return db.upsertUser(args.id, args.fbName);
+        return db.userUpsert(args.id, args.fbName);
       }
     },
     redeemPromo: { // Redeem the promo code for a user, and add an additional stamp for all theuser's cards
@@ -230,7 +230,7 @@ const mutation = new GraphQLObjectType({
         code: {type: GraphQLString}
       },
       resolve: (parentValue, args) => {
-        return db.addPromoToUser(args.userId, args.code);
+        return db.userRedeemCoupon(args.userId, args.code);
       }
     },
     stampCard: { // Stamp a card for a user
@@ -241,7 +241,7 @@ const mutation = new GraphQLObjectType({
         PIN: {type: GraphQLString}
       },
       resolve: (parentValue, args) => {
-        return db.stampCard(args.userId, args.cardId, args.PIN);
+        return db.userStampCard(args.userId, args.cardId, args.PIN);
       },
     },
     createPIN: {
@@ -265,7 +265,7 @@ const mutation = new GraphQLObjectType({
         numberOfCoupons: {type: GraphQLInt},
       },
       resolve: (parentValue, args) => {
-        return db.createCoupon(
+        return db.couponCreate(
             args.code,
             args.isForAllRestaurants,
             args.restaurantId,
@@ -284,7 +284,7 @@ const mutation = new GraphQLObjectType({
         description: {type: GraphQLString},
       },
       resolve: (parentValue, args) => {
-        return db.createRestaurant(args.name, args.imageURL, args.longitude, args.latitude,
+        return db.restaurantCreate(args.name, args.imageURL, args.longitude, args.latitude,
             args.description);
       }
     },

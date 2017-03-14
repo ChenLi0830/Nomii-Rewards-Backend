@@ -4,8 +4,8 @@ const UserTable = require('./config').UserTable;
 let AWS = require('./config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
 const _ = require('lodash');
-const getAllRestaurants = require('./getAllRestaurants');
-const getUser = require('./getUser');
+const getAllRestaurants = require('./restaurantsGetAll');
+const getUser = require('./userGet');
 
 const updateCardEdges = (user) => {
   let allCards = getAllRestaurants();
