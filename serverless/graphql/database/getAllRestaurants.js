@@ -1,5 +1,5 @@
 'use strict';
-const getAllCards = () => {
+const getAllRestaurants = () => {
   return [
     {
       id: "1",
@@ -52,4 +52,4 @@ const getAllCards = () => {
 
 // ];
 
-module.exports = getAllCards;
+module.exports = getAllRestaurants;

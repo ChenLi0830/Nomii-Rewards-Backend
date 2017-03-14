@@ -1,5 +1,5 @@
 'use strict';
-const getAllCards = require('./getAllCards');
+const getAllRestaurants = require('./getAllRestaurants');
 const getUser = require('./getUser');
 const upsertUser = require('./upsertUser');
 const addPromoToUser = require('./addPromoToUser');
@@ -8,7 +8,7 @@ const stampCard = require('./stampCard');
 const getAllCardEdges = require('./getAllCardEdges');
 
 module.exports = {
-  getAllCards,
+  getAllRestaurants,
   getUser,
   upsertUser,
   addPromoToUser,

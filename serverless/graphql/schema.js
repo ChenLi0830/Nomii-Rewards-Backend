@@ -24,24 +24,23 @@ const PINType = new GraphQLObjectType({
   }),
 });
 
-const UserCardEdge = new GraphQLObjectType({
-  name: "UserCardEdge",
+const CardType = new GraphQLObjectType({
+  name: "Card",
   fields: () => ({
     id: {type: GraphQLID},
     stampCount: {type: GraphQLInt},
     lastStampAt: {type: GraphQLInt},
-    card: {
-      type: CardType,
-      args: {isValidCard: {type: GraphQLBoolean}},
-      resolve(parentValue, args){
-        return db.getCard(parentValue.id, args.isValidCard);
+    restaurant: {
+      type: RestaurantType,
+      resolve(parentValue){
+        return db.getCard(parentValue.id);
       },
     },
   })
 });
 
-const CardType = new GraphQLObjectType({
-  name: "Card",
+const RestaurantType = new GraphQLObjectType({
+  name: "Restaurant",
   fields: () => ({
     id: {type: GraphQLID},
     name: {type: GraphQLString},
@@ -59,8 +58,8 @@ const CardType = new GraphQLObjectType({
 });
 
 
-const UserCouponEdge = new GraphQLObjectType({
-  name: "UserCouponEdge",
+const RedeemedCouponType = new GraphQLObjectType({
+  name: "redeemedCoupon",
   fields: () => ({
     redeemedAt: {type: GraphQLInt},
     couponCode: {type: GraphQLString},
@@ -92,22 +91,22 @@ const UserType = new GraphQLObjectType({
     registeredAt: {type: GraphQLInt},
     lastLoginAt: {type: GraphQLInt},
     cards: {
-      type: new GraphQLList(UserCardEdge),
+      type: new GraphQLList(CardType),
     },
     usedCards: {
-      type: new GraphQLList(UserCardEdge),
+      type: new GraphQLList(CardType),
     },
     redeemedCoupons: {
-      type: new GraphQLList(UserCouponEdge),
+      type: new GraphQLList(RedeemedCouponType),
       // resolve(parentValue, args){
       //   // return
       // },
     },
     visitedRestaurants:{
-      type: new GraphQLList(GraphQLString),
+      type: new GraphQLList(GraphQLID),
     },
     ownedRestaurants: {
-      type: new GraphQLList(GraphQLString),
+      type: new GraphQLList(GraphQLID),
     }
   })
 });
@@ -153,8 +152,8 @@ const RootQuery = new GraphQLObjectType({
         return db.getUser(args.id);
       },
     },
-    edgesOfAllCards: {
-      type: new GraphQLList(UserCardEdge),
+    allRestaurantCards: {
+      type: new GraphQLList(CardType),
       args: {userId: {type: GraphQLID}},
       resolve: (parentValue, args) => {
         return db.getAllCardEdges(args.userId);

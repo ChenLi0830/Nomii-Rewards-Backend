@@ -3,13 +3,13 @@
 /**
  * Get the edges of all cards for a specific user
  * */
-const getAllCards = require('./getAllCards');
+const getAllRestaurants = require('./getAllRestaurants');
 const getUser = require('./getUser');
 
 const getAllCardEdges = (userId) => {
   console.log("userId", userId);
   
-  const allCards = getAllCards();
+  const allCards = getAllRestaurants();
   
   // console.log("allCards", allCards);
   
