@@ -54,7 +54,7 @@ const RestaurantType = new GraphQLObjectType({
         // return db.getRestaurantPin(parentValue.id),
       },
     },
-    newUserCount:{
+    newUserCount: {
       type: GraphQLInt,
       args: {
         restaurantId: {type: GraphQLID},
@@ -146,7 +146,7 @@ const UserType = new GraphQLObjectType({
       //   // return
       // },
     },
-    visitedRestaurants:{
+    visitedRestaurants: {
       type: new GraphQLList(GraphQLID),
     },
     ownedRestaurants: {
@@ -187,7 +187,7 @@ const RootQuery = new GraphQLObjectType({
     coupons: {
       type: new GraphQLList(CouponType),
       resolve: (parentValue, args) => {
-        // return db.getAllCoupons();
+        return db.getAllCoupons();
       }
     },
     restaurant: {
@@ -219,7 +219,7 @@ const mutation = new GraphQLObjectType({
         id: {type: GraphQLID},
         fbName: {type: GraphQLString},
       },
-      resolve: (parentValue, args)=>{
+      resolve: (parentValue, args) => {
         return db.upsertUser(args.id, args.fbName);
       }
     },
@@ -229,7 +229,7 @@ const mutation = new GraphQLObjectType({
         userId: {type: GraphQLID},
         code: {type: GraphQLString}
       },
-      resolve: (parentValue, args)=>{
+      resolve: (parentValue, args) => {
         return db.addPromoToUser(args.userId, args.code);
       }
     },
@@ -258,17 +258,23 @@ const mutation = new GraphQLObjectType({
     createCoupon: {
       type: CouponType,
       args: {
+        code: {type: GraphQLString},
         isForAllRestaurants: {type: GraphQLBoolean},
         restaurantId: {type: GraphQLID},
-        expireAt: {type: GraphQLInt},
+        daysToExpire: {type: GraphQLInt},
         numberOfCoupons: {type: GraphQLInt},
       },
       resolve: (parentValue, args) => {
-        // return db.createCoupon(args.isForAllRestaurants, args.restaurantId, args.expireAt,
-        // args.numberOfCoupons )
+        return db.createCoupon(
+            args.code,
+            args.isForAllRestaurants,
+            args.restaurantId,
+            args.daysToExpire,
+            args.numberOfCoupons
+        );
       }
     },
-    createRestaurant:{
+    createRestaurant: {
       type: RestaurantType,
       args: {
         name: {type: GraphQLString},
@@ -278,7 +284,8 @@ const mutation = new GraphQLObjectType({
         description: {type: GraphQLString},
       },
       resolve: (parentValue, args) => {
-        return db.createRestaurant(args.name, args.imageURL, args.longitude, args.latitude, args.description);
+        return db.createRestaurant(args.name, args.imageURL, args.longitude, args.latitude,
+            args.description);
       }
     },
     
