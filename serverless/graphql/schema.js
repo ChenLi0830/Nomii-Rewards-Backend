@@ -20,7 +20,7 @@ const PINType = new GraphQLObjectType({
   fields: () => ({
     code: {type: GraphQLString},
     employeeName: {type: GraphQLString},
-    numberOfUse: {type: GraphQLInt},
+    usageCount: {type: GraphQLInt},
   }),
 });
 
@@ -156,8 +156,8 @@ const UserType = new GraphQLObjectType({
 });
 
 
-const StampEventsType = new GraphQLObjectType({
-  name: "StampEvents",
+const StampEventType = new GraphQLObjectType({
+  name: "StampEvent",
   fields: () => ({
     restaurantId: {type: GraphQLString},
     stampedAt: {type: GraphQLInt},
@@ -198,7 +198,7 @@ const RootQuery = new GraphQLObjectType({
       }
     },
     stampEvents: {
-      type: new GraphQLList(StampEventsType),
+      type: new GraphQLList(StampEventType),
       args: {
         startFrom: {type: GraphQLInt},
         endTo: {type: GraphQLInt},
@@ -245,14 +245,14 @@ const mutation = new GraphQLObjectType({
       },
     },
     createPIN: {
-      type: PINType,
+      type: new GraphQLList(PINType),
       args: {
         restaurantId: {type: GraphQLID},
         PIN: {type: GraphQLString},
         employeeName: {type: GraphQLString},
       },
       resolve: (parentValue, args) => {
-        // return db.createPIN(args.restaurantId, args.PIN, args.employeeName);
+        return db.restaurantPINCreate(args.restaurantId, args.PIN, args.employeeName);
       }
     },
     createCoupon: {
