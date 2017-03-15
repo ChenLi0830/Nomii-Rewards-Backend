@@ -10,7 +10,9 @@ const userStampCard = require('./userStampCard');
 const userCardGetAll = require('./userCardGetAll');
 
 const couponCreate = require('./couponCreate');
+const couponGet = require('./couponGet');
 const couponGetAll = require('./couponGetAll');
+const couponUse = require('./couponUse');
 
 module.exports = {
   restaurantsGetAll,
@@ -23,4 +25,6 @@ module.exports = {
   userCardGetAll,
   couponCreate,
   couponGetAll,
+  couponGet,
+  couponUse,
 };

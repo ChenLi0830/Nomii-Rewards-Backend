@@ -53,7 +53,7 @@ const upsertUser = (id, fbName) => {
   return getUser(id)
       .then(user => {
         //Create user
-        if (!user) {
+        if (!user || !user.id) {
           user = {
             id,
             fbName,

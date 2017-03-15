@@ -4,6 +4,7 @@ let AWS = require('./config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
 const _ = require('lodash');
 const getUser = require('./userGet');
+const api = require('../api');
 
 const updateUserCards = (user, cardId) => {
   // console.log("user.cards", user.cards);
@@ -18,7 +19,7 @@ const updateUserCards = (user, cardId) => {
   }
   
   card.stampCount++;
-  card.lastStampAt = Math.trunc(new Date().getTime()/1000);
+  card.lastStampAt = api.getTimeInSec();
   return user.cards;
 };
 

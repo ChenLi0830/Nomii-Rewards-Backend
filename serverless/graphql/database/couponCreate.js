@@ -4,25 +4,7 @@ let AWS = require('./config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
 const _ = require('lodash');
 const api = require('../api');
-
-const getDupCoupon = (code) => {
-  let params = {
-    TableName: CouponTable,
-    Key: {
-      code: code
-    },
-  };
-  return new Promise((resolve, reject) => {
-    docClient.get(params, (err, data) => {
-      if (err) {
-        console.error("Unable to get coupon. Error JSON:", JSON.stringify(err), err.stack);
-        return reject(err);
-      }
-      const coupon = data.Item;
-      resolve(coupon);
-    });
-  });
-};
+const getCoupon = require('./couponGet');
 
 const insertCoupon = (coupon) => {
   return new Promise((resolve, reject) => {
@@ -45,8 +27,8 @@ const insertCoupon = (coupon) => {
 };
 
 const createCoupon = (code, isForAllRestaurants, restaurantId, daysToExpire, numberOfCoupons) => {
-  console.log("code", code);
-  return getDupCoupon(code)
+  // console.log("code", code);
+  return getCoupon(code)
       .then(dupCoupon => {
         if (dupCoupon && dupCoupon.code) {
           // coupon exist
@@ -56,6 +38,9 @@ const createCoupon = (code, isForAllRestaurants, restaurantId, daysToExpire, num
           }
         }
         
+        if (daysToExpire < 0) daysToExpire = 365*10;
+        if (numberOfCoupons < 0) numberOfCoupons = 1000000000;
+          
         //Create coupon
         const coupon = {
           code,
