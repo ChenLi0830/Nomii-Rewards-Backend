@@ -313,7 +313,7 @@ const mutation = new GraphQLObjectType({
       type: UserType,
       args:{
         userId: {type: GraphQLID},
-        restaurantID: {type: GraphQLID},
+        restaurantId: {type: GraphQLID},
       },
       resolve: (parentValue, args) => {
         return db.userRestaurantOwnershipRemove(args.userId, args.restaurantId);
