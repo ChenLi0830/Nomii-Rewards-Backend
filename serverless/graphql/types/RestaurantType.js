@@ -13,6 +13,7 @@ const graphql = require('graphql'),
     GraphQLID = graphql.GraphQLID;
 
 const PINType = require('./PINType');
+const RestaurantStatisticsType = require('./RestaurantStatisticsType');
 
 const RestaurantType = new GraphQLObjectType({
   name: "Restaurant",
@@ -26,48 +27,14 @@ const RestaurantType = new GraphQLObjectType({
     PINs: {
       type: new GraphQLList(PINType),
     },
-    newUserCount: {
-      type: GraphQLInt,
+    statistics: {
+      type: RestaurantStatisticsType,
       args: {
-        restaurantId: {type: GraphQLID},
-        startFrom: {type: GraphQLInt},
+        daysToCover: {type: GraphQLFloat},
         endTo: {type: GraphQLInt},
       },
       resolve(parentValue, args){
-        // return db.getRestaurantNewUserCount(args.restaurantId, args.startFrom, args.endTo)
-      }
-    },
-    returnUserCount: {
-      type: GraphQLInt,
-      args: {
-        restaurantId: {type: GraphQLID},
-        startFrom: {type: GraphQLInt},
-        endTo: {type: GraphQLInt},
-      },
-      resolve(parentValue, args){
-        // return db.getRestaurantReturnUserCount(args.restaurantId, args.startFrom, args.endTo)
-      }
-    },
-    newVisitCount: {
-      type: GraphQLInt,
-      args: {
-        restaurantId: {type: GraphQLID},
-        startFrom: {type: GraphQLInt},
-        endTo: {type: GraphQLInt},
-      },
-      resolve(parentValue, args){
-        // return db.getRestaurantNewVisitCount(args.restaurantId, args.startFrom, args.endTo)
-      }
-    },
-    returnVisitCount: {
-      type: GraphQLInt,
-      args: {
-        restaurantId: {type: GraphQLID},
-        startFrom: {type: GraphQLInt},
-        endTo: {type: GraphQLInt},
-      },
-      resolve(parentValue, args){
-        // return db.getRestaurantReturnVisitCount(args.restaurantId, args.startFrom, args.endTo)
+        return db.restaurantStatisticsGet(parentValue.id, args.daysToCover, args.endTo)
       }
     },
   }),

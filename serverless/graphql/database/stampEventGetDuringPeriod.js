@@ -5,7 +5,9 @@ let docClient = new AWS.DynamoDB.DocumentClient();
 const _ = require('lodash');
 const api = require('../api');
 
-const getAllStampEvent = (restaurantId, daysToCover, endTo) => {
+const getStampEventDuringPeriod = (restaurantId, daysToCover, endTo) => {
+  console.log("restaurantId, daysToCover, endTo", restaurantId, daysToCover, endTo);
+  
   if (typeof endTo !== "number") endTo = api.getTimeInSec();
   let startFrom = endTo - daysToCover * 24 * 3600;
   
@@ -25,8 +27,9 @@ const getAllStampEvent = (restaurantId, daysToCover, endTo) => {
         console.error("Unable to get the stampEvents. Error JSON:", JSON.stringify(err), err.stack);
         return reject(err);
       }
-      console.log("data", data);
+      // console.log("data", data);
       let stampEvents = data.Items;
+      // console.log("stampEvents", stampEvents);
       // console.log("user", user);
       // if (!user) user = {};
       // console.log("Scan restaurants succeeded:", JSON.stringify(restaurants));
@@ -35,4 +38,4 @@ const getAllStampEvent = (restaurantId, daysToCover, endTo) => {
   });
 };
 
-module.exports = getAllStampEvent;
+module.exports = getStampEventDuringPeriod;

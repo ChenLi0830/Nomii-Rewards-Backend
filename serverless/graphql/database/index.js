@@ -5,6 +5,7 @@ const restaurantCreate = require('./restaurantCreate');
 const restaurantPINCreate = require('./restaurantPINCreate');
 const restaurantPINUse = require('./restaurantPINUse');
 const restaurantPINRemove = require('./restaurantPINRemove');
+const restaurantStatisticsGet = require('./restaurantStatisticsGet');
 
 const userGet = require('./userGet');
 const userUpsert = require('./userUpsert');
@@ -28,6 +29,7 @@ module.exports = {
   restaurantPINCreate,
   restaurantPINUse,
   restaurantPINRemove,
+  restaurantStatisticsGet,
   userGet,
   userUpsert,
   userRedeemCoupon,
