@@ -97,10 +97,10 @@ const stampCard = (userId, cardId, PINCode) => {
                     return Promise.all([
                       updateUserTable(user, newCards, visitedRestaurants),
                       useRestaurantPIN(cardId, PINCode),
-                      createStampEvent(cardId, userId, restaurant.name, isNewUser),
+                      createStampEvent(cardId, userId, restaurant.name, isNewUser, PINCode, PIN.employeeName, user.fbName),
                     ])
                         .then(results => {
-                          console.log("results", results);
+                          // console.log("results", results);
                           return results[0];
                         });
                   })

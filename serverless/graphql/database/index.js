@@ -17,7 +17,7 @@ const couponGet = require('./couponGet');
 const couponGetAll = require('./couponGetAll');
 const couponUse = require('./couponUse');
 
-const stampEventCreate = require('./stampEventCreate');
+const stampEventGetDuringPeriod = require('./stampEventGetDuringPeriod');
 
 module.exports = {
   restaurantsGetAll,
@@ -35,4 +35,5 @@ module.exports = {
   couponGetAll,
   couponGet,
   couponUse,
+  stampEventGetDuringPeriod,
 };

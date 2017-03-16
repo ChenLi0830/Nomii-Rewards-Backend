@@ -161,6 +161,9 @@ const StampEventType = new GraphQLObjectType({
     userId: {type: GraphQLID},
     isNewUser: {type: GraphQLBoolean},
     restaurantName: {type: GraphQLString},
+    PIN: {type: GraphQLString},
+    employeeName: {type: GraphQLString},
+    userName: {type: GraphQLString},
   }),
 });
 
@@ -197,11 +200,12 @@ const RootQuery = new GraphQLObjectType({
     stampEvents: {
       type: new GraphQLList(StampEventType),
       args: {
-        startFrom: {type: GraphQLInt},
+        restaurantId: {type: GraphQLID},
+        daysToCover: {type: GraphQLFloat},
         endTo: {type: GraphQLInt},
       },
       resolve: (parentValue, args) => {
-        // return db.getStampEvents(args.startFrom, args.endTo);
+        return db.stampEventGetDuringPeriod(args.restaurantId ,args.daysToCover, args.endTo);
       }
     }
   }

@@ -174,14 +174,14 @@ resources:
             AttributeName: restaurantId
             AttributeType: S
           -
-            AttributeName: StampedAt
+            AttributeName: stampedAt
             AttributeType: N
         KeySchema:
           -
             AttributeName: restaurantId
             KeyType: HASH
           -
-            AttributeName: StampedAt
+            AttributeName: stampedAt
             KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 10
