@@ -2,7 +2,7 @@
 const _ = require('lodash');
 
 const userVisitedRestaurantBefore = (user, restaurantId) => {
-  const visitedRestaurant = _.find(user.visitedRestaurants, function (id) {
+  const visitedRestaurant = _.find(user.visitedRestaurants, (id) => {
     return id === restaurantId
   });
   console.log("visitedRestaurant", visitedRestaurant);

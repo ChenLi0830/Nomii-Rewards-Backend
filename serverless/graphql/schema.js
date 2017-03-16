@@ -299,7 +299,26 @@ const mutation = new GraphQLObjectType({
             args.description);
       }
     },
-    
+    addRestaurantOwnership: {
+      type: UserType,
+      args:{
+        userId: {type: GraphQLID},
+        restaurantId: {type: GraphQLID},
+      },
+      resolve: (parentValue, args) => {
+        return db.userRestaurantOwnershipAdd(args.userId, args.restaurantId);
+      }
+    },
+    removeRestaurantOwnership: {
+      type: UserType,
+      args:{
+        userId: {type: GraphQLID},
+        restaurantID: {type: GraphQLID},
+      },
+      resolve: (parentValue, args) => {
+        return db.userRestaurantOwnershipRemove(args.userId, args.restaurantId);
+      }
+    }
   }
 });
 
