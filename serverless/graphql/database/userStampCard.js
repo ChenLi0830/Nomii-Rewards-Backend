@@ -38,15 +38,24 @@ const api = require('../api');
 // };
 
 const calcUserCards = (user, cardId) => {
-  let card = _.find(user.cards, {id: cardId});
+  let cardIndex = _.findIndex(user.cards, {id: cardId});
+  let card;
   
-  if (card === undefined) {
-    card = {id: cardId, stampCount: 0};
+  //User doesn't have that card
+  if (cardIndex < 0) {
+    card = {id: cardId, stampCount: 1, lastStampAt: api.getTimeInSec()};
     user.cards.push(card);
   }
+  // Card is used up
+  else if (user.cards[cardIndex].stampCount >= 2) {
+    user.cards.splice(cardIndex, 1);
+  }
+  // Add stamp to card
+  else {
+    user.cards[cardIndex].stampCount++;
+    user.cards[cardIndex].lastStampAt = api.getTimeInSec();
+  }
   
-  card.stampCount++;
-  card.lastStampAt = api.getTimeInSec();
   return Promise.resolve(user.cards);
 };
 
