@@ -1,0 +1,24 @@
+'use strict';
+
+const _ = require('lodash');
+const db = require('../database');
+
+const graphql = require('graphql'),
+    GraphQLObjectType = graphql.GraphQLObjectType,
+    GraphQLString = graphql.GraphQLString,
+    GraphQLInt = graphql.GraphQLInt,
+    GraphQLBoolean = graphql.GraphQLBoolean,
+    GraphQLID = graphql.GraphQLID;
+
+const CouponType = new GraphQLObjectType({
+  name: "Coupon",
+  fields: () => ({
+    code: {type: GraphQLString},
+    isForAllRestaurants: {type: GraphQLBoolean},
+    restaurantId: {type: GraphQLID},
+    expireAt: {type: GraphQLInt},
+    couponsLeft: {type: GraphQLInt},
+  }),
+});
+
+module.exports = CouponType;
