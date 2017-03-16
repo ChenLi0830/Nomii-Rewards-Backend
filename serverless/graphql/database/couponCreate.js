@@ -7,12 +7,13 @@ const api = require('../api');
 const getCoupon = require('./couponGet');
 
 const insertCoupon = (coupon) => {
+  let params = {
+    TableName: CouponTable,
+    Item: coupon,
+    // ReturnConsumedCapacity: "TOTAL",
+  };
+  
   return new Promise((resolve, reject) => {
-    let params = {
-      TableName: CouponTable,
-      Item: coupon,
-      // ReturnConsumedCapacity: "TOTAL",
-    };
     docClient.put(params, (err, data) => {
       if (err) {
         console.error("Unable to insert coupon. Error JSON:", JSON.stringify(err), err.stack);

@@ -50,9 +50,6 @@ const RestaurantType = new GraphQLObjectType({
     description: {type: GraphQLString},
     PINs: {
       type: new GraphQLList(PINType),
-      resolve(parentValue, args){
-        // return db.getRestaurantPin(parentValue.id),
-      },
     },
     newUserCount: {
       type: GraphQLInt,

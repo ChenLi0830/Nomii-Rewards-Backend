@@ -4,67 +4,108 @@ let AWS = require('./config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
 const _ = require('lodash');
 const getUser = require('./userGet');
+const getRestaurant = require('./restaurantGet');
+const userVisitedRestaurantBefore = require('./userVisitedRestaurantBeforeCheck');
+const useRestaurantPIN = require('./restaurantPINUse');
+const createStampEvent = require('./stampEventCreate');
 const api = require('../api');
 
-const updateUserCards = (user, cardId) => {
-  // console.log("user.cards", user.cards);
-  // console.log("user.cards[0].id", typeof user.cards[0].id, "cardId", typeof cardId);
-  // console.log(user.cards[0].id === cardId);
-  
+// const userVisitRestaurant = (user, restaurantId) => {
+//   let visitedRestaurants = user.visitedRestaurants;
+//   visitedRestaurants.push(restaurantId);
+//
+//   return new Promise((resolve, reject) => {
+//     let params = {
+//       TableName: UserTable,
+//       Key: {id: user.id},
+//       UpdateExpression: "SET visitedRestaurants = :visitedRestaurants",
+//       ExpressionAttributeValues: {
+//         ":visitedRestaurants": visitedRestaurants,
+//       },
+//       ReturnValues: "ALL_NEW"
+//     };
+//     docClient.update(params, (err, data) => {
+//       if (err) {
+//         console.error("Unable to update item. Error JSON:", JSON.stringify(err), err.stack);
+//         return reject(err);
+//       } else {
+//         console.log("User visitedRestaurants Updated successfully");
+//         // console.log("data", data);
+//         resolve(data.Attributes);
+//       }
+//     });
+//   });
+// };
+
+const calcUserCards = (user, cardId) => {
   let card = _.find(user.cards, {id: cardId});
   
-  if (card === undefined){
+  if (card === undefined) {
     card = {id: cardId, stampCount: 0};
     user.cards.push(card);
   }
   
   card.stampCount++;
   card.lastStampAt = api.getTimeInSec();
-  return user.cards;
+  return Promise.resolve(user.cards);
 };
 
-const updateDB = (userId, newCards, newUser) => {// Todo update just one card instead of all user's cards
-  // console.log("newCards", newCards);
+const updateUserTable = (user, newCards, visitedRestaurants) => {
+  // Todo update just one card instead of all user's cards
+  
   return new Promise((resolve, reject) => {
     let params = {
       TableName: UserTable,
-      Key: {id: userId},
-      UpdateExpression: "set cards = :cards",
-      ExpressionAttributeValues:{
-        ":cards":newCards,
+      Key: {id: user.id},
+      UpdateExpression: "set cards = :cards, visitedRestaurants = :visitedRestaurants",
+      ExpressionAttributeValues: {
+        ":cards": newCards,
+        ":visitedRestaurants": visitedRestaurants,
       },
-      ReturnValues:"UPDATED_NEW"
+      ReturnValues: "ALL_NEW"
     };
     docClient.update(params, (err, data) => {
       if (err) {
-        console.error("Unable to update item. Error JSON:", JSON.stringify(err), err.stack);
+        console.error("Unable to stamp card for user. Error JSON:", JSON.stringify(err), err.stack);
         return reject(err);
       } else {
-        console.log("Item Updated successfully");
-        // console.log("data", data);
-        resolve(newUser);
+        console.log("User stamped card successfully");
+        // console.log("data.Attributes", data.Attributes);
+        resolve(data.Attributes);
       }
     });
   });
-  
 };
 
-const stampCard = (userId, cardId, pin) => {
+const stampCard = (userId, cardId, PINCode) => {
   // console.log("strampCard userId, cardId, pin", userId, cardId, pin);
-  let newUser;
-  if (pin === "2587"){
-    return getUser(userId)
-        .then(user => {
-          newUser = user;
-          return updateUserCards(user, cardId)
-        })
-        .then(newCards => {
-          newUser.cards = newCards;
-          return updateDB(userId, newCards, newUser)
-        })
-  } else {
-    throw new Error('Invalid PIN');
-  }
+  return getRestaurant(cardId)
+      .then(restaurant => {
+        // Check PIN exist
+        const PIN = _.find(restaurant.PINs, {code: PINCode});
+        if (!PIN || !PIN.code) return Promise.reject(new Error('Invalid PIN'));
+        
+        return getUser(userId)
+            .then(user => {
+              return calcUserCards(user, cardId)
+                  .then(newCards => {
+                    let visitedRestaurants = user.visitedRestaurants;
+                    const isNewUser = !userVisitedRestaurantBefore(user, cardId);
+                    if (isNewUser) {
+                      visitedRestaurants.push(cardId);
+                    }
+                    return Promise.all([
+                      updateUserTable(user, newCards, visitedRestaurants),
+                      useRestaurantPIN(cardId, PINCode),
+                      createStampEvent(cardId, userId, restaurant.name, isNewUser),
+                    ])
+                        .then(results => {
+                          console.log("results", results);
+                          return results[0];
+                        });
+                  })
+            })
+      });
 };
 
 module.exports = stampCard;

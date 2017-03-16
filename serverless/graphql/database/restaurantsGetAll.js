@@ -20,7 +20,7 @@ const getAllRestaurants = () => {
       let restaurants = data.Items;
       // console.log("user", user);
       // if (!user) user = {};
-      console.log("Scan restaurants succeeded:", JSON.stringify(restaurants));
+      // console.log("Scan restaurants succeeded:", JSON.stringify(restaurants));
       resolve(restaurants);
     });
   });

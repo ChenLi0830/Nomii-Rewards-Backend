@@ -1,10 +1,10 @@
 'use strict';
-'use strict';
 const UserTable = require('./config').UserTable;
 let AWS = require('./config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
 const _ = require('lodash');
 const getAllRestaurants = require('./restaurantsGetAll');
+const userVisitedRestaurantBefore = require('./userVisitedRestaurantBeforeCheck');
 const getUser = require('./userGet');
 const getCoupon = require('./couponGet');
 const useCoupon = require('./couponUse');
@@ -14,14 +14,6 @@ const userRedeemedCouponBefore = (user, coupon) => {
   const usedCoupon = _.find(user.redeemedCoupons, {couponCode: coupon.code});
   console.log("used coupon", usedCoupon);
   return !!usedCoupon;
-};
-
-const userVisitedRestaurantBefore = (user, coupon) => {
-  const visitedRestaurant = _.find(user.visitedRestaurants, function (id) {
-    return id === coupon.restaurantId
-  });
-  console.log("visitedRestaurant", visitedRestaurant);
-  return !!visitedRestaurant;
 };
 
 const calcCardsForAllRestaurants = (user) => {
@@ -143,7 +135,7 @@ const userRedeemCoupon = (userId, code) => {
                 }
                 // Redeem coupon for one restaurant
                 else {
-                  if (userVisitedRestaurantBefore(user, coupon)) {
+                  if (userVisitedRestaurantBefore(user, coupon.restaurantId)) {
                     return Promise.reject(new Error("Sorry the coupon is only for new visitors to this restaurant"));
                   }
                   return calcCardForRestaurant(user, coupon)
