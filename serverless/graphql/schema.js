@@ -252,6 +252,16 @@ const mutation = new GraphQLObjectType({
         return db.restaurantPINCreate(args.restaurantId, args.PIN, args.employeeName);
       }
     },
+    removePIN: {
+      type: new GraphQLList(PINType),
+      args: {
+        restaurantId: {type: GraphQLID},
+        PIN: {type: GraphQLString},
+      },
+      resolve: (parentValue, args) => {
+        return db.restaurantPINRemove(args.restaurantId, args.PIN);
+      }
+    },
     createCoupon: {
       type: CouponType,
       args: {
