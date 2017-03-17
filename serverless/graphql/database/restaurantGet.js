@@ -18,7 +18,7 @@ const getRestaurant = (id) => {
         console.error("Unable to get restaurant. Error JSON:", JSON.stringify(err), err.stack);
         return reject(err);
       }
-      console.log("data.Item", data.Item);
+      // console.log("data.Item", data.Item);
       const restaurant = data.Item;
       resolve(restaurant);
     });

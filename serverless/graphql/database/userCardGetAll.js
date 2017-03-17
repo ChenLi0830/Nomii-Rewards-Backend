@@ -6,40 +6,42 @@
 const getAllRestaurants = require('./restaurantsGetAll');
 const getUser = require('./userGet');
 
-const getAllCardEdges = (userId) => {
+const getAllCards = (userId) => {
   console.log("userId", userId);
   
-  const allCards = getAllRestaurants();
+  return getAllRestaurants()
+      .then(allRestaurants => {
   
-  // console.log("allCards", allCards);
+        // console.log("allCards", allCards);
   
-  let allEdges = allCards.map(card => {
-    return {id: card.id, stampCount: 0, card: card}
-  });
-  
-  // console.log("allEdges", allEdges);
-  
-  let allEdgesMap = new Map();
-  allEdges.forEach(edge => {
-    allEdgesMap.set(edge.id, edge);
-  });
-  
-  // console.log("allEdgesMap", allEdgesMap);
-  
-  return getUser(userId)
-      .then(user => {
-        let userCardEdges = user.cards;
-        // console.log("userCardEdges", userCardEdges);
-        
-        userCardEdges.forEach(userCardEdge => {
-          allEdgesMap.set(userCardEdge.id, userCardEdge);
+        let allCards = allRestaurants.map(card => {
+          return {id: card.id, stampCount: 0, card: card}
         });
-
-        let result = Array.from(allEdgesMap.values());
-        // console.log("result", result);
-        return result;
-      })
+  
+        // console.log("allCards", allCards);
+  
+        let allCardsMap = new Map();
+        allCards.forEach(card => {
+          allCardsMap.set(card.id, card);
+        });
+  
+        // console.log("allCardsMap", allCardsMap);
+  
+        return getUser(userId)
+            .then(user => {
+              let userCards = user.cards;
+              // console.log("userCardEdges", userCardEdges);
+  
+              userCards.forEach(userCard => {
+                allCardsMap.set(userCard.id, userCard);
+              });
+        
+              let result = Array.from(allCardsMap.values());
+              // console.log("result", result);
+              return result;
+            })
+      });
 };
   
   
-module.exports = getAllCardEdges;
+module.exports = getAllCards;
