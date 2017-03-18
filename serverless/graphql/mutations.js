@@ -111,10 +111,11 @@ const mutation = new GraphQLObjectType({
         latitude: {type: GraphQLFloat},
         description: {type: GraphQLString},
         address: {type: GraphQLString},
+        stampValidDays: {type: GraphQLInt},
       },
       resolve: (parentValue, args) => {
         return db.restaurantCreate(args.name, args.imageURL, args.longitude, args.latitude,
-            args.description, args.address);
+            args.description, args.address, args.stampValidDays);
       }
     },
     addRestaurantOwnership: {

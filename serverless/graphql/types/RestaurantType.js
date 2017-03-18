@@ -25,6 +25,7 @@ const RestaurantType = new GraphQLObjectType({
     latitude: {type: GraphQLFloat},
     description: {type: GraphQLString},
     address: {type: GraphQLString},
+    stampValidDays: {type: GraphQLInt},
     // openingHours: {type: GraphQLString},
     PINs: {
       type: new GraphQLList(PINType),
