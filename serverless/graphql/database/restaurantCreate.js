@@ -27,7 +27,7 @@ const insertRestaurantToDB = (restaurant) => {
   })
 };
 
-const createRestaurant = (name, imageURL, longitude, latitude, description) => {
+const createRestaurant = (name, imageURL, longitude, latitude, description, address) => {
   return getAllRestaurants()
       .then(restaurants => {
         // Check duplication
@@ -43,6 +43,7 @@ const createRestaurant = (name, imageURL, longitude, latitude, description) => {
           longitude,
           latitude,
           description,
+          address,
           createdAt: api.getTimeInSec(),
           PINs: [],
         };
