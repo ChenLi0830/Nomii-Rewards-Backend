@@ -16,6 +16,7 @@ const RedeemedCouponType = new GraphQLObjectType({
   fields: () => ({
     redeemedAt: {type: GraphQLInt},
     couponCode: {type: GraphQLString},
+    restaurantName: {type: GraphQLString},
     coupon: {
       type: CouponType,
       resolve(parentValue, args){

@@ -4,6 +4,7 @@ let AWS = require('./config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
 const _ = require('lodash');
 const getAllRestaurants = require('./restaurantsGetAll');
+const getRestaurant = require('./restaurantGet');
 const userVisitedRestaurantBefore = require('./userVisitedRestaurantBeforeCheck');
 const getUser = require('./userGet');
 const getCoupon = require('./couponGet');
@@ -70,12 +71,12 @@ const calcCardForRestaurant = (user, coupon) => {
   return Promise.resolve(cards);
 };
 
-const updateUserTable = (cards, user, coupon) => {
+const updateUserTable = (cards, user, coupon, restaurant) => {
   // console.log("cards", cards);
   // let visitedRestaurants = user.visitedRestaurants;
   // if (!coupon.isForAllRestaurants) visitedRestaurants.push(coupon.restaurantId);
   let redeemedCoupons = user.redeemedCoupons;
-  redeemedCoupons.push({redeemedAt: api.getTimeInSec(), couponCode: coupon.code});
+  redeemedCoupons.push({redeemedAt: api.getTimeInSec(), couponCode: coupon.code, restaurantName: restaurant.name});
   
   return new Promise((resolve, reject) => {
     let params = {
@@ -138,16 +139,18 @@ const userRedeemCoupon = (userId, code) => {
                   if (userVisitedRestaurantBefore(user, coupon.restaurantId)) {
                     return Promise.reject(new Error("New restaurant visitors only"));
                   }
-                  return calcCardForRestaurant(user, coupon)
-                      .then(cards => {
-                        console.log("cards", cards);
-                        return Promise.all([updateUserTable(cards, user, coupon), useCoupon(coupon)])
-                            .then(result => {
-                              // console.log("result", result);
-                              return result[0];//return new user
-                            })
-                      });
-
+                  return getRestaurant(coupon.restaurantId)
+                      .then(restaurant => {
+                        return calcCardForRestaurant(user, coupon)
+                            .then(cards => {
+                              // console.log("cards", cards);
+                              return Promise.all([updateUserTable(cards, user, coupon, restaurant), useCoupon(coupon)])
+                                  .then(result => {
+                                    // console.log("result", result);
+                                    return result[0];//return new user
+                                  })
+                            });
+                      })
                 }
               })
         }
