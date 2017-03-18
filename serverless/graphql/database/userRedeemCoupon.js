@@ -72,11 +72,12 @@ const calcCardForRestaurant = (user, coupon) => {
 };
 
 const updateUserTable = (cards, user, coupon, restaurant) => {
-  // console.log("cards", cards);
-  // let visitedRestaurants = user.visitedRestaurants;
-  // if (!coupon.isForAllRestaurants) visitedRestaurants.push(coupon.restaurantId);
+  
+  // Create new coupon and add to user.redeemedCoupons
   let redeemedCoupons = user.redeemedCoupons;
-  redeemedCoupons.push({redeemedAt: api.getTimeInSec(), couponCode: coupon.code, restaurantName: restaurant.name});
+  let newCoupon = {redeemedAt: api.getTimeInSec(), couponCode: coupon.code};
+  if (restaurant) newCoupon.restaurantName = restaurant.name;
+  redeemedCoupons.push(newCoupon);
   
   return new Promise((resolve, reject) => {
     let params = {
