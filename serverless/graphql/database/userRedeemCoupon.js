@@ -102,7 +102,7 @@ const updateUserTable = (cards, user, coupon) => {
 };
 
 const userRedeemCoupon = (userId, code) => {
-  // console.log("addPromoToUser userId, code", userId, code);
+  console.log("User redeem Coupon userId, code", userId, code);
   return getCoupon(code)
       .then(coupon => {
         if (!coupon || !coupon.code) {
@@ -118,7 +118,7 @@ const userRedeemCoupon = (userId, code) => {
           return getUser(userId)
               .then(user => {
                 if (userRedeemedCouponBefore(user, coupon)) {
-                  return Promise.reject(new Error("It seems you've redeemed this coupon before"));
+                  return Promise.reject(new Error("This Coupon was redeemed"));
                 }
                 
                 // Redeem coupon for all restaurants
@@ -136,7 +136,7 @@ const userRedeemCoupon = (userId, code) => {
                 // Redeem coupon for one restaurant
                 else {
                   if (userVisitedRestaurantBefore(user, coupon.restaurantId)) {
-                    return Promise.reject(new Error("Sorry the coupon is only for new visitors to this restaurant"));
+                    return Promise.reject(new Error("New restaurant visitors only"));
                   }
                   return calcCardForRestaurant(user, coupon)
                       .then(cards => {

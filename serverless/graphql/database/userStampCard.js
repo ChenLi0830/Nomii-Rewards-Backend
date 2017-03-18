@@ -87,7 +87,7 @@ const updateUserTable = (user, newCards, visitedRestaurants) => {
 };
 
 const stampCard = (userId, cardId, PINCode) => {
-  // console.log("strampCard userId, cardId, pin", userId, cardId, pin);
+  console.log("strampCard userId, cardId, PINCode", userId, cardId, PINCode);
   return getRestaurant(cardId)
       .then(restaurant => {
         // Check PIN exist
