@@ -14,6 +14,7 @@ const PINType = new GraphQLObjectType({
     code: {type: GraphQLString},
     employeeName: {type: GraphQLString},
     usageCount: {type: GraphQLInt},
+    id: {type: GraphQLString},
   }),
 });
 
