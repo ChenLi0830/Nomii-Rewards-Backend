@@ -29,7 +29,7 @@ const updateRestaurantTable = (restaurantId, newPINs) => {
       } else {
         console.log("new PIN Updated successfully");
         console.log("data", data);
-        resolve(data.Attributes.PINs);
+        resolve(data.Attributes);
       }
     });
   });

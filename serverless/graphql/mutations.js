@@ -63,7 +63,7 @@ const mutation = new GraphQLObjectType({
       },
     },
     createPIN: {
-      type: new GraphQLList(PINType),
+      type: RestaurantType,
       args: {
         restaurantId: {type: GraphQLID},
         PIN: {type: GraphQLString},
@@ -74,7 +74,7 @@ const mutation = new GraphQLObjectType({
       }
     },
     removePIN: {
-      type: new GraphQLList(PINType),
+      type: RestaurantType,
       args: {
         restaurantId: {type: GraphQLID},
         PIN: {type: GraphQLString},

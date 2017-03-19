@@ -24,7 +24,7 @@ const updateRestaurantTable = (restaurantId, newPINs) => {
       } else {
         console.log("PIN removed successfully");
         // console.log("data", data);
-        resolve(data.Attributes.PINs);
+        resolve(data.Attributes);
       }
     });
   });
