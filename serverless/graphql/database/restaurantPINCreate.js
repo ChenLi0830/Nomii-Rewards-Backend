@@ -47,7 +47,8 @@ const restaurantPINCreate = (restaurantId, PINCode, employeeName) => {
         newPINs.push({
           code: PINCode,
           employeeName: employeeName,
-          usageCount: 0
+          usageCount: 0,
+          id: PINCode,
         });
         // update DB
         return updateRestaurantTable(restaurantId, newPINs);
