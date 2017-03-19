@@ -28,6 +28,8 @@ const insertRestaurantToDB = (restaurant) => {
 };
 
 const createRestaurant = (name, imageURL, longitude, latitude, description, address, stampValidDays) => {
+  if (!stampValidDays) stampValidDays = 7;
+  
   return getAllRestaurants()
       .then(restaurants => {
         // Check duplication
