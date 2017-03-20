@@ -49,7 +49,7 @@ const updateUserInDB = (user) => {
   })
 };
 
-const upsertUser = (id, fbName) => {
+const upsertUser = (id, fbName, token) => {
   return getUser(id)
       .then(user => {
         //Create user
@@ -57,6 +57,7 @@ const upsertUser = (id, fbName) => {
           user = {
             id,
             fbName,
+            token,
             registeredAt: api.getTimeInSec(),
             lastLoginAt: api.getTimeInSec(),
             cards: [],
@@ -71,6 +72,8 @@ const upsertUser = (id, fbName) => {
         // Update user
         else {
           user.lastLoginAt = api.getTimeInSec();
+          user.fbName = fbName;
+          user.token = token;
           console.log("updateUserInDB", user);
           return updateUserInDB(user);
         }

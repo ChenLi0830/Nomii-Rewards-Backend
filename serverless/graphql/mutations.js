@@ -36,9 +36,10 @@ const mutation = new GraphQLObjectType({
       args: {
         id: {type: GraphQLID},
         fbName: {type: GraphQLString},
+        token: {type: GraphQLString},
       },
       resolve: (parentValue, args) => {
-        return db.userUpsert(args.id, args.fbName);
+        return db.userUpsert(args.id, args.fbName, args.token);
       }
     },
     redeemPromo: { // Redeem the promo code for a user, and add an additional stamp for all theuser's cards
