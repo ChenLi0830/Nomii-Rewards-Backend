@@ -31,9 +31,11 @@ const updateUserInDB = (user) => {
       Key: {
         "id": user.id,
       },
-      UpdateExpression: "SET lastLoginAt = :time",
+      UpdateExpression: "SET lastLoginAt = :lastLoginAt, fbName = :fbName, token = :token",
       ExpressionAttributeValues: {
-        ":time": api.getTimeInSec(),
+        ":lastLoginAt": user.lastLoginAt,
+        ":fbName": user.fbName,
+        ":token": user.token,
       },
       ReturnValues: "ALL_NEW",
     };
