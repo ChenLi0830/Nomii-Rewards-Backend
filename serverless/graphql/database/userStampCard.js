@@ -37,7 +37,8 @@ const api = require('../api');
 //   });
 // };
 
-const calcUserCards = (user, cardId) => {
+const calcUserCards = (user, cardId, stampValidDays) => {
+  // console.log("stampValidDays", stampValidDays);
   let cardIndex = _.findIndex(user.cards, {id: cardId});
   let card;
   
@@ -45,6 +46,11 @@ const calcUserCards = (user, cardId) => {
   if (cardIndex < 0) {
     card = {id: cardId, stampCount: 1, lastStampAt: api.getTimeInSec()};
     user.cards.push(card);
+  }
+  // Card is expired
+  else if (user.cards[cardIndex].lastStampAt + stampValidDays * 24 * 3600 < api.getTimeInSec()){
+    user.cards[cardIndex].lastStampAt = api.getTimeInSec();
+    user.cards[cardIndex].stampCount = 1;
   }
   // Card is used up
   else if (user.cards[cardIndex].stampCount >= 2) {
@@ -96,7 +102,7 @@ const stampCard = (userId, cardId, PINCode) => {
         
         return getUser(userId)
             .then(user => {
-              return calcUserCards(user, cardId)
+              return calcUserCards(user, cardId, restaurant.stampValidDays)
                   .then(newCards => {
                     let visitedRestaurants = user.visitedRestaurants;
                     const isNewUser = !userVisitedRestaurantBefore(user, cardId);
@@ -113,6 +119,10 @@ const stampCard = (userId, cardId, PINCode) => {
                           return results[0];
                         });
                   })
+            })
+            .catch(error => {
+              console.log(error);
+              throw error;
             })
       });
 };
