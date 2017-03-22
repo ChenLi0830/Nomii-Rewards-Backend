@@ -23,7 +23,7 @@ const calcCardsForAllRestaurants = (user) => {
         let userCards = user.cards;
         let visitedRestaurants = user.visitedRestaurants;
         let idCardMap = new Map(); // Store new cards in this map
-        
+
         // Create new cards for all restaurants
         allRestaurants.forEach(restaurant => {
           idCardMap.set(restaurant.id, {
@@ -31,17 +31,17 @@ const calcCardsForAllRestaurants = (user) => {
             stampCount: 1,
           });
         });
-        
+
         // Remove the ones that the user has visited
         visitedRestaurants.forEach(restaurantId => {
           idCardMap.delete(restaurantId)
         });
-        
+
         // Add user's current cards back
         userCards.forEach(card => {
           idCardMap.set(card.id, card);
         });
-        
+
         const cards = Array.from(idCardMap.values());
         // console.log("cards", cards);
         return cards;
@@ -52,33 +52,33 @@ const calcCardForRestaurant = (user, coupon) => {
   const restaurantVisited = _.find(user.visitedRestaurants, {restaurantsId: coupon.restaurantId});
   if (restaurantVisited) return Promise.reject(new Error("Coupon is only valid if you haven't" +
       " use the app in the restaurant before"));
-  
+
   let idCardMap = new Map(); // Store new cards in this map
-  
+
   // Add user's current cards
   user.cards.forEach(card => {
     idCardMap.set(card.id, card);
   });
-  
+
   let newCard = {
     id: coupon.restaurantId,
     lastStampAt: api.getTimeInSec(),
     stampCount: 1
   };
-  
+
   idCardMap.set(newCard.id, newCard);
   const cards = Array.from(idCardMap.values());
   return Promise.resolve(cards);
 };
 
 const updateUserTable = (cards, user, coupon, restaurant) => {
-  
+
   // Create new coupon and add to user.redeemedCoupons
   let redeemedCoupons = user.redeemedCoupons;
   let newCoupon = {redeemedAt: api.getTimeInSec(), couponCode: coupon.code};
   if (restaurant) newCoupon.restaurantName = restaurant.name;
   redeemedCoupons.push(newCoupon);
-  
+
   return new Promise((resolve, reject) => {
     let params = {
       TableName: UserTable,
@@ -109,20 +109,17 @@ const userRedeemCoupon = (userId, code) => {
       .then(coupon => {
         if (!coupon || !coupon.code) {
           return Promise.reject(new Error("Invalid Code"));
-        }
-        else if (coupon.expireAt && coupon.expireAt < api.getTimeInSec()) {
+        } else if (coupon.expireAt && coupon.expireAt < api.getTimeInSec()) {
           return Promise.reject(new Error("Coupon Expired"));
-        }
-        else if (coupon.couponsLeft <= 0) {
-          return Promise.reject(new Error("No coupon left"));
-        }
-        else {
+        } else if (coupon.couponsLeft <= 0) {
+          return Promise.reject(new Error("Coupon Limit Reached"));
+        } else {
           return getUser(userId)
               .then(user => {
                 if (userRedeemedCouponBefore(user, coupon)) {
-                  return Promise.reject(new Error("This Coupon was redeemed"));
+                  return Promise.reject(new Error("Code Already Used"));
                 }
-                
+
                 // Redeem coupon for all restaurants
                 if (coupon.isForAllRestaurants) {
                   return calcCardsForAllRestaurants(user)

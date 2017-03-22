@@ -41,7 +41,7 @@ const calcUserCards = (user, cardId, stampValidDays) => {
   // console.log("stampValidDays", stampValidDays);
   let cardIndex = _.findIndex(user.cards, {id: cardId});
   let card;
-  
+
   //User doesn't have that card
   if (cardIndex < 0) {
     card = {id: cardId, stampCount: 1, lastStampAt: api.getTimeInSec()};
@@ -59,15 +59,14 @@ const calcUserCards = (user, cardId, stampValidDays) => {
   // Add stamp to card
   else {
     user.cards[cardIndex].stampCount++;
-    user.cards[cardIndex].lastStampAt = api.getTimeInSec();
   }
-  
+
   return Promise.resolve(user.cards);
 };
 
 const updateUserTable = (user, newCards, visitedRestaurants) => {
   // Todo update just one card instead of all user's cards
-  
+
   return new Promise((resolve, reject) => {
     let params = {
       TableName: UserTable,
@@ -99,7 +98,7 @@ const stampCard = (userId, cardId, PINCode) => {
         // Check PIN exist
         const PIN = _.find(restaurant.PINs, {code: PINCode});
         if (!PIN || !PIN.code) return Promise.reject(new Error('Invalid PIN'));
-        
+
         return getUser(userId)
             .then(user => {
               return calcUserCards(user, cardId, restaurant.stampValidDays)
