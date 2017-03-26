@@ -59,6 +59,8 @@ const calcUserCards = (user, cardId, stampValidDays) => {
   // Add stamp to card
   else {
     user.cards[cardIndex].stampCount++;
+    // If the card is added by allResto coupon, update its lastStampAt attribute
+    if (!user.cards[cardIndex].lastStampAt) user.cards[cardIndex].lastStampAt = api.getTimeInSec();
   }
 
   return Promise.resolve(user.cards);
