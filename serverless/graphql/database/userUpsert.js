@@ -55,6 +55,7 @@ const updateUserInDB = (user) => {
 };
 
 const upsertUser = (id, fbName, token) => {
+  const time = api.getTimeInSec();
   return getUser(id)
       .then(user => {
         //Create user
@@ -63,8 +64,8 @@ const upsertUser = (id, fbName, token) => {
             id,
             fbName,
             token,
-            registeredAt: api.getTimeInSec(),
-            lastLoginAt: api.getTimeInSec(),
+            registeredAt: time,
+            lastLoginAt: time,
             cards: [],
             usedCards: [],
             redeemedCoupons: [],
