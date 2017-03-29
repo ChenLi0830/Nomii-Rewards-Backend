@@ -3,7 +3,11 @@ import ReactDOM from 'react-dom';
 import GraphiQL from 'graphiql';
 import fetch from 'isomorphic-fetch';
 
-const link = "https://bnbs6szfk8.execute-api.us-west-2.amazonaws.com/dev";
+// Production
+// const link = "https://bnbs6szfk8.execute-api.us-west-2.amazonaws.com/dev";
+
+// Staging
+const link = "https://p9s1hjsm03.execute-api.us-west-2.amazonaws.com/staging";
 
 function graphQLFetcher(graphQLParams) {
   return fetch(link + '/graphql', {
