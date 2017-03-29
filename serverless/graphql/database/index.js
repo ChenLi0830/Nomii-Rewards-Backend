@@ -14,6 +14,7 @@ const userStampCard = require('./userStampCard');
 const userCardGetAll = require('./userCardGetAll');
 const userRestaurantOwnershipAdd = require('./userRestaurantOwnershipAdd');
 const userRestaurantOwnershipRemove = require('./userRestaurantOwnershipRemove');
+const userPushTokenUpsert = require('./userPushTokenUpsert');
 
 const couponCreate = require('./couponCreate');
 const couponGet = require('./couponGet');
@@ -37,6 +38,7 @@ module.exports = {
   userCardGetAll,
   userRestaurantOwnershipAdd,
   userRestaurantOwnershipRemove,
+  userPushTokenUpsert,
   couponCreate,
   couponGetAll,
   couponGet,
