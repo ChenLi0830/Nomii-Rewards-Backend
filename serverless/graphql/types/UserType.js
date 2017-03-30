@@ -21,6 +21,9 @@ const UserType = new GraphQLObjectType({
     fbName: {type: GraphQLString},
     registeredAt: {type: GraphQLInt},
     lastLoginAt: {type: GraphQLInt},
+    pushTokens: {
+      type: new GraphQLList(GraphQLString)
+    },
     cards: {
       type: new GraphQLList(CardType),
     },

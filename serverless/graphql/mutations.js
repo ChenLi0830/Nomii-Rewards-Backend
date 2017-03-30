@@ -139,14 +139,14 @@ const mutation = new GraphQLObjectType({
         return db.userRestaurantOwnershipRemove(args.userId, args.restaurantId);
       }
     },
-    upsertPushToken: {
+    addPushToken: {
       type: UserType,
       args:{
         userId: {type: GraphQLID},
         pushToken: {type: GraphQLString},
       },
       resolve: (parentValue, args) => {
-        return db.userPushTokenUpsert(args.userId, args.pushToken);
+        return db.userPushTokenAdd(args.userId, args.pushToken);
       }
     }
   }
