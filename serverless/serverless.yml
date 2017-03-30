@@ -18,7 +18,7 @@ service: Nomii-Rewards-Serverless
 # frameworkVersion: "=X.X.X"
 
 custom:
-  defaultStage: dev
+  defaultStage: staging
 #  productionStream: arn:aws:dynamodb:us-west-2:151302725877:table/Users/stream/2016-12-16T22:04:17.359
 #  devStream: arn:aws:dynamodb:us-west-2:594750710208:table/Users/stream/2016-12-27T16:29:37.237
 
@@ -72,6 +72,7 @@ functions:
         path: graphql
         method: post
         cors: true
+
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

@@ -8,11 +8,12 @@ module.exports.graphql = (event, context, callback) => {
   // };
   // callback(null, response);
   if (!event.body) {
-    event = {
-      body: {
-        "query":"{\n\thello\n}","variables":""
-      }
-    }
+    console.log("Scheduled post request event");
+    let response = {
+      statusCode: 200,
+      headers: {"Access-Control-Allow-Origin": "*"},
+    };
+    return callback(null, response);
   }
   
   if (typeof event.body === "string") event.body = JSON.parse(event.body);
