@@ -8,6 +8,7 @@ const restaurantPINRemove = require('./restaurantPINRemove');
 const restaurantStatisticsGet = require('./restaurantStatisticsGet');
 
 const userGet = require('./userGet');
+const usersGetAll = require('./usersGetAll');
 const userUpsert = require('./userUpsert');
 const userRedeemCoupon = require('./userRedeemCoupon');
 const userStampCard = require('./userStampCard');
@@ -39,6 +40,7 @@ module.exports = {
   userRestaurantOwnershipAdd,
   userRestaurantOwnershipRemove,
   userPushTokenAdd,
+  usersGetAll,
   couponCreate,
   couponGetAll,
   couponGet,

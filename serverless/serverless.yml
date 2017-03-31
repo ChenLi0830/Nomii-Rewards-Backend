@@ -73,6 +73,17 @@ functions:
         method: post
         cors: true
 
+  sendCardPushNotification:
+    handler: scheduled.sendCardPushNotification
+    events:
+      - http:
+          path: notification
+          method: get
+          cors: true
+      - schedule:
+#          rate: rate(1 minute)
+          rate: rate(24 hours)
+          enabled: true
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
