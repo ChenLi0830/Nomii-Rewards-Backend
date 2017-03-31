@@ -14,6 +14,8 @@ let notificationList;
 let newUsers;
 
 const calcRemainedDays = (lastStampAt, stampValidDays) => {
+  // If expired, return -1;
+  if (lastStampAt + stampValidDays * 24 * 3600 < api.getTimeInSec()) return -1;
   return Math.ceil((parseInt(lastStampAt) + stampValidDays * 24 * 3600 - api.getTimeInSec())/(3600 * 24));
 };
 
@@ -165,7 +167,7 @@ const sendCardPushNotification = (event, context, callback) => {
         // console.log("newUsers[0].cards", newUsers[0].cards);
         let chuckNotifications = expo.chunkPushNotifications(notificationList);
         // console.log("chuckNotifications", chuckNotifications);
-        
+  
         return chuckNotifications.forEach(notificationsChunk => {
           expo.sendPushNotificationsAsync(notificationsChunk)
               .then(receipts => {
@@ -173,12 +175,21 @@ const sendCardPushNotification = (event, context, callback) => {
               })
         });
       })
+      .then(() => {
+        let response = {
+          statusCode: 200,
+          headers: {"Access-Control-Allow-Origin": "*"},
+          body: JSON.stringify({
+            message: `${notificationList.length} push notifications sent out to ${newUsers.length} users`,
+          }),
+        };
+        
+        callback(null, response);
+      })
       .catch(error => {
         console.log("error", error);
       });
   
-  
-  callback();
   // let params = event.queryStringParameters;
   // const stage = event.requestContext.stage;
   // console.log("params", params);
