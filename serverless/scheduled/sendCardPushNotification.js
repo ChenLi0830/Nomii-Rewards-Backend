@@ -59,7 +59,7 @@ const calcNotificationAndUsers = (users) => {
         let discount = card.stampCount === 1 && "5%" || card.stampCount === 2 && "10%" || "stamp";
         // console.log("discount", discount);
         
-        let message = `${userFirstName.length ? userFirstName : "Hey"}, your ${discount} discount in ${restaurant.name} will expire in ${expireInDays} ${expireInDays>1 ? "days" : "day"}`;
+        let message = `${userFirstName.length ? userFirstName : "Hey"}, your ${discount} discount expires in ${expireInDays} ${expireInDays>1 ? "days" : "day"} ${String.fromCodePoint(128293)}`;
         
         // console.log("message: ", message);
         
@@ -71,7 +71,7 @@ const calcNotificationAndUsers = (users) => {
               // The push token for the app user to whom you want to send the notification
               to: pushToken,
               sound: 'default',
-              title: "Reminder: Nomii Rewards Card",
+              // title: `${userFirstName.length ? userFirstName : "Hey"}, don't miss out!`,
               body: message,
               // data: {withSome: 'data'},
               // ttl: 3600*24,
