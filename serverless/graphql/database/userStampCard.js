@@ -41,6 +41,7 @@ const calcUserCards = (user, cardId, stampValidDays) => {
   // console.log("stampValidDays", stampValidDays);
   let cardIndex = _.findIndex(user.cards, {id: cardId});
   let card;
+  let usedCard;
 
   //User doesn't have that card
   if (cardIndex < 0) {
@@ -54,7 +55,8 @@ const calcUserCards = (user, cardId, stampValidDays) => {
   }
   // Card is used up
   else if (user.cards[cardIndex].stampCount >= 2) {
-    user.cards.splice(cardIndex, 1);
+    usedCard = user.cards.splice(cardIndex, 1)[0];
+    usedCard.stampCount++;
   }
   // Add stamp to card
   else {
@@ -63,20 +65,21 @@ const calcUserCards = (user, cardId, stampValidDays) => {
     if (!user.cards[cardIndex].lastStampAt) user.cards[cardIndex].lastStampAt = api.getTimeInSec();
   }
 
-  return Promise.resolve(user.cards);
+  return Promise.resolve({newCards: user.cards, usedCard: usedCard});
 };
 
-const updateUserTable = (user, newCards, visitedRestaurants) => {
+const updateUserTable = (user, newCards, visitedRestaurants, usedCards) => {
   // Todo update just one card instead of all user's cards
 
   return new Promise((resolve, reject) => {
     let params = {
       TableName: UserTable,
       Key: {id: user.id},
-      UpdateExpression: "set cards = :cards, visitedRestaurants = :visitedRestaurants",
+      UpdateExpression: "set cards = :cards, visitedRestaurants = :visitedRestaurants, usedCards = :usedCards",
       ExpressionAttributeValues: {
         ":cards": newCards,
         ":visitedRestaurants": visitedRestaurants,
+        ":usedCards": usedCards,
       },
       ReturnValues: "ALL_NEW"
     };
@@ -104,14 +107,17 @@ const stampCard = (userId, cardId, PINCode) => {
         return getUser(userId)
             .then(user => {
               return calcUserCards(user, cardId, restaurant.stampValidDays)
-                  .then(newCards => {
+                  .then(result => {
+                    let newCards = result.newCards;
+                    let usedCard = result.usedCard;
+                    if (!!usedCard) user.usedCards.push(usedCard);
                     let visitedRestaurants = user.visitedRestaurants;
                     const isNewUser = !userVisitedRestaurantBefore(user, cardId);
                     if (isNewUser) {
                       visitedRestaurants.push(cardId);
                     }
                     return Promise.all([
-                      updateUserTable(user, newCards, visitedRestaurants),
+                      updateUserTable(user, newCards, visitedRestaurants, user.usedCards),
                       useRestaurantPIN(cardId, PINCode),
                       createStampEvent(cardId, userId, restaurant.name, isNewUser, PINCode, PIN.employeeName, user.fbName),
                     ])
