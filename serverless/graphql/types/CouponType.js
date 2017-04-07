@@ -8,7 +8,8 @@ const graphql = require('graphql'),
     GraphQLString = graphql.GraphQLString,
     GraphQLInt = graphql.GraphQLInt,
     GraphQLBoolean = graphql.GraphQLBoolean,
-    GraphQLID = graphql.GraphQLID;
+    GraphQLID = graphql.GraphQLID,
+    GraphQLList = graphql.GraphQLList;
 
 const CouponType = new GraphQLObjectType({
   name: "Coupon",
@@ -18,6 +19,15 @@ const CouponType = new GraphQLObjectType({
     restaurantId: {type: GraphQLID},
     expireAt: {type: GraphQLInt},
     couponsLeft: {type: GraphQLInt},
+    excludedRestaurants: {
+      type: new GraphQLList(GraphQLID),
+    },
+    discounts: {
+      type: new GraphQLList(GraphQLInt)
+    },
+    congratsScreens: {
+      type: new GraphQLList(GraphQLString),
+    },
   }),
 });
 

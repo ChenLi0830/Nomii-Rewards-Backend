@@ -92,6 +92,15 @@ const mutation = new GraphQLObjectType({
         restaurantId: {type: GraphQLID},
         daysToExpire: {type: GraphQLInt},
         numberOfCoupons: {type: GraphQLInt},
+        excludedRestaurants: {
+          type: new GraphQLList(GraphQLID),
+        },
+        discounts: {
+          type: new GraphQLList(GraphQLInt)
+        },
+        congratsScreens: {
+          type: new GraphQLList(GraphQLString),
+        },
       },
       resolve: (parentValue, args) => {
         return db.couponCreate(
@@ -99,7 +108,10 @@ const mutation = new GraphQLObjectType({
             args.isForAllRestaurants,
             args.restaurantId,
             args.daysToExpire,
-            args.numberOfCoupons
+            args.numberOfCoupons,
+            args.excludedRestaurants,
+            args.discounts,
+            args.congratsScreens
         );
       }
     },

@@ -4,6 +4,7 @@ let AWS = require('./config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
 const _ = require('lodash');
 const api = require('../api');
+const timeStamp = api.getTimeInSec();
 const getCoupon = require('./couponGet');
 
 const insertCoupon = (coupon) => {
@@ -24,16 +25,16 @@ const insertCoupon = (coupon) => {
       }
     });
   })
-  
 };
 
-const createCoupon = (code, isForAllRestaurants, restaurantId, daysToExpire, numberOfCoupons) => {
+const createCoupon = (code, isForAllRestaurants, restaurantId, daysToExpire, numberOfCoupons, excludedRestaurants, discounts, congratsScreens) => {
+  
   // console.log("code", code);
   return getCoupon(code)
       .then(dupCoupon => {
         if (dupCoupon && dupCoupon.code) {
           // coupon exist
-          if (!dupCoupon.expireAt || dupCoupon.expireAt > api.getTimeInSec()) {
+          if (!dupCoupon.expireAt || dupCoupon.expireAt > timeStamp) {
             // coupon is not expired
             return Promise.reject(new Error("coupon with same code already exist"));
           }
@@ -41,15 +42,18 @@ const createCoupon = (code, isForAllRestaurants, restaurantId, daysToExpire, num
         
         if (daysToExpire < 0) daysToExpire = 365*10;
         if (numberOfCoupons < 0) numberOfCoupons = 1000000000;
-          
+        
         //Create coupon
         const coupon = {
           code,
           isForAllRestaurants,
           restaurantId,
-          expireAt: api.getTimeInSec() + daysToExpire * 24 * 3600,
+          expireAt: timeStamp + daysToExpire * 24 * 3600,
           couponsLeft: numberOfCoupons,
-          createdAt: api.getTimeInSec(),
+          createdAt: timeStamp,
+          excludedRestaurants,
+          discounts,
+          congratsScreens,
         };
         
         return insertCoupon(coupon);
