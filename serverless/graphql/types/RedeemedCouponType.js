@@ -19,8 +19,8 @@ const RedeemedCouponType = new GraphQLObjectType({
     restaurantName: {type: GraphQLString},
     coupon: {
       type: CouponType,
-      resolve(parentValue, args){
-        //return db.getCoupon(parentValue.couponCode);
+      resolve(parentValue){
+        return db.couponGet(parentValue.couponCode);
       },
     }
   }),

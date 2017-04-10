@@ -27,7 +27,7 @@ const insertCoupon = (coupon) => {
   })
 };
 
-const createCoupon = (code, isForAllRestaurants, restaurantId, daysToExpire, numberOfCoupons, excludedRestaurants, discounts, congratsScreens) => {
+const createCoupon = (code, isForAllRestaurants, restaurantId, daysToExpire, numberOfCoupons, excludedRestaurants, discounts, PINSuccessScreens, codeSuccessScreen, type) => {
   
   // console.log("code", code);
   return getCoupon(code)
@@ -53,7 +53,9 @@ const createCoupon = (code, isForAllRestaurants, restaurantId, daysToExpire, num
           createdAt: timeStamp,
           excludedRestaurants,
           discounts,
-          congratsScreens,
+          PINSuccessScreens,
+          codeSuccessScreen,
+          type,
         };
         
         return insertCoupon(coupon);

@@ -17,18 +17,23 @@ const userRedeemedCouponBefore = (user, coupon) => {
   return !!usedCoupon;
 };
 
-const calcCardsForAllRestaurants = (user) => {
+const calcCardsForAllRestaurants = (user, coupon) => {
   return getAllRestaurants()
       .then(allRestaurants => {
         let userCards = user.cards;
         let visitedRestaurants = user.visitedRestaurants;
+        let excludedRestaurants = coupon.excludedRestaurants;
         let idCardMap = new Map(); // Store new cards in this map
-
+  
         // Create new cards for all restaurants
         allRestaurants.forEach(restaurant => {
           idCardMap.set(restaurant.id, {
             id: restaurant.id,
-            stampCount: 1,
+            // add extra stamp if the coupon type is stamp or undefined
+            stampCount: coupon.type === "discount" ? 0 : 1,
+            discounts: coupon.discounts || [],
+            PINSuccessScreens: coupon.PINSuccessScreens || [],
+            codeSuccessScreen: coupon.codeSuccessScreen,
           });
         });
 
@@ -36,23 +41,28 @@ const calcCardsForAllRestaurants = (user) => {
         visitedRestaurants.forEach(restaurantId => {
           idCardMap.delete(restaurantId)
         });
+        
+        // Remove the ones that are excluded
+        if (excludedRestaurants && excludedRestaurants.length > 0){
+          for (let restaurantId of excludedRestaurants){
+            idCardMap.delete(restaurantId);
+          }
+        }
 
+        // console.log("userCards", userCards);
         // Add user's current cards back
         userCards.forEach(card => {
           idCardMap.set(card.id, card);
         });
 
         const cards = Array.from(idCardMap.values());
+        
         // console.log("cards", cards);
         return cards;
       });
 };
 
 const calcCardForRestaurant = (user, coupon) => {
-  const restaurantVisited = _.find(user.visitedRestaurants, {restaurantsId: coupon.restaurantId});
-  if (restaurantVisited) return Promise.reject(new Error("Coupon is only valid if you haven't" +
-      " use the app in the restaurant before"));
-
   let idCardMap = new Map(); // Store new cards in this map
 
   // Add user's current cards
@@ -63,7 +73,10 @@ const calcCardForRestaurant = (user, coupon) => {
   let newCard = {
     id: coupon.restaurantId,
     lastStampAt: api.getTimeInSec(),
-    stampCount: 1
+    stampCount: 1,
+    discounts: coupon.discounts || [],
+    PINSuccessScreens: coupon.PINSuccessScreens || [],
+    codeSuccessScreen: coupon.codeSuccessScreen,
   };
 
   idCardMap.set(newCard.id, newCard);
@@ -122,9 +135,12 @@ const userRedeemCoupon = (userId, code) => {
 
                 // Redeem coupon for all restaurants
                 if (coupon.isForAllRestaurants) {
-                  return calcCardsForAllRestaurants(user)
+                  return calcCardsForAllRestaurants(user, coupon)
                       .then(cards => {
-                        console.log("cards", cards);
+                        if (cards.length === 0) {
+                          return Promise.reject(new Error("New restaurants visitors only"));
+                        }
+                        // console.log("cards", cards);
                         return Promise.all([updateUserTable(cards, user, coupon), useCoupon(coupon)])
                             .then(result => {
                               // console.log("result", result);

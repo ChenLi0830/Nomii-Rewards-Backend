@@ -25,9 +25,11 @@ const CouponType = new GraphQLObjectType({
     discounts: {
       type: new GraphQLList(GraphQLInt)
     },
-    congratsScreens: {
+    PINSuccessScreens: {
       type: new GraphQLList(GraphQLString),
     },
+    codeSuccessScreen:{type: GraphQLString},
+    type: {type: GraphQLString}
   }),
 });
 

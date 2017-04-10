@@ -98,9 +98,13 @@ const mutation = new GraphQLObjectType({
         discounts: {
           type: new GraphQLList(GraphQLInt)
         },
-        congratsScreens: {
+        PINSuccessScreens: {
           type: new GraphQLList(GraphQLString),
         },
+        codeSuccessScreen: {
+          type: GraphQLString,
+        },
+        type: {type: GraphQLString} // stamp | discount
       },
       resolve: (parentValue, args) => {
         return db.couponCreate(
@@ -111,7 +115,9 @@ const mutation = new GraphQLObjectType({
             args.numberOfCoupons,
             args.excludedRestaurants,
             args.discounts,
-            args.congratsScreens
+            args.PINSuccessScreens,
+            args.codeSuccessScreen,
+            args.type // stamp | discount
         );
       }
     },
