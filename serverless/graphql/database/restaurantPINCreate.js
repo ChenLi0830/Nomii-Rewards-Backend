@@ -46,7 +46,7 @@ const restaurantPINCreate = (restaurantId, PINCode, employeeName) => {
         let newPINs = restaurant.PINs;
         newPINs.push({
           code: PINCode,
-          employeeName: employeeName,
+          employeeName: employeeName.trim(),
           usageCount: 0,
           id: PINCode,
         });
