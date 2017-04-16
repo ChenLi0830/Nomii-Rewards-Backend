@@ -139,7 +139,7 @@ const mutation = new GraphQLObjectType({
     },
     addRestaurantOwnership: {
       type: UserType,
-      args:{
+      args: {
         userId: {type: GraphQLID},
         restaurantId: {type: GraphQLID},
       },
@@ -149,7 +149,7 @@ const mutation = new GraphQLObjectType({
     },
     removeRestaurantOwnership: {
       type: UserType,
-      args:{
+      args: {
         userId: {type: GraphQLID},
         restaurantId: {type: GraphQLID},
       },
@@ -159,12 +159,26 @@ const mutation = new GraphQLObjectType({
     },
     addPushToken: {
       type: UserType,
-      args:{
+      args: {
         userId: {type: GraphQLID},
         pushToken: {type: GraphQLString},
       },
       resolve: (parentValue, args) => {
         return db.userPushTokenAdd(args.userId, args.pushToken);
+      }
+    },
+    addSurveyQuestion: {
+      type: RestaurantType,
+      args: {
+        restaurantId: {type: GraphQLID},
+        question: {type: GraphQLString},
+        askInRound: {type: GraphQLInt},
+        type: {type: GraphQLString},
+        maxScore: {type: GraphQLInt},
+        textPlaceholder: {type: GraphQLString},
+      },
+      resolve: (parentValue, args) => {
+        return db.restaurantQuestionAdd(args);
       }
     }
   }

@@ -14,6 +14,7 @@ const graphql = require('graphql'),
 
 const PINType = require('./PINType');
 const RestaurantStatisticsType = require('./RestaurantStatisticsType');
+const QuestionType = require('./QuestionType');
 
 const RestaurantType = new GraphQLObjectType({
   name: "Restaurant",
@@ -29,6 +30,9 @@ const RestaurantType = new GraphQLObjectType({
     // openingHours: {type: GraphQLString},
     PINs: {
       type: new GraphQLList(PINType),
+    },
+    surveyQuestions: {
+      type: new GraphQLList(QuestionType),
     },
     statistics: {
       type: RestaurantStatisticsType,

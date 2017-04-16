@@ -17,9 +17,9 @@ const QuestionType = new GraphQLObjectType({
     question: {type: GraphQLString},
     askInRound: {type: GraphQLInt},
     isDeleted:{type: GraphQLBoolean},
-    type: {type: GraphQLString},//(textInput, select, score),
-    // *maxScore: int,
-    // *textPlaceholder: string,
+    type: {type: GraphQLString},//(text, select, score),
+    maxScore: {type: GraphQLInt},
+    textPlaceholder: {type: GraphQLString},
   }),
 });
 
