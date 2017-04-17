@@ -1,12 +1,13 @@
 "use strict";
 
 const getTimeInSec = () => {
-  return Math.trunc(new Date().getTime()/1000);
+  return Math.trunc(new Date().getTime() / 1000);
 };
 
 /**
-* Get the urgency level of a card, namely, how soon is it going to expire (0 - very urgent, 1 - urgent, 2 - normal)
-* */
+ * Get the urgency level of a card, namely, how soon is it going to expire (0 - very urgent, 1 -
+ * urgent, 2 - normal)
+ * */
 const getUrgency = (stampValidDays, expireInDays) => {
   console.log("stampValidDays, expireInDays", stampValidDays, expireInDays);
   let urgencyArray = [
@@ -16,15 +17,15 @@ const getUrgency = (stampValidDays, expireInDays) => {
   ];
   // Get correct row
   let row;
-  for (row=0; row<urgencyArray.length; row++){
+  for (row = 0; row < urgencyArray.length; row++) {
     // row is found
-    if (urgencyArray[row][2]>=stampValidDays) break;
+    if (urgencyArray[row][2] >= stampValidDays) break;
   }
   if (row === urgencyArray.length) row--;
   
   // Get urgency
   let urgency;
-  for (urgency = 0; urgency<urgencyArray[row].length; urgency++){
+  for (urgency = 0; urgency < urgencyArray[row].length; urgency++) {
     // urgencyLevel is found
     if (urgencyArray[row][urgency] >= expireInDays) break;
   }
@@ -32,4 +33,36 @@ const getUrgency = (stampValidDays, expireInDays) => {
   return urgency;
 };
 
-module.exports = {getTimeInSec, getUrgency};
+/**
+ * Get params for DynamoDB table update calls
+ * */
+const getUpdateExpression = (newFields) => {
+  let UpdateExpression = "SET";
+  for (let fieldKey of Object.keys(newFields)) {
+    UpdateExpression += ` #${fieldKey} = :${fieldKey},`
+  }
+  //Return UpdateExpression after trimming the last character
+  return UpdateExpression.slice(0, -1);
+};
+const getExpressionAttributeNames = (newFields) => {
+  let ExpressionAttributeNames = {};
+  for (let fieldKey of Object.keys(newFields)) {
+    ExpressionAttributeNames[`#${fieldKey}`] = fieldKey;
+  }
+  return ExpressionAttributeNames;
+};
+const getExpressionAttributeValues = (newFields) => {
+  let ExpressionAttributeValues = {};
+  for (let fieldKey of Object.keys(newFields)) {
+    ExpressionAttributeValues[`:${fieldKey}`] = newFields[fieldKey];
+  }
+  return ExpressionAttributeValues;
+};
+
+module.exports = {
+  getTimeInSec,
+  getUrgency,
+  getUpdateExpression,
+  getExpressionAttributeNames,
+  getExpressionAttributeValues,
+};

@@ -1,17 +1,17 @@
 'use strict';
-const RestaurantTable = require('./config').RestaurantTable;
+const UserTable = require('./config').UserTable;
 let AWS = require('./config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
 const api = require('../api');
 
 /**
- * Update restaurant whose id === `restaurantId`, the fields in `newFields` would be updated
+ * Update user whose id === `userId`, the fields in `newFields` would be updated
  * */
-const updateRestaurant = (restaurantId, newFields) => {
-  if (!restaurantId) {
-    return Promise.reject(new Error("Update fail: restaurant doesn't have id"));
+const updateUser = (userId, newFields) => {
+  // Check for argument errors
+  if (!userId) {
+    return Promise.reject(new Error("Update fail: user doesn't have id"));
   }
-  
   if (!newFields || Object.keys(newFields).length === 0) {
     return Promise.reject(new Error("Update fail: newFields can't be empty"));
   }
@@ -22,9 +22,9 @@ const updateRestaurant = (restaurantId, newFields) => {
   const ExpressionAttributeValues = api.getExpressionAttributeValues(newFields);
   
   let params = {
-    TableName: RestaurantTable,
+    TableName: UserTable,
     Key: {
-      id: restaurantId
+      id: userId
     },
     UpdateExpression,
     ExpressionAttributeNames,
@@ -35,16 +35,16 @@ const updateRestaurant = (restaurantId, newFields) => {
   return new Promise((resolve, reject) => {
     docClient.update(params, (err, data) => {
       if (err) {
-        console.error(`Unable to update restaurant fields. ${JSON.stringify(newFields)}`,
+        console.error(`Unable to update user fields. ${JSON.stringify(newFields)}`,
             JSON.stringify(err), err.stack);
         return reject(err);
       } else {
-        console.log("Restaurant updated successfully");
-        console.log("newFields", JSON.stringify(newFields));
+        console.log("User updated successfully");
+        // console.log("newFields", JSON.stringify(newFields));
         resolve(data.Attributes);
       }
     });
   });
 };
 
-module.exports = updateRestaurant;
+module.exports = updateUser;
