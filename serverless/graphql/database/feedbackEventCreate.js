@@ -6,7 +6,7 @@ const _ = require('lodash');
 const api = require('../api');
 
 const createFeedbackEvent = (args) => {
-  const {restaurantId, userId, questions, comment = null, userContact = null, tags = [], restaurantName = null, userName = null} = args;
+  const {restaurantId, userId, questions = [], comment, userContact, tags = [], restaurantName, userName} = args;
   
   const feedbackEvent = {
     restaurantId,

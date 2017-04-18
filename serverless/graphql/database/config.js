@@ -16,5 +16,6 @@ const UserTable = "Nomii-Rewards-Users";
 const RestaurantTable = "Nomii-Rewards-Restaurants";
 const CouponTable = "Nomii-Rewards-Coupons";
 const StampEventTable = "Nomii-Rewards-Stamp-Events";
+const FeedbackEventTable = "Nomii-Rewards-Feedback-Events";
 
-module.exports = {UserTable, RestaurantTable, CouponTable, StampEventTable, AWS};
+module.exports = {UserTable, RestaurantTable, CouponTable, StampEventTable, FeedbackEventTable, AWS};
