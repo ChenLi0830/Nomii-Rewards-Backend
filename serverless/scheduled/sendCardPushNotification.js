@@ -2,6 +2,7 @@
 let AWS = require('../graphql/database/config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
 const Expo = require('exponent-server-sdk');
+const _ = require('lodash');
 
 const UserTable = require('../graphql/database/config').UserTable;
 const api = require('../graphql/api');
@@ -23,13 +24,23 @@ const shouldNotifyCard = (expireInDays, lastNotificationAt, notifiedTimes, stamp
   // Card is already expired, notification should not be sent
   if (expireInDays<0) return false;
   
-  let urgency = api.getUrgency(stampValidDays, expireInDays);
-  let notificationIntervalInHour = (api.getTimeInSec() - lastNotificationAt) / (3600);
+  /* strategy 1 - based */
+  // let urgency = api.getUrgency(stampValidDays, expireInDays);
+  // let notificationIntervalInHour = (api.getTimeInSec() - lastNotificationAt) / (3600);
+  //
+  // // Notification should wait for at least 24 hours
+  // // A card should be notified for at most 2 times
+  // // A card should be notified only when it is very urgent
+  // return notificationIntervalInHour >= 24 && notifiedTimes < 2 && urgency === 0;
   
-  // Notification should wait for at least 24 hours
-  // A card should be notified for at most 2 times
-  // A card should be notified only when it is very urgent
-  return notificationIntervalInHour >= 24 && notifiedTimes < 2 && urgency === 0;
+  /* strategy 2 - based on expireInDays */
+  if (stampValidDays <= 7){
+    return _.includes([1, 3], expireInDays);
+  } else if (stampValidDays <= 14){
+    return _.includes([1, 3, 5, 7], expireInDays);
+  } else if (stampValidDays <= 30){
+    return _.includes([1, 3, 5, 10], expireInDays);
+  }
 };
 
 const calcNotificationAndUsers = (users) => {
@@ -60,7 +71,6 @@ const calcNotificationAndUsers = (users) => {
         // console.log("discount", discount);
         
         let message = `${userFirstName.length ? userFirstName : "Hey"}, your ${discount} discount expires in ${expireInDays} ${expireInDays>1 ? "days" : "day"} ${String.fromCodePoint(128293)}`;
-        
         // console.log("message: ", message);
         
         user.pushTokens.forEach(pushToken => {
@@ -86,8 +96,6 @@ const calcNotificationAndUsers = (users) => {
       
       return card;
     });
-    
-    // console.log("newUserCards", newUserCards);
     
     // keep track of which users need to be updated
     if (userShouldUpdate) {
@@ -126,19 +134,15 @@ const updateUserTable = (user) => {
   })
 };
 
-
-
 const sendCardPushNotification = (event, context, callback) => {
   restaurantsMap = new Map();
   notificationList = [];
   newUsers = [];
   
-  let getDataPromises = [
+  Promise.all([
     restaurantsGetAll(),
     usersGetAll()
-  ];
-  
-  Promise.all(getDataPromises)
+  ])
       .then(results => {
         const restaurants = results[0];
         users = results[1];
@@ -146,8 +150,6 @@ const sendCardPushNotification = (event, context, callback) => {
         for (let restaurant of restaurants){
           restaurantsMap.set(restaurant.id, restaurant);
         }
-        // console.log("restaurantsMap", restaurantsMap);
-        // console.log("users", users);
       })
       .then(()=>{
         calcNotificationAndUsers(users)
@@ -189,15 +191,6 @@ const sendCardPushNotification = (event, context, callback) => {
       .catch(error => {
         console.log("error", error);
       });
-  
-  // let params = event.queryStringParameters;
-  // const stage = event.requestContext.stage;
-  // console.log("params", params);
-  // console.log("stage", stage);
-  // console.log("event", JSON.stringify(event));
-  // console.log("context", JSON.stringify(context));
-  // console.log("event.requestContext.stage", event.requestContext.stage);
-  
 };
 
 module.exports = sendCardPushNotification;
