@@ -81,8 +81,8 @@ functions:
           method: get
           cors: true
       - schedule:
-#          rate: rate(1 minute)
-          rate: rate(24 hours)
+#          rate: rate(24 hours)
+          rate: cron(0 11 * * ? *)
           enabled: true
 
 #    The following are a few example events you can configure
