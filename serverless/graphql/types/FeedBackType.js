@@ -1,5 +1,7 @@
 'use strict';
 
+const QuestionAnswerType = require('./QuestionAnswerType');
+
 const graphql = require('graphql'),
     GraphQLObjectType = graphql.GraphQLObjectType,
     GraphQLString = graphql.GraphQLString,
@@ -7,18 +9,14 @@ const graphql = require('graphql'),
     GraphQLList = graphql.GraphQLList,
     GraphQLID = graphql.GraphQLID;
 
-const QuestionAnswerType = new GraphQLObjectType({
-  surveyQuestionId: {type: GraphQLID},
-  score: {type: GraphQLInt},
-  // comment: {type: GraphQLString}, //optional
-});
-
 const FeedBackType = new GraphQLObjectType({
   name: "Feedback",
   fields: () => ({
     restaurantId: {type: GraphQLString},
-    createdAt: {type: GraphQLInt},
+    restaurantName: {type: GraphQLString},
     userId: {type: GraphQLID},
+    userName: {type: GraphQLString},
+    createdAt: {type: GraphQLInt},
     questions: {type: new GraphQLList(QuestionAnswerType)},
     tags: {type: new GraphQLList(GraphQLID)},
     comment: {type: GraphQLString},
