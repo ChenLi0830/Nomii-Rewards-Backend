@@ -24,7 +24,7 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs4.3
+  runtime: nodejs6.10
   stage: ${opt:stage, self:custom.defaultStage}
   # Deploys to dev stage by default.
   # To deploy for production, run 'serverless deploy --stage production'
@@ -200,7 +200,7 @@ resources:
           WriteCapacityUnits: 5
         TableName: 'Nomii-Rewards-Stamp-Events'
 
-    FeedBacksTable:
+    FeedbackEventsTable:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Retain
       Properties:
@@ -221,4 +221,4 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 10
           WriteCapacityUnits: 5
-        TableName: 'Nomii-Rewards-FeedBacks'
+        TableName: 'Nomii-Rewards-Feedback-Events'
