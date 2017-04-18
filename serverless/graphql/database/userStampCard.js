@@ -10,33 +10,6 @@ const useRestaurantPIN = require('./restaurantPINUse');
 const createStampEvent = require('./stampEventCreate');
 const api = require('../api');
 
-// const userVisitRestaurant = (user, restaurantId) => {
-//   let visitedRestaurants = user.visitedRestaurants;
-//   visitedRestaurants.push(restaurantId);
-//
-//   return new Promise((resolve, reject) => {
-//     let params = {
-//       TableName: UserTable,
-//       Key: {id: user.id},
-//       UpdateExpression: "SET visitedRestaurants = :visitedRestaurants",
-//       ExpressionAttributeValues: {
-//         ":visitedRestaurants": visitedRestaurants,
-//       },
-//       ReturnValues: "ALL_NEW"
-//     };
-//     docClient.update(params, (err, data) => {
-//       if (err) {
-//         console.error("Unable to update item. Error JSON:", JSON.stringify(err), err.stack);
-//         return reject(err);
-//       } else {
-//         console.log("User visitedRestaurants Updated successfully");
-//         // console.log("data", data);
-//         resolve(data.Attributes);
-//       }
-//     });
-//   });
-// };
-
 const calcUserCards = (user, cardId, stampValidDays) => {
   // console.log("stampValidDays", stampValidDays);
   let cardIndex = _.findIndex(user.cards, {id: cardId});

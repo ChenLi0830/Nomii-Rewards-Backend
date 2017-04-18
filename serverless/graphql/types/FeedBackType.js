@@ -12,7 +12,7 @@ const graphql = require('graphql'),
 const FeedBackType = new GraphQLObjectType({
   name: "Feedback",
   fields: () => ({
-    restaurantId: {type: GraphQLString},
+    restaurantId: {type: GraphQLID},
     restaurantName: {type: GraphQLString},
     userId: {type: GraphQLID},
     userName: {type: GraphQLString},

@@ -15,18 +15,14 @@ const graphql = require('graphql'),
     GraphQLID = graphql.GraphQLID;
 
 const PINType = require('./types/PINType');
-
 const CardType = require('./types/CardType');
-
 const RestaurantType = require('./types/RestaurantType');
-
 const RedeemedCouponType = require('./types/RedeemedCouponType');
-
 const CouponType = require('./types/CouponType');
-
 const UserType = require('./types/UserType');
-
 const StampEventType = require('./types/StampEventType');
+const FeedBackType = require('./types/FeedBackType');
+const QuestionAnswerInputType = require('./types/QuestionAnswerInputType');
 
 const mutation = new GraphQLObjectType({
   name: "Mutation",
@@ -179,6 +175,20 @@ const mutation = new GraphQLObjectType({
       },
       resolve: (parentValue, args) => {
         return db.restaurantQuestionAdd(args);
+      }
+    },
+    submitFeedback: {
+      type: FeedBackType,
+      args:{
+        restaurantId: {type: GraphQLID},
+        userId: {type: GraphQLID},
+        questions: {type: new GraphQLList(QuestionAnswerInputType)},
+        tags: {type: new GraphQLList(GraphQLID)},
+        comment: {type: GraphQLString},
+        userContact: {type: GraphQLString},
+      },
+      resolve: (parentValue, args) => {
+        return db.userSubmitFeedback(args);
       }
     }
   }

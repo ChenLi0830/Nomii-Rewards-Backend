@@ -10,9 +10,14 @@ const userSubmitFeedback = (args) => {
   ])
       .then(result => {
         return feedbackEventCreate({
-          ...args,
           restaurantName: result[0].name,
           userName: result[1].fbName,
+          restaurantId: args.restaurantId,
+          userId: args.userId,
+          questions: args.questions,
+          tags: args.tags,
+          comment: args.comment,
+          userContact: args.userContact,
         })
       });
 };
