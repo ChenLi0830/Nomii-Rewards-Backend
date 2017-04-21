@@ -44,6 +44,7 @@ const shouldNotifyCard = (expireInDays, lastNotificationAt, notifiedTimes, stamp
 };
 
 const calcNotificationAndUsers = (users) => {
+  console.log(`Calc notifications for ${users.length} users`);
   users.forEach(user => {
     // pass the user if he/she doesn't have pushTokens
     if (!user.pushTokens) return;
@@ -164,7 +165,7 @@ const sendCardPushNotification = (event, context, callback) => {
       })
       .then((result) => {
         let expo = new Expo();
-        // console.log("notificationList", notificationList);
+        // console.log("notificationList", JSON.stringify(notificationList));
         // console.log("newUsers", newUsers);
         // console.log("newUsers[0].cards", newUsers[0].cards);
         let chuckNotifications = expo.chunkPushNotifications(notificationList);
