@@ -9,6 +9,7 @@ const graphql = require('graphql'),
     GraphQLInt = graphql.GraphQLInt,
     GraphQLList = graphql.GraphQLList,
     GraphQLNonNull = graphql.GraphQLNonNull,
+    GraphQLBoolean = graphql.GraphQLBoolean,
     GraphQLID = graphql.GraphQLID;
 
 const CardType = require('./CardType');
@@ -21,6 +22,7 @@ const UserType = new GraphQLObjectType({
     fbName: {type: GraphQLString},
     registeredAt: {type: GraphQLInt},
     lastLoginAt: {type: GraphQLInt},
+    isNomiiAdmin: {type: GraphQLBoolean},
     pushTokens: {
       type: new GraphQLList(GraphQLString)
     },

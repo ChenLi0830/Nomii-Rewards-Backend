@@ -190,7 +190,16 @@ const mutation = new GraphQLObjectType({
       resolve: (parentValue, args) => {
         return db.userSubmitFeedback(args);
       }
-    }
+    },
+    setUserAdmin: {
+      type: UserType,
+      args: {
+        userId: {type: GraphQLID},
+      },
+      resolve: (parentValue, args) => {
+        return db.userNomiiAdminSet(args.userId);
+      }
+    },
   }
 });
 
