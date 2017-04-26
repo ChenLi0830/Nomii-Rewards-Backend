@@ -11,6 +11,7 @@ const getCoupon = require('./couponGet');
 const useCoupon = require('./couponUse');
 const api = require('../api');
 const createStampEvent = require('./stampEventCreate');
+const updateUser = require('./userUpdate');
 
 const userRedeemedCouponBefore = (user, coupon) => {
   const usedCoupon = _.find(user.redeemedCoupons, {couponCode: coupon.code});
@@ -85,38 +86,6 @@ const calcCardForRestaurant = (user, coupon) => {
   return Promise.resolve(cards);
 };
 
-const updateUserTable = (cards, user, coupon, restaurant) => {
-
-  // Create new coupon and add to user.redeemedCoupons
-  let redeemedCoupons = user.redeemedCoupons;
-  let newCoupon = {redeemedAt: api.getTimeInSec(), couponCode: coupon.code};
-  if (restaurant) newCoupon.restaurantName = restaurant.name;
-  redeemedCoupons.push(newCoupon);
-
-  return new Promise((resolve, reject) => {
-    let params = {
-      TableName: UserTable,
-      Key: {id: user.id},
-      UpdateExpression: "SET cards = :cards, redeemedCoupons = :redeemedCoupons",
-      ExpressionAttributeValues: {
-        ":cards": cards,
-        ":redeemedCoupons": redeemedCoupons,
-      },
-      ReturnValues: "ALL_NEW"
-    };
-    docClient.update(params, (err, data) => {
-      if (err) {
-        console.error("Unable to update item. Error JSON:", JSON.stringify(err), err.stack);
-        return reject(err);
-      } else {
-        console.log("Item Updated successfully");
-        // console.log("data", data);
-        resolve(data.Attributes);
-      }
-    });
-  });
-};
-
 const userRedeemCoupon = (userId, code) => {
   console.log("User redeem Coupon userId, code", userId, code);
   return getCoupon(code)
@@ -141,8 +110,16 @@ const userRedeemCoupon = (userId, code) => {
                         if (cards.length === 0) {
                           return Promise.reject(new Error("New restaurants visitors only"));
                         }
-                        // console.log("cards", cards);
-                        return Promise.all([updateUserTable(cards, user, coupon), useCoupon(coupon)])
+                        // calculate new fields for updating userTable
+                        let redeemedCoupons = user.redeemedCoupons;
+                        let newCoupon = {redeemedAt: api.getTimeInSec(), couponCode: coupon.code};
+                        redeemedCoupons.push(newCoupon);
+                        let newFields = {cards, redeemedCoupons};
+                        
+                        return Promise.all([
+                          updateUser(userId, newFields),
+                          useCoupon(coupon)
+                        ])
                             .then(result => {
                               // console.log("result", result);
                               return result[0];//return new user
@@ -158,7 +135,21 @@ const userRedeemCoupon = (userId, code) => {
                       .then(restaurant => {
                         return calcCardForRestaurant(user, coupon)
                             .then(cards => {
-                              // console.log("cards", cards);
+                              // Calculate new fields for updating userTable
+                              let redeemedCoupons = user.redeemedCoupons;
+                              let newCoupon = {
+                                redeemedAt: api.getTimeInSec(),
+                                couponCode: coupon.code,
+                                restaurantName: restaurant.name,
+                              };
+                              redeemedCoupons.push(newCoupon);
+                              let visitedRestaurants = user.visitedRestaurants;
+                              if (!_.includes(visitedRestaurants, restaurant.id)){
+                                visitedRestaurants.push(restaurant.id);
+                              }
+                              let newFields = {cards, redeemedCoupons, visitedRestaurants};
+                              
+                              // Calc new stampEvent record
                               const stampEvent = {
                                 restaurantId: coupon.restaurantId,
                                 userId,
@@ -169,7 +160,7 @@ const userRedeemCoupon = (userId, code) => {
                               };
                               
                               return Promise.all([
-                                updateUserTable(cards, user, coupon, restaurant),
+                                updateUser(userId, newFields),
                                 useCoupon(coupon),
                                 createStampEvent(stampEvent),
                               ])

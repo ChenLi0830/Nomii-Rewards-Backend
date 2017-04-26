@@ -80,7 +80,7 @@ const upsertUser = (id, fbName, token) => {
           user.lastLoginAt = api.getTimeInSec();
           user.fbName = fbName;
           user.token = token;
-          console.log("updateUserInDB", user);
+          // console.log("updateUserInDB", user);
           return updateUserInDB(user);
         }
       });
