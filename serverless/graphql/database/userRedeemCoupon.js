@@ -10,6 +10,7 @@ const getUser = require('./userGet');
 const getCoupon = require('./couponGet');
 const useCoupon = require('./couponUse');
 const api = require('../api');
+const createStampEvent = require('./stampEventCreate');
 
 const userRedeemedCouponBefore = (user, coupon) => {
   const usedCoupon = _.find(user.redeemedCoupons, {couponCode: coupon.code});
@@ -158,7 +159,20 @@ const userRedeemCoupon = (userId, code) => {
                         return calcCardForRestaurant(user, coupon)
                             .then(cards => {
                               // console.log("cards", cards);
-                              return Promise.all([updateUserTable(cards, user, coupon, restaurant), useCoupon(coupon)])
+                              const stampEvent = {
+                                restaurantId: coupon.restaurantId,
+                                userId,
+                                fbName: user.fbName,
+                                restaurantName: restaurant.name,
+                                isNewUser: true,
+                                couponCode: code,
+                              };
+                              
+                              return Promise.all([
+                                updateUserTable(cards, user, coupon, restaurant),
+                                useCoupon(coupon),
+                                createStampEvent(stampEvent),
+                              ])
                                   .then(result => {
                                     // console.log("result", result);
                                     return result[0];//return new user

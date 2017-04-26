@@ -89,10 +89,21 @@ const stampCard = (userId, cardId, PINCode) => {
                     if (isNewUser) {
                       visitedRestaurants.push(cardId);
                     }
+                    
+                    const stampEvent = {
+                      restaurantId: cardId,
+                      userId,
+                      restaurantName: restaurant.name,
+                      isNewUser,
+                      PIN: PINCode,
+                      employeeName: PIN.employeeName,
+                      fbName: user.fbName,
+                    };
+                    
                     return Promise.all([
                       updateUserTable(user, newCards, visitedRestaurants, user.usedCards),
                       useRestaurantPIN(cardId, PINCode),
-                      createStampEvent(cardId, userId, restaurant.name, isNewUser, PINCode, PIN.employeeName, user.fbName),
+                      createStampEvent(stampEvent),
                     ])
                         .then(results => {
                           // console.log("results", results);
