@@ -5,10 +5,10 @@ let docClient = new AWS.DynamoDB.DocumentClient();
 const _ = require('lodash');
 const api = require('../api');
 
-const createStampEvent = ({restaurantId, userId, restaurantName, isNewUser, PIN, employeeName, fbName, couponCode}) => {
+const createStampEvent = ({restaurantId, userId, restaurantName, isNewUser, PIN, employeeName, fbName, couponCode, stampedAt}) => {
   const stampEvent = {
     restaurantId,
-    stampedAt: api.getTimeInSec(),
+    stampedAt: stampedAt ? stampedAt : api.getTimeInSec(),
     userId,
     isNewUser,
     restaurantName,
