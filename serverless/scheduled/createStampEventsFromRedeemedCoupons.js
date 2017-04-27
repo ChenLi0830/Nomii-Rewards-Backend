@@ -58,7 +58,10 @@ const createStampEventsFromRedeemedCoupons = (event, context, callback) => {
           const {restaurantId, stampedAt, userId, isNewUser} = stampEvent;
           if (isNewUser){
             const restaurantCouponCode = restaurantIdToCoupon[restaurantId];
-            const userRedeemedCoupons = idToUserMap[userId].redeemedCoupons;
+            const user = idToUserMap[userId];
+            if (!user) continue;
+            const userRedeemedCoupons = user.redeemedCoupons;
+            if (!userRedeemedCoupons) continue;
             const userNotNew = !!_.find(userRedeemedCoupons, {couponCode: restaurantCouponCode});
   
             if (userNotNew) {
