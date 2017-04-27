@@ -82,10 +82,10 @@ const createStampEventsFromRedeemedCoupons = (event, context, callback) => {
             let restaurant = coupon && coupon.couponCode && couponToRestaurant[coupon.couponCode];
             // If the coupon is not for all restaurant
             if (restaurant){
-              // console.log("restaurant", restaurant);
               const stampEvent = {
                 restaurantId: restaurant.id,
                 userId: user.id,
+                fbName: user.fbName,
                 restaurantName: restaurant.name,
                 isNewUser: true,
                 couponCode: coupon.couponCode,
