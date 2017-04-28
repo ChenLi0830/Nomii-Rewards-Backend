@@ -5,10 +5,10 @@ let docClient = new AWS.DynamoDB.DocumentClient();
 const _ = require('lodash');
 const api = require('../api');
 
-const getStampEventDuringPeriod = (restaurantId, daysToCover, endTo) => {
+const getStampEventDuringPeriod = (restaurantId, daysToCover = 30, endTo = api.getTimeInSec()) => {
   console.log("restaurantId, daysToCover, endTo", restaurantId, daysToCover, endTo);
   
-  if (typeof endTo !== "number") endTo = api.getTimeInSec();
+  // if (typeof endTo !== "number") endTo = api.getTimeInSec();
   let startFrom = endTo - daysToCover * 24 * 3600;
   
   const params = {

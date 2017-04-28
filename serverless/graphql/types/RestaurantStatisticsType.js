@@ -6,7 +6,17 @@ const db = require('../database');
 const graphql = require('graphql'),
     GraphQLObjectType = graphql.GraphQLObjectType,
     GraphQLInt = graphql.GraphQLInt,
-    GraphQLID = graphql.GraphQLID;
+    GraphQLID = graphql.GraphQLID,
+    GraphQLList = graphql.GraphQLList,
+    GraphQLString = graphql.GraphQLString;
+
+const PINCountType = new GraphQLObjectType({
+  name: "PINCountType",
+  fields: () => ({
+    employeeName: {type: GraphQLString},
+    count: {type: GraphQLInt},
+  }),
+});
 
 const RestaurantStatisticsType = new GraphQLObjectType({
   name: "StatisticsOfRestaurant",
@@ -16,6 +26,8 @@ const RestaurantStatisticsType = new GraphQLObjectType({
     returnUserCount: {type: GraphQLInt},
     newVisitCount: {type: GraphQLInt},
     returnVisitCount: {type: GraphQLInt},
+    PINsCount: {type: new GraphQLList(PINCountType)},
+    couponsCount: {type: GraphQLInt},
   })
 });
 
