@@ -15,6 +15,16 @@ const graphql = require('graphql'),
 const CardType = require('./CardType');
 const RedeemedCouponType = require('./RedeemedCouponType');
 
+const AwaitFeedbackType = new GraphQLObjectType({
+  name: "AwaitFeedback",
+  fields: () => ({
+    restaurantId: {type : GraphQLID},
+    visitedAt: {type : GraphQLInt},
+    stampDiscount: {type : GraphQLInt},
+    employeeName: {type : GraphQLString},
+  }),
+});
+
 const UserType = new GraphQLObjectType({
   name: "User",
   fields: () => ({
@@ -43,6 +53,10 @@ const UserType = new GraphQLObjectType({
     },
     ownedRestaurants: {
       type: new GraphQLList(GraphQLID),
+    },
+    leavedFeedbackCount: {type: GraphQLInt},
+    awaitFeedbacks: {
+      type: new GraphQLList(AwaitFeedbackType)
     }
   })
 });
