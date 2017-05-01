@@ -6,15 +6,30 @@ const _ = require('lodash');
 const api = require('../api');
 
 const createFeedbackEvent = (args) => {
-  const {restaurantId, userId, questions = [], comment, userContact, tags = [], restaurantName, userName} = args;
+  const {
+      restaurantId,
+      userId,
+      comment,
+      userContact,
+      tags = [],
+      restaurantName,
+      userName,
+      userVisitedRestaurantAt,
+      stampCountOfCard,
+      rating,
+      employeeName
+  } = args;
   
   const feedbackEvent = {
     restaurantId,
     restaurantName,
     userId,
     userName,
+    userVisitedRestaurantAt,
+    stampCountOfCard,
+    rating,
+    employeeName,
     createdAt: api.getTimeInSec(),
-    questions,
     comment,
     userContact,
     tags,
@@ -29,7 +44,8 @@ const createFeedbackEvent = (args) => {
   return new Promise((resolve, reject) => {
     docClient.put(params, (err, data) => {
       if (err) {
-        console.error("Unable to insert feedback event. Error JSON:", JSON.stringify(err), err.stack);
+        console.error("Unable to insert feedback event. Error JSON:", JSON.stringify(err),
+            err.stack);
         return reject(err);
       } else {
         console.log("feedback event inserted successfully");

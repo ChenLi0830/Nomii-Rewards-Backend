@@ -192,7 +192,7 @@ const mutation = new GraphQLObjectType({
       args: {
         userId: {type: GraphQLID},
         restaurantId: {type: GraphQLID},
-        stampDiscount: {type: GraphQLInt},
+        stampCountOfCard: {type: GraphQLInt},
         employeeName: {type: GraphQLString},
       },
       resolve: (parentValue, args) => {
@@ -205,7 +205,7 @@ const mutation = new GraphQLObjectType({
         restaurantId: {type: GraphQLID},
         userId: {type: GraphQLID},
         userVisitedRestaurantAt: {type: GraphQLInt},
-        stampDiscount: {type: GraphQLInt},
+        stampCountOfCard: {type: GraphQLInt},
         employeeName: {type: GraphQLString},
         rating: {type: GraphQLFloat},
         //questions: {type: new GraphQLList(QuestionAnswerInputType)},
@@ -217,7 +217,7 @@ const mutation = new GraphQLObjectType({
         return db.userSubmitFeedback(args);
       }
     },
-    addFeedBackTag: {
+    createFeedBackTag: {
       type: FeedBackTagType,
       args:{
         content: {type: GraphQLString},

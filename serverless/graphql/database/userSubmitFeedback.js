@@ -2,26 +2,36 @@
 const getRestaurant = require('./restaurantGet');
 const getUser = require('./userGet');
 const feedbackEventCreate = require('./feedbackEventCreate');
-
+const userAwaitFeedbackDelete = require('./userAwaitFeedbackDelete');
 const userSubmitFeedback = (args) => {
   return Promise.all([
     getRestaurant(args.restaurantId),
     getUser(args.userId),
   ])
       .then(result => {
-        return feedbackEventCreate({
-          restaurantName: result[0].name,
-          userName: result[1].fbName,
-          restaurantId: args.restaurantId,
-          userId: args.userId,
-          userVisitedRestaurantAt: args.userVisitedRestaurantAt,
-          stampDiscount: args.stampDiscount,
-          employeeName: args.employeeName,
-          rating: args.rating,
-          tags: args.tags,
-          comment: args.comment,
-          userContact: args.userContact,
-        })
+        return Promise.all([
+          feedbackEventCreate({
+            restaurantName: result[0].name,
+            userName: result[1].fbName,
+            restaurantId: args.restaurantId,
+            userId: args.userId,
+            userVisitedRestaurantAt: args.userVisitedRestaurantAt,
+            stampCountOfCard: args.stampCountOfCard,
+            employeeName: args.employeeName,
+            rating: args.rating,
+            tags: args.tags,
+            comment: args.comment,
+            userContact: args.userContact,
+          }),
+          userAwaitFeedbackDelete({
+            userId: args.userId,
+            restaurantId: args.restaurantId,
+            visitedAt: args.userVisitedRestaurantAt,
+          }),
+        ])
+            .then(result => {
+              return result[0];
+            })
       });
 };
 

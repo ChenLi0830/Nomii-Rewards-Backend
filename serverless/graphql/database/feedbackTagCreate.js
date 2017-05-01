@@ -18,7 +18,8 @@ const createStampEvent = ({content}) => {
   let params = {
     TableName: FeedbackTagTable,
     Item: newFeedbackTag,
-    ReturnConsumedCapacity: "NONE",
+    // ReturnConsumedCapacity: "TOTAL",
+    // ReturnValues: "UPDATED_NEW",
   };
   
   return new Promise((resolve, reject) => {

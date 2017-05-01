@@ -9,7 +9,7 @@ const userAwaitFeedbackAdd = (args) => {
   const {
     userId,
     restaurantId,
-    stampDiscount,
+    stampCountOfCard,
     employeeName,
   } = args;
   
@@ -20,15 +20,15 @@ const userAwaitFeedbackAdd = (args) => {
           userId,
           restaurantId,
           visitedAt: api.getTimeInSec(),
-          stampDiscount,
+          stampCountOfCard,
           employeeName,
         };
   
         //update user
         if (user.awaitFeedbacks) {
-          updateUser(userId, {awaitFeedbacks: [...user.awaitFeedbacks, newFeedback]})
+          return updateUser(userId, {awaitFeedbacks: [...user.awaitFeedbacks, newFeedback]})
         } else {
-          updateUser(userId, {awaitFeedbacks: [newFeedback]})
+          return updateUser(userId, {awaitFeedbacks: [newFeedback]})
         }
       });
 };

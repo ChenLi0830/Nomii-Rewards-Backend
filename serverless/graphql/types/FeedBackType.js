@@ -18,7 +18,7 @@ const FeedBackType = new GraphQLObjectType({
     userId: {type: GraphQLID},
     userName: {type: GraphQLString},
     userVisitedRestaurantAt: {type: GraphQLInt},
-    stampDiscount: {type: GraphQLInt},
+    stampCountOfCard: {type: GraphQLInt},
     employeeName: {type: GraphQLString},
     rating: {type: GraphQLFloat},
     createdAt: {type: GraphQLInt},

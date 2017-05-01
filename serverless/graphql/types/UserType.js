@@ -20,7 +20,7 @@ const AwaitFeedbackType = new GraphQLObjectType({
   fields: () => ({
     restaurantId: {type : GraphQLID},
     visitedAt: {type : GraphQLInt},
-    stampDiscount: {type : GraphQLInt},
+    stampCountOfCard: {type : GraphQLInt},
     employeeName: {type : GraphQLString},
   }),
 });
