@@ -44,7 +44,6 @@ const shouldNotifyCard = (expireInDays, lastNotificationAt, notifiedTimes, stamp
 };
 
 const calcNotificationAndUsers = (users) => {
-  console.log(`Calc notifications for ${users.length} users`);
   users.forEach(user => {
     // pass the user if he/she doesn't have pushTokens
     if (!user.pushTokens) return;
@@ -142,11 +141,14 @@ const sendCardPushNotification = (event, context, callback) => {
   
   Promise.all([
     restaurantsGetAll(),
-    usersGetAll()
+    usersGetAll({projectionExpression:'id, cards, fbName, pushTokens'}),
   ])
       .then(results => {
         const restaurants = results[0];
         users = results[1];
+        
+        // console.log("users", users);
+        console.log(`Calc notifications for ${users.length} users`);
         
         for (let restaurant of restaurants){
           restaurantsMap.set(restaurant.id, restaurant);
@@ -160,17 +162,17 @@ const sendCardPushNotification = (event, context, callback) => {
         let promises = newUsers.map(user => {
           return updateUserTable(user);
         });
-        
+        console.log(`${promises.length} users will be notified`);
         return Promise.all(promises);
       })
       .then((result) => {
         let expo = new Expo();
-        // console.log("notificationList", JSON.stringify(notificationList));
+        console.log("notificationList", JSON.stringify(notificationList));
         // console.log("newUsers", newUsers);
         // console.log("newUsers[0].cards", newUsers[0].cards);
         let chuckNotifications = expo.chunkPushNotifications(notificationList);
-        // console.log("chuckNotifications", chuckNotifications);
-  
+        console.log("chuckNotifications.length", chuckNotifications.length);
+
         return chuckNotifications.forEach(notificationsChunk => {
           expo.sendPushNotificationsAsync(notificationsChunk)
               .then(receipts => {
