@@ -19,6 +19,7 @@ const userRestaurantOwnershipRemove = require('./userRestaurantOwnershipRemove')
 const userPushTokenAdd = require('./userPushTokenAdd');
 const userSubmitFeedback = require('./userSubmitFeedback');
 const userNomiiAdminSet = require('./userNomiiAdminSet');
+const userAwaitFeedbackAdd = require('./userAwaitFeedbackAdd');
 
 const couponCreate = require('./couponCreate');
 const couponGet = require('./couponGet');
@@ -29,6 +30,8 @@ const stampEventGetDuringPeriod = require('./stampEventGetDuringPeriod');
 const stampEventGetAll = require('./stampEventGetAll');
 const stampEventUpdate = require('./stampEventUpdate');
 const stampEventCreate = require('./stampEventCreate');
+
+const feedbackTagCreate = require('./feedbackTagCreate');
 
 module.exports = {
   restaurantsGetAll,
@@ -49,6 +52,7 @@ module.exports = {
   userPushTokenAdd,
   usersGetAll,
   userSubmitFeedback,
+  userAwaitFeedbackAdd,
   userNomiiAdminSet,
   couponCreate,
   couponGetAll,
@@ -58,4 +62,5 @@ module.exports = {
   stampEventCreate,
   stampEventGetAll,
   stampEventUpdate,
+  feedbackTagCreate,
 };

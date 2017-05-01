@@ -22,6 +22,7 @@ const CouponType = require('./types/CouponType');
 const UserType = require('./types/UserType');
 const StampEventType = require('./types/StampEventType');
 const FeedBackType = require('./types/FeedBackType');
+const FeedBackTagType = require('./types/FeedBackTagType');
 const QuestionAnswerInputType = require('./types/QuestionAnswerInputType');
 
 const mutation = new GraphQLObjectType({
@@ -177,12 +178,37 @@ const mutation = new GraphQLObjectType({
         return db.restaurantQuestionAdd(args);
       }
     },
-    submitFeedback: {
+    setUserAdmin: {
+      type: UserType,
+      args: {
+        userId: {type: GraphQLID},
+      },
+      resolve: (parentValue, args) => {
+        return db.userNomiiAdminSet(args.userId);
+      }
+    },
+    addAwaitFeedbackToUser: {
+      type: UserType,
+      args: {
+        userId: {type: GraphQLID},
+        restaurantId: {type: GraphQLID},
+        stampDiscount: {type: GraphQLInt},
+        employeeName: {type: GraphQLString},
+      },
+      resolve: (parentValue, args) => {
+        return db.userAwaitFeedbackAdd(args);
+      }
+    },
+    submitUserFeedback: {
       type: FeedBackType,
       args:{
         restaurantId: {type: GraphQLID},
         userId: {type: GraphQLID},
-        questions: {type: new GraphQLList(QuestionAnswerInputType)},
+        userVisitedRestaurantAt: {type: GraphQLInt},
+        stampDiscount: {type: GraphQLInt},
+        employeeName: {type: GraphQLString},
+        rating: {type: GraphQLFloat},
+        //questions: {type: new GraphQLList(QuestionAnswerInputType)},
         tags: {type: new GraphQLList(GraphQLID)},
         comment: {type: GraphQLString},
         userContact: {type: GraphQLString},
@@ -191,13 +217,13 @@ const mutation = new GraphQLObjectType({
         return db.userSubmitFeedback(args);
       }
     },
-    setUserAdmin: {
-      type: UserType,
-      args: {
-        userId: {type: GraphQLID},
+    addFeedBackTag: {
+      type: FeedBackTagType,
+      args:{
+        content: {type: GraphQLString},
       },
       resolve: (parentValue, args) => {
-        return db.userNomiiAdminSet(args.userId);
+        return db.feedbackTagCreate(args);
       }
     },
   }

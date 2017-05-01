@@ -85,13 +85,13 @@ functions:
           rate: cron(0 18 * * ? *) # schedule it to run everyday at 11:00 am, UTC 18:00 == PST 11:00
           enabled: true
 
-  createStampsByRedeemedCoupons:
-    handler: scheduled.createStampEventsFromRedeemedCoupons
-    events:
-      - http:
-          path: createStampsByRedeemedCoupons
-          method: get
-          cors: true
+#  createStampsByRedeemedCoupons:
+#    handler: scheduled.createStampEventsFromRedeemedCoupons
+#    events:
+#      - http:
+#          path: createStampsByRedeemedCoupons
+#          method: get
+#          cors: true
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
@@ -230,3 +230,20 @@ resources:
           ReadCapacityUnits: 10
           WriteCapacityUnits: 5
         TableName: 'Nomii-Rewards-Feedback-Events'
+
+    FeedbackTagsTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: restaurantId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: 'Nomii-Rewards-Feedback-Tags'

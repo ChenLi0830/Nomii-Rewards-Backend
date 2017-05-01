@@ -4,9 +4,9 @@ let AWS = require("aws-sdk");
 
 /**
  * For testing on local DynamoDB
-**/
+ **/
 console.log("process.env.DEBUG_MODE", process.env.DEBUG_MODE);
-if (process.env.DEBUG_MODE){
+if (process.env.DEBUG_MODE) {
   AWS.config.update({
     region: "us-west-2",
     endpoint: "http://localhost:8000",
@@ -20,5 +20,14 @@ const RestaurantTable = "Nomii-Rewards-Restaurants";
 const CouponTable = "Nomii-Rewards-Coupons";
 const StampEventTable = "Nomii-Rewards-Stamp-Events";
 const FeedbackEventTable = "Nomii-Rewards-Feedback-Events";
+const FeedbackTagTable = "Nomii-Rewards-Feedback-Tags";
 
-module.exports = {UserTable, RestaurantTable, CouponTable, StampEventTable, FeedbackEventTable, AWS};
+module.exports = {
+  UserTable,
+  RestaurantTable,
+  CouponTable,
+  StampEventTable,
+  FeedbackEventTable,
+  FeedbackTagTable,
+  AWS
+};
