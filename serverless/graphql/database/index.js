@@ -32,6 +32,7 @@ const stampEventUpdate = require('./stampEventUpdate');
 const stampEventCreate = require('./stampEventCreate');
 
 const feedbackTagCreate = require('./feedbackTagCreate');
+const feedbackTagGetAll = require('./feedbackTagGetAll');
 
 module.exports = {
   restaurantsGetAll,
@@ -63,4 +64,5 @@ module.exports = {
   stampEventGetAll,
   stampEventUpdate,
   feedbackTagCreate,
+  feedbackTagGetAll,
 };

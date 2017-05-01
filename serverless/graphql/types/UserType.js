@@ -14,6 +14,8 @@ const graphql = require('graphql'),
 
 const CardType = require('./CardType');
 const RedeemedCouponType = require('./RedeemedCouponType');
+const RestaurantType = require('./RestaurantType');
+const FeedBackTagType = require('./FeedBackTagType');
 
 const AwaitFeedbackType = new GraphQLObjectType({
   name: "AwaitFeedback",
@@ -22,6 +24,18 @@ const AwaitFeedbackType = new GraphQLObjectType({
     visitedAt: {type : GraphQLInt},
     stampCountOfCard: {type : GraphQLInt},
     employeeName: {type : GraphQLString},
+    restaurant: {
+      type: RestaurantType,
+      resolve(parentValue){
+        return db.restaurantGet(parentValue.restaurantId);
+      },
+    },
+    feedbackTags: {
+      type: new GraphQLList(FeedBackTagType),
+      resolve(parentValue){
+        return db.feedbackTagGetAll();
+      }
+    }
   }),
 });
 
