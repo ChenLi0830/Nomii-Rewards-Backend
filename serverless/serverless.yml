@@ -241,7 +241,7 @@ resources:
             AttributeType: S
         KeySchema:
           -
-            AttributeName: restaurantId
+            AttributeName: id
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
