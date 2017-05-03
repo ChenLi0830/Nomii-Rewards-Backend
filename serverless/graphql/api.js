@@ -59,10 +59,23 @@ const getExpressionAttributeValues = (newFields) => {
   return ExpressionAttributeValues;
 };
 
+// Prepare args to be ready for inserting into DynamoDB
+const removeInvalidArgs = (args) => {
+  for (let key of Object.keys(args)){
+    const isEmptyString = typeof args[key] === "string" && args[key].length === 0;
+    const isNull = args[key] === null;
+    if (isNull || isEmptyString){
+      args[key] = undefined;
+    }
+  }
+  return args;
+};
+
 module.exports = {
   getTimeInSec,
   getUrgency,
   getUpdateExpression,
   getExpressionAttributeNames,
   getExpressionAttributeValues,
+  removeInvalidArgs,
 };

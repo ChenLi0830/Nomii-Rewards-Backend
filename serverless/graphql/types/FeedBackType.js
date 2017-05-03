@@ -1,6 +1,6 @@
 'use strict';
 
-const QuestionAnswerType = require('./QuestionAnswerType');
+const FeedBackTagType = require('./FeedBackTagType');
 
 const graphql = require('graphql'),
     GraphQLObjectType = graphql.GraphQLObjectType,
@@ -24,7 +24,7 @@ const FeedBackType = new GraphQLObjectType({
     createdAt: {type: GraphQLInt},
     updatedAt: {type: GraphQLInt},
     //questions: {type: new GraphQLList(QuestionAnswerType)},
-    tags: {type: new GraphQLList(GraphQLID)},
+    tags: {type: new GraphQLList(FeedBackTagType)},
     comment: {type: GraphQLString},
     userContact: {type: GraphQLString},
   }),

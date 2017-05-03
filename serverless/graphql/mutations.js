@@ -24,6 +24,7 @@ const StampEventType = require('./types/StampEventType');
 const FeedBackType = require('./types/FeedBackType');
 const FeedBackTagType = require('./types/FeedBackTagType');
 const QuestionAnswerInputType = require('./types/QuestionAnswerInputType');
+const FeedbackTagInputType = require('./types/FeedbackTagInputType');
 
 const mutation = new GraphQLObjectType({
   name: "Mutation",
@@ -209,7 +210,7 @@ const mutation = new GraphQLObjectType({
         employeeName: {type: GraphQLString},
         rating: {type: GraphQLFloat},
         //questions: {type: new GraphQLList(QuestionAnswerInputType)},
-        tags: {type: new GraphQLList(GraphQLID)},
+        tags: {type: new GraphQLList(FeedbackTagInputType)},
         comment: {type: GraphQLString},
         userContact: {type: GraphQLString},
       },
