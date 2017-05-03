@@ -26,6 +26,7 @@ const FeedBackType = new GraphQLObjectType({
     //questions: {type: new GraphQLList(QuestionAnswerType)},
     tags: {type: new GraphQLList(FeedBackTagType)},
     comment: {type: GraphQLString},
+    userContactName: {type: GraphQLString},
     userContact: {type: GraphQLString},
   }),
 });

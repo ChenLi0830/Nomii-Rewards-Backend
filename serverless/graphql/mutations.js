@@ -213,6 +213,7 @@ const mutation = new GraphQLObjectType({
         tags: {type: new GraphQLList(FeedbackTagInputType)},
         comment: {type: GraphQLString},
         userContact: {type: GraphQLString},
+        userContactName: {type: GraphQLString},
       },
       resolve: (parentValue, args) => {
         return db.userSubmitFeedback(args);

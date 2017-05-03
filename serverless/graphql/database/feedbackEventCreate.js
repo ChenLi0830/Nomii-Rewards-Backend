@@ -11,6 +11,7 @@ const createFeedbackEvent = (args) => {
       userId,
       comment,
       userContact,
+      userContactName,
       tags = [],
       restaurantName,
       userName,
@@ -32,6 +33,7 @@ const createFeedbackEvent = (args) => {
     createdAt: api.getTimeInSec(),
     comment,
     userContact,
+    userContactName,
     tags,
   };
   
