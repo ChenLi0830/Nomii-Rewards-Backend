@@ -5,7 +5,7 @@ let docClient = new AWS.DynamoDB.DocumentClient();
 /**
  * Get all items from table
  * @param {string} tableName
- * @param {object} [options]
+ * @param {object} [options] - scan options
  * */
 const getAll = (tableName, options={}) => {
   const {projectionExpression} = options;

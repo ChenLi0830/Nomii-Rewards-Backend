@@ -9,7 +9,7 @@ const restaurantStatisticsGet = require('./restaurantStatisticsGet');
 const restaurantQuestionAdd = require('./restaurantQuestionAdd');
 
 const userGet = require('./CRUD/userGet');
-const usersGetAll = require('./usersGetAll');
+const usersGetAll = require('./CRUD/usersGetAll');
 const userUpsert = require('./userUpsert');
 const userRedeemCoupon = require('./userRedeemCoupon');
 const userStampCard = require('./userStampCard');
