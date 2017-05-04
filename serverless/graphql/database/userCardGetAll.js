@@ -3,7 +3,7 @@
 /**
  * Get the edges of all cards for a specific user
  * */
-const getAllRestaurants = require('./restaurantsGetAll');
+const getAllRestaurants = require('./CRUD/restaurantsGetAll');
 const getUser = require('./CRUD/userGet');
 
 const getAllCards = (userId) => {

@@ -3,7 +3,7 @@ const _ = require('lodash');
 const uuidV4 = require('uuid/v4');
 const RestaurantTable = require('../config').RestaurantTable;
 const create = require('./create');
-const getAllRestaurants = require('../../database/restaurantsGetAll');
+const getAllRestaurants = require('./restaurantsGetAll');
 
 const createRestaurant = (args) => {
   if (!args.stampValidDays) args.stampValidDays = 21;
