@@ -1,4 +1,4 @@
-const create = require('../general/create');
+const create = require('./create');
 const FeedbackEventTable = require('../config').FeedbackEventTable;
 
 const createFeedbackEvent = (args) => {

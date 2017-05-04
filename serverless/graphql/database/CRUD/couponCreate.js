@@ -1,5 +1,5 @@
 'use strict';
-const create = require('../general/create');
+const create = require('./create');
 const CouponTable = require('../config').CouponTable;
 const _ = require('lodash');
 const api = require('../../api');

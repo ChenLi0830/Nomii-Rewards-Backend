@@ -1,6 +1,6 @@
 'use strict';
 const StampEventTable = require('../config').StampEventTable;
-const create = require('../general/create');
+const create = require('./create');
 const api = require('../../api');
 
 const createStampEvent = (args) => {

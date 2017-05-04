@@ -1,7 +1,7 @@
 'use strict';
 const FeedbackTagTable = require('../config').FeedbackTagTable;
 const uuidV4 = require('uuid/v4');
-const create = require('../general/create');
+const create = require('./create');
 
 const createStampEvent = (args) => {
   args.id = uuidV4();

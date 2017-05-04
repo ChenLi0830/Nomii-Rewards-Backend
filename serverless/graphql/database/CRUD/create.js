@@ -5,7 +5,7 @@ const _ = require('lodash');
 const api = require('../../api');
 
 /**
-* create Item in table, 'createdAt' and 'updatedAt' timeStamps will be added in each item
+* Create Item in table, 'createdAt' and 'updatedAt' timeStamps will be added in each item
 * */
 const create = (tableName, item, options={}) => {
   const {ReturnValues = "NONE", ReturnConsumedCapacity="NONE"} = options;
