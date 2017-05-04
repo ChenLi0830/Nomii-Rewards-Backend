@@ -29,7 +29,7 @@ const couponUse = require('./couponUse');
 const stampEventGetDuringPeriod = require('./stampEventGetDuringPeriod');
 const stampEventGetAll = require('./stampEventGetAll');
 const stampEventUpdate = require('./stampEventUpdate');
-const stampEventCreate = require('./stampEventCreate');
+const stampEventCreate = require('./CRUD/stampEventCreate');
 
 const feedbackTagCreate = require('./CRUD/feedbackTagCreate');
 const feedbackTagGetAll = require('./feedbackTagGetAll');

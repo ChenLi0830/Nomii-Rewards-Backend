@@ -10,7 +10,7 @@ const getUser = require('./userGet');
 const getCoupon = require('./couponGet');
 const useCoupon = require('./couponUse');
 const api = require('../api');
-const createStampEvent = require('./stampEventCreate');
+const createStampEvent = require('./CRUD/stampEventCreate');
 const updateUser = require('./userUpdate');
 
 const userRedeemedCouponBefore = (user, coupon) => {
@@ -153,7 +153,7 @@ const userRedeemCoupon = (userId, code) => {
                               const stampEvent = {
                                 restaurantId: coupon.restaurantId,
                                 userId,
-                                fbName: user.fbName,
+                                userName: user.fbName,
                                 restaurantName: restaurant.name,
                                 isNewUser: true,
                                 couponCode: code,

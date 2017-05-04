@@ -7,7 +7,7 @@ const getUser = require('./userGet');
 const getRestaurant = require('./restaurantGet');
 const userVisitedRestaurantBefore = require('./userVisitedRestaurantBeforeCheck');
 const useRestaurantPIN = require('./restaurantPINUse');
-const createStampEvent = require('./stampEventCreate');
+const createStampEvent = require('./CRUD/stampEventCreate');
 const api = require('../api');
 
 const calcUserCards = (user, cardId, stampValidDays) => {
@@ -97,7 +97,7 @@ const stampCard = (userId, cardId, PINCode) => {
                       isNewUser,
                       PIN: PINCode,
                       employeeName: PIN.employeeName,
-                      fbName: user.fbName,
+                      userName: user.fbName,
                     };
                     
                     return Promise.all([

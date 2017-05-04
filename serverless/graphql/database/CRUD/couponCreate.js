@@ -6,7 +6,6 @@ const api = require('../../api');
 const getCoupon = require('../couponGet');
 
 const createCoupon = (args) => {
-  console.log("args", args);
   const timeStamp = api.getTimeInSec();
   
   return getCoupon(args.code)
