@@ -23,7 +23,7 @@ const userAwaitFeedbackAdd = require('./userAwaitFeedbackAdd');
 
 const couponCreate = require('./CRUD/couponCreate');
 const couponGet = require('./CRUD/couponGet');
-const couponGetAll = require('./couponGetAll');
+const couponGetAll = require('./CRUD/couponGetAll');
 const couponUse = require('./couponUse');
 
 const stampEventGetDuringPeriod = require('./stampEventGetDuringPeriod');

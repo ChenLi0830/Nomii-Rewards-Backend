@@ -35,7 +35,6 @@ const getAll = (tableName, options={}) => {
         return reject(err);
       }
       console.log("Object.keys(data)", Object.keys(data));
-      console.log(`${data.Items.length} items fetched`);
       
       result = result.concat(data.Items);
       
