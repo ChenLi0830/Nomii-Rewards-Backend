@@ -71,8 +71,9 @@ const upsertUser = (id, fbName, token) => {
             redeemedCoupons: [],
             visitedRestaurants: [],
             ownedRestaurants: [],
+            awaitFeedbacks:[],
           };
-          console.log("insertUserToDB", user);
+          console.log("insertUserToDB - id, fbName", user.id, user.fbName);
           return insertUserToDB(user);
         }
         // Update user
