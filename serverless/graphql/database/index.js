@@ -21,7 +21,7 @@ const userSubmitFeedback = require('./userSubmitFeedback');
 const userNomiiAdminSet = require('./userNomiiAdminSet');
 const userAwaitFeedbackAdd = require('./userAwaitFeedbackAdd');
 
-const couponCreate = require('./couponCreate');
+const couponCreate = require('./CRUD/couponCreate');
 const couponGet = require('./couponGet');
 const couponGetAll = require('./couponGetAll');
 const couponUse = require('./couponUse');

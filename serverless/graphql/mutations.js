@@ -105,18 +105,18 @@ const mutation = new GraphQLObjectType({
         type: {type: GraphQLString} // stamp | discount
       },
       resolve: (parentValue, args) => {
-        return db.couponCreate(
-            args.code,
-            args.isForAllRestaurants,
-            args.restaurantId,
-            args.daysToExpire,
-            args.numberOfCoupons,
-            args.excludedRestaurants,
-            args.discounts,
-            args.PINSuccessScreens,
-            args.codeSuccessScreen,
-            args.type // stamp | discount
-        );
+        return db.couponCreate({
+          code: args.code,
+          isForAllRestaurants: args.isForAllRestaurants,
+          restaurantId: args.restaurantId,
+          daysToExpire: args.daysToExpire,
+          couponsLeft: args.numberOfCoupons,
+          excludedRestaurants: args.excludedRestaurants,
+          discounts: args.discounts,
+          PINSuccessScreens: args.PINSuccessScreens,
+          codeSuccessScreen: args.codeSuccessScreen,
+          type: args.type// stamp | discount
+      });
       }
     },
     createRestaurant: {

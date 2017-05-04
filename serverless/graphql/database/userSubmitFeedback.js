@@ -1,7 +1,7 @@
 'use strict';
 const getRestaurant = require('./restaurantGet');
 const getUser = require('./userGet');
-const feedbackEventCreate = require('./feedbackEventCreate');
+const feedbackEventCreate = require('./CRUD/feedbackEventCreate');
 const userAwaitFeedbackDelete = require('./userAwaitFeedbackDelete');
 const removeInvalidArgs = require('../api').removeInvalidArgs;
 const userSubmitFeedback = (args) => {
