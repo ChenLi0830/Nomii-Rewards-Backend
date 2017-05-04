@@ -32,7 +32,7 @@ const stampEventUpdate = require('./stampEventUpdate');
 const stampEventCreate = require('./CRUD/stampEventCreate');
 
 const feedbackTagCreate = require('./CRUD/feedbackTagCreate');
-const feedbackTagGetAll = require('./feedbackTagGetAll');
+const feedbackTagGetAll = require('./CRUD/feedbackTagGetAll');
 
 module.exports = {
   restaurantsGetAll,
