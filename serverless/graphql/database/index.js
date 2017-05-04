@@ -31,7 +31,7 @@ const stampEventGetAll = require('./stampEventGetAll');
 const stampEventUpdate = require('./stampEventUpdate');
 const stampEventCreate = require('./stampEventCreate');
 
-const feedbackTagCreate = require('./feedbackTagCreate');
+const feedbackTagCreate = require('./CRUD/feedbackTagCreate');
 const feedbackTagGetAll = require('./feedbackTagGetAll');
 
 module.exports = {
