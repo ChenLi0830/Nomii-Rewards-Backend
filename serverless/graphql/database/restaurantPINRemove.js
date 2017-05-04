@@ -4,7 +4,7 @@ let AWS = require('./config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
 const _ = require('lodash');
 const api = require('../api');
-const getRestaurant = require('./restaurantGet');
+const getRestaurant = require('./CRUD/restaurantGet');
 
 const updateRestaurantTable = (restaurantId, newPINs) => {
   let params = {

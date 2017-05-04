@@ -1,5 +1,5 @@
 'use strict';
-const getRestaurant = require('./restaurantGet');
+const getRestaurant = require('./CRUD/restaurantGet');
 const getUser = require('./userGet');
 const feedbackEventCreate = require('./CRUD/feedbackEventCreate');
 const userAwaitFeedbackDelete = require('./userAwaitFeedbackDelete');

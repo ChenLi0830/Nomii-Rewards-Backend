@@ -4,7 +4,7 @@ let AWS = require('./config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
 const _ = require('lodash');
 const api = require('../api');
-const getRestaurant = require('./restaurantGet');
+const getRestaurant = require('./CRUD/restaurantGet');
 
 const restaurantHasSamePIN = (restaurant, PINCode) => {
   const PIN = _.find(restaurant.PINs, {code: PINCode});
