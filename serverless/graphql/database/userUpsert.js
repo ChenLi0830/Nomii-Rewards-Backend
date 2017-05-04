@@ -3,26 +3,8 @@ const UserTable = require('./config').UserTable;
 let AWS = require('./config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
 const getUser = require('./CRUD/userGet');
+const createUser = require('./CRUD/userCreate');
 const api = require('../api');
-
-const insertUserToDB = (user) => {
-  return new Promise((resolve, reject) => {
-    let params = {
-      TableName: UserTable,
-      Item: user,
-      // ReturnConsumedCapacity: "TOTAL",
-    };
-    docClient.put(params, (err, data) => {
-      if (err) {
-        console.error("Unable to insert user. Error JSON:", JSON.stringify(err), err.stack);
-        return reject(err);
-      } else {
-        console.log("User inserted successfully");
-        resolve(user);
-      }
-    });
-  })
-};
 
 const updateUserInDB = (user) => {
   return new Promise((resolve, reject) => {
@@ -74,7 +56,7 @@ const upsertUser = (id, fbName, token) => {
             awaitFeedbacks:[],
           };
           console.log("insertUserToDB - id, fbName", user.id, user.fbName);
-          return insertUserToDB(user);
+          return createUser(user);
         }
         // Update user
         else {
