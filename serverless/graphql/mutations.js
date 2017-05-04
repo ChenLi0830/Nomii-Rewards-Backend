@@ -131,8 +131,15 @@ const mutation = new GraphQLObjectType({
         stampValidDays: {type: GraphQLInt},
       },
       resolve: (parentValue, args) => {
-        return db.restaurantCreate(args.name, args.imageURL, args.longitude, args.latitude,
-            args.description, args.address, args.stampValidDays);
+        return db.restaurantCreate({
+            name: args.name,
+            imageURL: args.imageURL,
+            longitude: args.longitude,
+            latitude: args.latitude,
+            description: args.description,
+            address: args.address,
+            stampValidDays: args.stampValidDays,
+        });
       }
     },
     addRestaurantOwnership: {

@@ -1,7 +1,7 @@
 'use strict';
 const restaurantsGetAll = require('./restaurantsGetAll');
 const restaurantGet = require('./restaurantGet');
-const restaurantCreate = require('./restaurantCreate');
+const restaurantCreate = require('./CRUD/restaurantCreate');
 const restaurantPINCreate = require('./restaurantPINCreate');
 const restaurantPINUse = require('./restaurantPINUse');
 const restaurantPINRemove = require('./restaurantPINRemove');
