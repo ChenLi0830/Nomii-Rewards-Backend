@@ -22,7 +22,7 @@ const get = (tableName, key, options={}) => {
         console.error(`Unable to get item from ${tableName}. Error JSON:`, JSON.stringify(err), err.stack);
         return reject(err);
       }
-      // console.log("data.Item", data.Item);
+      console.log(`Successfully get item from ${tableName}`);
       resolve(data.Item);
     });
   });

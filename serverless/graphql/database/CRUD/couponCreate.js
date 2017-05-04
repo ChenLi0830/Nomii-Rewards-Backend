@@ -3,7 +3,7 @@ const create = require('./create');
 const CouponTable = require('../config').CouponTable;
 const _ = require('lodash');
 const api = require('../../api');
-const getCoupon = require('../couponGet');
+const getCoupon = require('./couponGet');
 
 const createCoupon = (args) => {
   const timeStamp = api.getTimeInSec();
