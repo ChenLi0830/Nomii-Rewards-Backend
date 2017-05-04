@@ -8,7 +8,7 @@ const restaurantPINRemove = require('./restaurantPINRemove');
 const restaurantStatisticsGet = require('./restaurantStatisticsGet');
 const restaurantQuestionAdd = require('./restaurantQuestionAdd');
 
-const userGet = require('./userGet');
+const userGet = require('./CRUD/userGet');
 const usersGetAll = require('./usersGetAll');
 const userUpsert = require('./userUpsert');
 const userRedeemCoupon = require('./userRedeemCoupon');

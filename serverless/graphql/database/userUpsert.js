@@ -2,7 +2,7 @@
 const UserTable = require('./config').UserTable;
 let AWS = require('./config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
-const getUser = require('./userGet');
+const getUser = require('./CRUD/userGet');
 const api = require('../api');
 
 const insertUserToDB = (user) => {

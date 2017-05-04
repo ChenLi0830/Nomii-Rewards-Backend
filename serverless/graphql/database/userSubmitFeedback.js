@@ -1,6 +1,6 @@
 'use strict';
 const getRestaurant = require('./CRUD/restaurantGet');
-const getUser = require('./userGet');
+const getUser = require('./CRUD/userGet');
 const feedbackEventCreate = require('./CRUD/feedbackEventCreate');
 const userAwaitFeedbackDelete = require('./userAwaitFeedbackDelete');
 const removeInvalidArgs = require('../api').removeInvalidArgs;

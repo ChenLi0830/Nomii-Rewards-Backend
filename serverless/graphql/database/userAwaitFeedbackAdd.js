@@ -2,7 +2,7 @@
 let AWS = require('./config').AWS;
 const api = require('../api');
 
-const getUser = require('./userGet');
+const getUser = require('./CRUD/userGet');
 const updateUser = require('./userUpdate');
 
 const userAwaitFeedbackAdd = (args) => {
