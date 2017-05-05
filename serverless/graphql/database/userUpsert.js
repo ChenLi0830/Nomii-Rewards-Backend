@@ -4,40 +4,11 @@ let AWS = require('./config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
 const getUser = require('./CRUD/userGet');
 const createUser = require('./CRUD/userCreate');
+const updateUser = require('./CRUD/userUpdate');
 const api = require('../api');
 
-const updateUserInDB = (user) => {
-  return new Promise((resolve, reject) => {
-    let params = {
-      TableName: UserTable,
-      Key: {
-        "id": user.id,
-      },
-      UpdateExpression: "SET lastLoginAt = :lastLoginAt, fbName = :fbName, #token = :token",
-      ExpressionAttributeNames: {
-        "#token" : "token",
-      },
-      ExpressionAttributeValues: {
-        ":lastLoginAt": user.lastLoginAt,
-        ":fbName": user.fbName,
-        ":token": user.token,
-      },
-      ReturnValues: "ALL_NEW",
-    };
-    docClient.update(params, (err, data) => {
-      if (err) {
-        console.error("Unable to update user. Error JSON:", JSON.stringify(err), err.stack);
-        return reject(err);
-      } else {
-        console.log("User updated successfully");
-        resolve(user);
-      }
-    });
-  })
-};
-
 const upsertUser = (id, fbName, token) => {
-  const time = api.getTimeInSec();
+  const timeStamp = api.getTimeInSec();
   return getUser(id)
       .then(user => {
         //Create user
@@ -46,8 +17,8 @@ const upsertUser = (id, fbName, token) => {
             id,
             fbName,
             token,
-            registeredAt: time,
-            lastLoginAt: time,
+            registeredAt: timeStamp,
+            lastLoginAt: timeStamp,
             cards: [],
             usedCards: [],
             redeemedCoupons: [],
@@ -60,11 +31,8 @@ const upsertUser = (id, fbName, token) => {
         }
         // Update user
         else {
-          user.lastLoginAt = api.getTimeInSec();
-          user.fbName = fbName;
-          user.token = token;
           // console.log("updateUserInDB", user);
-          return updateUserInDB(user);
+          return updateUser(id, {lastLoginAt: timeStamp, fbName, token});
         }
       });
 };
