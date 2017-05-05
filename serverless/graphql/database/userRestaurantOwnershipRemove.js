@@ -1,35 +1,9 @@
 'use strict';
-const UserTable = require('./config').UserTable;
-let AWS = require('./config').AWS;
-let docClient = new AWS.DynamoDB.DocumentClient();
 const _ = require('lodash');
 const api = require('../api');
 
 const getUser = require('./CRUD/userGet');
-
-const updateUserTable = (userId, ownedRestaurants) => {
-  let params = {
-    TableName: UserTable,
-    Key: {id: userId},
-    UpdateExpression: "SET ownedRestaurants = :ownedRestaurants",
-    ExpressionAttributeValues: {
-      ":ownedRestaurants": ownedRestaurants,
-    },
-    ReturnValues: "ALL_NEW"
-  };
-  return new Promise((resolve, reject) => {
-    docClient.update(params, (err, data) => {
-      if (err) {
-        console.error("Unable to remove user ownedRestaurants. Error JSON:", JSON.stringify(err), err.stack);
-        return reject(err);
-      } else {
-        console.log("User ownedRestaurant remove successfully");
-        // console.log("data", data);
-        resolve(data.Attributes);
-      }
-    });
-  });
-};
+const updateUser = require('./CRUD/userUpdate');
 
 const userRestaurantOwnershipRemove = (userId, restaurantId) => {
   
@@ -45,7 +19,7 @@ const userRestaurantOwnershipRemove = (userId, restaurantId) => {
         // console.log("ownedRestaurants", ownedRestaurants);
         
         // update DB
-        return updateUserTable(userId, ownedRestaurants);
+        return updateUser(userId, {ownedRestaurants});
       });
 };
 

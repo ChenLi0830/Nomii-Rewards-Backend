@@ -1,7 +1,4 @@
 'use strict';
-const UserTable = require('./config').UserTable;
-let AWS = require('./config').AWS;
-let docClient = new AWS.DynamoDB.DocumentClient();
 const _ = require('lodash');
 const getAllRestaurants = require('./CRUD/restaurantsGetAll');
 const getRestaurant = require('./CRUD/restaurantGet');

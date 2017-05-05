@@ -1,6 +1,4 @@
 'use strict';
-let AWS = require('./config').AWS;
-
 const updateUser = require('./CRUD/userUpdate');
 
 const userNomiiAdminSet = (userId) => {

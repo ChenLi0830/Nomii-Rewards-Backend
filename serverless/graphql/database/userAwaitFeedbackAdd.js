@@ -1,5 +1,4 @@
 'use strict';
-let AWS = require('./config').AWS;
 const api = require('../api');
 
 const getUser = require('./CRUD/userGet');
