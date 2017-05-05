@@ -40,7 +40,7 @@ const calcUserCards = (user, cardId, stampValidDays) => {
 };
 
 const stampCard = (userId, cardId, PINCode) => {
-  console.log("strampCard userId, cardId, PINCode", userId, cardId, PINCode);
+  console.log("strampCard start userId, cardId, PINCode", userId, cardId, PINCode);
   return getRestaurant(cardId)
       .then(restaurant => {
         // Check PIN exist

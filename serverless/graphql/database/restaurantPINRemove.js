@@ -4,6 +4,7 @@ const getRestaurant = require('./CRUD/restaurantGet');
 const updateRestaurant = require('./CRUD/restaurantUpdate');
 
 const restaurantPINRemove = (restaurantId, PINCode) => {
+  console.log("restaurantPINRemove start");
   return getRestaurant(restaurantId)
       .then(restaurant => {
         // check duplicate

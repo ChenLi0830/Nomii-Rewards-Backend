@@ -5,6 +5,7 @@ const updateUser = require('./CRUD/userUpdate');
 const api = require('../api');
 
 const upsertUser = (id, fbName, token) => {
+  console.log("upsertUser start");
   const timeStamp = api.getTimeInSec();
   return getUser(id)
       .then(user => {

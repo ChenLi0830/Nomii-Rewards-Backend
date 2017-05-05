@@ -84,7 +84,7 @@ const calcCardForRestaurant = (user, coupon) => {
 };
 
 const userRedeemCoupon = (userId, code) => {
-  console.log("User redeem Coupon userId, code", userId, code);
+  console.log("userRedeemCoupon start userId, code", userId, code);
   return getCoupon(code)
       .then(coupon => {
         if (!coupon || !coupon.code) {

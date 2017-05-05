@@ -3,6 +3,7 @@
 const getStampEventDuringPeriod = require('./stampEventGetDuringPeriod');
 
 const restaurantStatisticsGet = (restaurantId, daysToCover, endTo) => {
+  console.log("restaurantStatisticsGet start");
   return getStampEventDuringPeriod(restaurantId, daysToCover, endTo)
       .then(stampEvents => {
         let newUserSet = new Set();

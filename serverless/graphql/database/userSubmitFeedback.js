@@ -4,7 +4,9 @@ const getUser = require('./CRUD/userGet');
 const feedbackEventCreate = require('./CRUD/feedbackEventCreate');
 const userAwaitFeedbackDelete = require('./userAwaitFeedbackDelete');
 const removeInvalidArgs = require('../api').removeInvalidArgs;
+
 const userSubmitFeedback = (args) => {
+  console.log("userSubmitFeedback start");
   args = removeInvalidArgs(args);
   return Promise.all([
     getRestaurant(args.restaurantId),

@@ -4,6 +4,7 @@ const getRestaurant = require('./CRUD/restaurantGet');
 const updateRestaurant = require('./CRUD/restaurantUpdate');
 
 const useRestaurantPIN = (restaurantId, PINCode) => {
+  console.log("useRestaurantPIN start");
   return getRestaurant(restaurantId)
       .then(restaurant => {
         // calculate newPINs

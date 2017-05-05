@@ -6,7 +6,7 @@ const getUser = require('./CRUD/userGet');
 const updateUser = require('./CRUD/userUpdate');
 
 const userRestaurantOwnershipRemove = (userId, restaurantId) => {
-  
+  console.log("userRestaurantOwnershipRemove start userId, restaurantId", userId, restaurantId);
   return getUser(userId)
       .then(user => {
         // check if the user already owns the restaurant

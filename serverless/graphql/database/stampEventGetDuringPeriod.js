@@ -6,6 +6,7 @@ const _ = require('lodash');
 const api = require('../api');
 
 const getStampEventDuringPeriod = (restaurantId, daysToCover = 30, endTo = api.getTimeInSec()) => {
+  console.log("getStampEventDuringPeriod start");
   console.log("restaurantId, daysToCover, endTo", restaurantId, daysToCover, endTo);
   
   // if (typeof endTo !== "number") endTo = api.getTimeInSec();

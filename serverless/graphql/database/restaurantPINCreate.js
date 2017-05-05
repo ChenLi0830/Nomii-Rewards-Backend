@@ -9,6 +9,7 @@ const restaurantHasSamePIN = (restaurant, PINCode) => {
 };
 
 const restaurantPINCreate = (restaurantId, PINCode, employeeName) => {
+  console.log("restaurantPINCreate start");
   return getRestaurant(restaurantId)
       .then(restaurant => {
         // check duplicate

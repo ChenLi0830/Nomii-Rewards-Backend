@@ -5,6 +5,7 @@ const getUser = require('./CRUD/userGet');
 const updateUser = require('./CRUD/userUpdate');
 
 const userAwaitFeedbackDelete = (args) => {
+  console.log("userAwaitFeedbackDelete start");
   const {
     userId,
     restaurantId,

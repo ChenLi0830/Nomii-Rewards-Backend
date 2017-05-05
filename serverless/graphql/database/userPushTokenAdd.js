@@ -5,7 +5,7 @@ const getUser = require('./CRUD/userGet');
 const updateUser = require('./CRUD/userUpdate');
 
 const userPushTokenUpsert = (userId, pushToken) => {
-  
+  console.log("userPushTokenUpsert start");
   return getUser(userId)
       .then(user => {
         let newPushTokens;

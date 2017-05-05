@@ -7,8 +7,7 @@ const getAllRestaurants = require('./CRUD/restaurantsGetAll');
 const getUser = require('./CRUD/userGet');
 
 const getAllCards = (userId) => {
-  console.log("userId", userId);
-  
+  console.log("getAllCards start");
   return getAllRestaurants()
       .then(allRestaurants => {
   

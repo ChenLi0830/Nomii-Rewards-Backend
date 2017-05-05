@@ -5,6 +5,7 @@ const restaurantUpdate = require('./CRUD/restaurantUpdate');
 const restaurantGet = require('./CRUD/restaurantGet');
 
 const addRestaurantSurveyQuestion = (args) => {
+  console.log("addRestaurantSurveyQuestion start");
   const {restaurantId, question, askInRound = 1, type = "score", maxScore = 5, textPlaceholder = null} = args;
   
   return restaurantGet(restaurantId)
