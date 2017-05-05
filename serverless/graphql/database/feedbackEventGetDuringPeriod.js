@@ -6,7 +6,7 @@ const _ = require('lodash');
 const api = require('../api');
 
 const getFeedbackEventDuringPeriod = (restaurantId, daysToCover, endTo) => {
-  // console.log("restaurantId, daysToCover, endTo", restaurantId, daysToCover, endTo);
+  console.log("getFeedbackEventDuringPeriod start restaurantId, daysToCover, endTo", restaurantId, daysToCover, endTo);
   
   if (typeof endTo !== "number") endTo = api.getTimeInSec();
   let startFrom = endTo - daysToCover * 24 * 3600;
