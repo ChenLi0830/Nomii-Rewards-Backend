@@ -1,7 +1,4 @@
 'use strict';
-const UserTable = require('./config').UserTable;
-let AWS = require('./config').AWS;
-let docClient = new AWS.DynamoDB.DocumentClient();
 const getUser = require('./CRUD/userGet');
 const createUser = require('./CRUD/userCreate');
 const updateUser = require('./CRUD/userUpdate');

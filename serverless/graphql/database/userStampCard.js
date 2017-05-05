@@ -8,6 +8,7 @@ const getRestaurant = require('./CRUD/restaurantGet');
 const userVisitedRestaurantBefore = require('./userVisitedRestaurantBeforeCheck');
 const useRestaurantPIN = require('./restaurantPINUse');
 const createStampEvent = require('./CRUD/stampEventCreate');
+const updateUser = require('./CRUD/userUpdate');
 const api = require('../api');
 
 const calcUserCards = (user, cardId, stampValidDays) => {
@@ -39,34 +40,6 @@ const calcUserCards = (user, cardId, stampValidDays) => {
   }
 
   return Promise.resolve({newCards: user.cards, usedCard: usedCard});
-};
-
-const updateUserTable = (user, newCards, visitedRestaurants, usedCards) => {
-  // Todo update just one card instead of all user's cards
-
-  return new Promise((resolve, reject) => {
-    let params = {
-      TableName: UserTable,
-      Key: {id: user.id},
-      UpdateExpression: "set cards = :cards, visitedRestaurants = :visitedRestaurants, usedCards = :usedCards",
-      ExpressionAttributeValues: {
-        ":cards": newCards,
-        ":visitedRestaurants": visitedRestaurants,
-        ":usedCards": usedCards,
-      },
-      ReturnValues: "ALL_NEW"
-    };
-    docClient.update(params, (err, data) => {
-      if (err) {
-        console.error("Unable to stamp card for user. Error JSON:", JSON.stringify(err), err.stack);
-        return reject(err);
-      } else {
-        console.log("User stamped card successfully");
-        // console.log("data.Attributes", data.Attributes);
-        resolve(data.Attributes);
-      }
-    });
-  });
 };
 
 const stampCard = (userId, cardId, PINCode) => {
@@ -101,7 +74,7 @@ const stampCard = (userId, cardId, PINCode) => {
                     };
                     
                     return Promise.all([
-                      updateUserTable(user, newCards, visitedRestaurants, user.usedCards),
+                      updateUser(userId, {cards: newCards, visitedRestaurants, usedCards: user.usedCards}),
                       useRestaurantPIN(cardId, PINCode),
                       createStampEvent(stampEvent),
                     ])
