@@ -11,7 +11,7 @@ const getCoupon = require('./CRUD/couponGet');
 const useCoupon = require('./couponUse');
 const api = require('../api');
 const createStampEvent = require('./CRUD/stampEventCreate');
-const updateUser = require('./userUpdate');
+const updateUser = require('./CRUD/userUpdate');
 
 const userRedeemedCouponBefore = (user, coupon) => {
   const usedCoupon = _.find(user.redeemedCoupons, {couponCode: coupon.code});

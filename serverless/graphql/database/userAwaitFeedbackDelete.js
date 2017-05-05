@@ -4,7 +4,7 @@ const api = require('../api');
 const _ = require('lodash');
     
 const getUser = require('./CRUD/userGet');
-const updateUser = require('./userUpdate');
+const updateUser = require('./CRUD/userUpdate');
 
 const userAwaitFeedbackDelete = (args) => {
   const {

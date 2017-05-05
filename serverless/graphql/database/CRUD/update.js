@@ -11,8 +11,7 @@ const api = require('../../api');
  * @param {object} [options] update options, for example, {ReturnValues: "ALL_NEW"}
  * */
 const update = (tableName, key, newFields, options = {}) => {
-  const {ReturnValues = "NONE"} = options;
-      
+  const {ReturnValues = "ALL_NEW"} = options;
   // Check for argument errors
   if (!key) {
     return Promise.reject(new Error("Update fail: argument `key` is invalid"));
