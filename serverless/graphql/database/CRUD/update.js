@@ -41,7 +41,7 @@ const update = (tableName, key, newFields, options = {}) => {
             JSON.stringify(err), err.stack);
         return reject(err);
       } else {
-        console.log(`Successfully updated item in table ${tableName}`);
+        console.log(`Successfully updated item in ${tableName}`);
         resolve(data.Attributes);
       }
     });

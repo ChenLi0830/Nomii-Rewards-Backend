@@ -4,7 +4,7 @@ let AWS = require('./config').AWS;
 let docClient = new AWS.DynamoDB.DocumentClient();
 const uuidV4 = require('uuid/v4');
 const api = require('../api');
-const restaurantUpdate = require('./restaurantUpdate');
+const restaurantUpdate = require('./CRUD/restaurantUpdate');
 const restaurantGet = require('./CRUD/restaurantGet');
 
 const addRestaurantSurveyQuestion = (args) => {
