@@ -26,8 +26,9 @@ const calcUserCards = (user, cardId, stampValidDays) => {
   }
   // Card is used up
   else if (user.cards[cardIndex].stampCount >= 2) {
-    usedCard = user.cards.splice(cardIndex, 1)[0];
+    usedCard = user.cards.slice(cardIndex, cardIndex+1);
     usedCard.stampCount++;
+    user.cards[cardIndex] = {id: user.cards[cardIndex].id, stampCount:0, lastStampAt: undefined};
   }
   // Add stamp to card
   else {
