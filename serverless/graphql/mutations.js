@@ -207,6 +207,15 @@ const mutation = new GraphQLObjectType({
         return db.userAwaitFeedbackAdd(args);
       }
     },
+    skipAwaitFeedback: {
+      type: UserType,
+      args:{
+        userId: {type: GraphQLID},
+      },
+      resolve: (parentValue, args) => {
+        return db.userAwaitFeedbackSkip(args);
+      }
+    },
     submitUserFeedback: {
       type: FeedBackType,
       args:{

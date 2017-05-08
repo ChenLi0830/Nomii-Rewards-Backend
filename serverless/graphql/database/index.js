@@ -20,6 +20,7 @@ const userPushTokenAdd = require('./userPushTokenAdd');
 const userSubmitFeedback = require('./userSubmitFeedback');
 const userNomiiAdminSet = require('./userNomiiAdminSet');
 const userAwaitFeedbackAdd = require('./userAwaitFeedbackAdd');
+const userAwaitFeedbackSkip = require('./userAwaitFeedbackSkip');
 
 const couponCreate = require('./CRUD/couponCreate');
 const couponGet = require('./CRUD/couponGet');
@@ -54,6 +55,7 @@ module.exports = {
   usersGetAll,
   userSubmitFeedback,
   userAwaitFeedbackAdd,
+  userAwaitFeedbackSkip,
   userNomiiAdminSet,
   couponCreate,
   couponGetAll,

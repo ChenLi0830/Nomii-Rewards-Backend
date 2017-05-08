@@ -24,6 +24,7 @@ const AwaitFeedbackType = new GraphQLObjectType({
     visitedAt: {type : GraphQLInt},
     stampCountOfCard: {type : GraphQLInt},
     employeeName: {type : GraphQLString},
+    skipCount: {type: GraphQLInt},
     restaurant: {
       type: RestaurantType,
       resolve(parentValue){

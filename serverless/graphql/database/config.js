@@ -21,6 +21,7 @@ const CouponTable = "Nomii-Rewards-Coupons";
 const StampEventTable = "Nomii-Rewards-Stamp-Events";
 const FeedbackEventTable = "Nomii-Rewards-Feedback-Events";
 const FeedbackTagTable = "Nomii-Rewards-Feedback-Tags";
+const SkippedFeedbackTable = "Nomii-Rewards-Skipped-Feedbacks";
 
 module.exports = {
   UserTable,
@@ -29,5 +30,6 @@ module.exports = {
   StampEventTable,
   FeedbackEventTable,
   FeedbackTagTable,
+  SkippedFeedbackTable,
   AWS
 };

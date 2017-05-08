@@ -22,6 +22,7 @@ const userAwaitFeedbackAdd = (args) => {
           visitedAt: api.getTimeInSec(),
           stampCountOfCard,
           employeeName,
+          skipCount: 0,
         };
   
         //update user
