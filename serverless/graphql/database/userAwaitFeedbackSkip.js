@@ -33,7 +33,7 @@ const userAwaitFeedbackSkip = (args) => {
         }
         // Add skip count
         else {
-          feedback.skipCount++;
+          feedback.skipCount = ~~feedback.skipCount+1;
           feedback.updatedAt = timeStamp;
           //update user
           return updateUser(userId, {awaitFeedbacks: user.awaitFeedbacks});
