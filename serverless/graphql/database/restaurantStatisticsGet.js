@@ -18,7 +18,11 @@ const restaurantStatisticsGet = (restaurantId, daysToCover, endTo) => {
             returnUserSet.add(stampEvent.userId);
             returnVisitCount++;
           } else {
-            newUserSet.add(stampEvent.userId);
+            if (!newUserSet.has(stampEvent.userId)){
+              newUserSet.add(stampEvent.userId);
+            } else {
+              console.log("stampEvent.userId is duplicated as new user", stampEvent.userId);
+            }
             newVisitCount++;
           }
           if (stampEvent.employeeName){
