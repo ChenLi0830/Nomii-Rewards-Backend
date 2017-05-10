@@ -23,7 +23,6 @@ const userAwaitFeedbackSkip = (args) => {
         if (feedback.skipCount >= 2) {
           user.awaitFeedbacks.splice(feedbackIndex, 1);
           //Push skipped feedback into skippedFeedbacks
-          feedback.updatedAt = timeStamp;
           feedback.userId = userId;
           return Promise.all([
             createSkippedFeedback(feedback),

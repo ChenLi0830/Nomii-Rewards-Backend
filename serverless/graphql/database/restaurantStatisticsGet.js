@@ -20,7 +20,10 @@ const restaurantStatisticsGet = (restaurantId, daysToCover, endTo) => {
           } else {
             if (!newUserSet.has(stampEvent.userId)){
               newUserSet.add(stampEvent.userId);
+            // user has visited in this restaurant before and somehow still has isNewUser===true
             } else {
+              returnUserSet.add(stampEvent.userId);
+              returnVisitCount++;
               console.log("stampEvent.userId is duplicated as new user", stampEvent.userId);
             }
             newVisitCount++;
@@ -32,11 +35,6 @@ const restaurantStatisticsGet = (restaurantId, daysToCover, endTo) => {
             couponsCount++;
           }
         });
-  
-        // if newVisitCount > newUserCount, it means there are return visits that we didn't count
-        if (newVisitCount > newUserSet.size) {
-          returnVisitCount += (newVisitCount-newUserSet.size);
-        }
         
         let PINsCountArray = Object.keys(PINsCount).map(employeeName => {
           return {
