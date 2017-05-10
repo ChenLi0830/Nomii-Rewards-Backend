@@ -29,6 +29,11 @@ const restaurantStatisticsGet = (restaurantId, daysToCover, endTo) => {
           }
         });
   
+        // if newVisitCount > newUserCount, it means there are return visits that we didn't count
+        if (newVisitCount > newUserSet.size) {
+          returnVisitCount += (newVisitCount-newUserSet.size);
+        }
+        
         let PINsCountArray = Object.keys(PINsCount).map(employeeName => {
           return {
             employeeName,
