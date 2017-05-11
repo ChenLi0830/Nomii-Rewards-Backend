@@ -1,4 +1,5 @@
 "use strict";
+const _ = require('lodash');
 
 const getTimeInSec = () => {
   return Math.trunc(new Date().getTime() / 1000);
@@ -59,7 +60,9 @@ const getExpressionAttributeValues = (newFields) => {
   return ExpressionAttributeValues;
 };
 
-// Prepare args to be ready for inserting into DynamoDB
+/**
+ * Prepare args to be ready for inserting into DynamoDB
+ * */
 const removeInvalidArgs = (args) => {
   for (let key of Object.keys(args)){
     const isEmptyString = typeof args[key] === "string" && args[key].length === 0;
@@ -71,6 +74,14 @@ const removeInvalidArgs = (args) => {
   return args;
 };
 
+/**
+ * check if user visited a restaurant before
+ * */
+const userVisitedRestaurantBefore = (user, restaurantId) => {
+  let visitedRestaurants = user.visitedRestaurants;
+  return _.includes(visitedRestaurants, restaurantId);
+};
+
 module.exports = {
   getTimeInSec,
   getUrgency,
@@ -78,4 +89,5 @@ module.exports = {
   getExpressionAttributeNames,
   getExpressionAttributeValues,
   removeInvalidArgs,
+  userVisitedRestaurantBefore,
 };

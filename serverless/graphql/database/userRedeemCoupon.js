@@ -2,7 +2,6 @@
 const _ = require('lodash');
 const getAllRestaurants = require('./CRUD/restaurantsGetAll');
 const getRestaurant = require('./CRUD/restaurantGet');
-const userVisitedRestaurantBefore = require('./userVisitedRestaurantBeforeCheck');
 const getUser = require('./CRUD/userGet');
 const getCoupon = require('./CRUD/couponGet');
 const useCoupon = require('./couponUse');
@@ -125,9 +124,10 @@ const userRedeemCoupon = (userId, code) => {
                 }
                 // Redeem coupon for one restaurant
                 else {
-                  if (userVisitedRestaurantBefore(user, coupon.restaurantId)) {
+                  if (api.userVisitedRestaurantBefore(user, coupon.restaurantId)) {
                     return Promise.reject(new Error("New restaurant visitors only"));
                   }
+                  // User hasn't visit this restaurant before
                   return getRestaurant(coupon.restaurantId)
                       .then(restaurant => {
                         return calcCardForRestaurant(user, coupon)
@@ -141,9 +141,7 @@ const userRedeemCoupon = (userId, code) => {
                               };
                               redeemedCoupons.push(newCoupon);
                               let visitedRestaurants = user.visitedRestaurants;
-                              if (!_.includes(visitedRestaurants, restaurant.id)){
-                                visitedRestaurants.push(restaurant.id);
-                              }
+                              visitedRestaurants.push(coupon.restaurantId);
                               let newFields = {cards, redeemedCoupons, visitedRestaurants};
                               
                               // Calc new stampEvent record

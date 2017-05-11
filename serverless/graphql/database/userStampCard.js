@@ -2,7 +2,6 @@
 const _ = require('lodash');
 const getUser = require('./CRUD/userGet');
 const getRestaurant = require('./CRUD/restaurantGet');
-const userVisitedRestaurantBefore = require('./userVisitedRestaurantBeforeCheck');
 const useRestaurantPIN = require('./restaurantPINUse');
 const createStampEvent = require('./CRUD/stampEventCreate');
 const updateUser = require('./CRUD/userUpdate');
@@ -56,7 +55,7 @@ const stampCard = (userId, cardId, PINCode) => {
                     let usedCard = result.usedCard;
                     if (!!usedCard) user.usedCards.push(usedCard);
                     let visitedRestaurants = user.visitedRestaurants;
-                    const isNewUser = !userVisitedRestaurantBefore(user, cardId);
+                    const isNewUser = !api.userVisitedRestaurantBefore(user, cardId);
                     if (isNewUser) {
                       visitedRestaurants.push(cardId);
                     }
