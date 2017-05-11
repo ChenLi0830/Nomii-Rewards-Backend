@@ -230,6 +230,9 @@ const mutation = new GraphQLObjectType({
         comment: {type: GraphQLString},
         userContact: {type: GraphQLString},
         userContactName: {type: GraphQLString},
+        isFirstTime: {type: GraphQLBoolean},
+        visitTimes: {type: GraphQLInt},
+        timePeriod: {type: GraphQLString},
       },
       resolve: (parentValue, args) => {
         return db.userSubmitFeedback(args);

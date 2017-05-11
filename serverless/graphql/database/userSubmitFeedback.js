@@ -27,6 +27,9 @@ const userSubmitFeedback = (args) => {
             comment: args.comment,
             userContact: args.userContact,
             userContactName: args.userContactName,
+            isFirstTime: args.isFirstTime,
+            visitTimes: args.visitTimes,
+            timePeriod: args.timePeriod,
           }),
           userAwaitFeedbackDelete({
             userId: args.userId,

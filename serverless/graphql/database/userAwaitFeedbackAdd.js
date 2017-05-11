@@ -11,6 +11,7 @@ const userAwaitFeedbackAdd = (args) => {
     restaurantId,
     stampCountOfCard,
     employeeName,
+    isNewUser = false,
   } = args;
   
   return getUser(userId)
@@ -23,6 +24,7 @@ const userAwaitFeedbackAdd = (args) => {
           stampCountOfCard,
           employeeName,
           skipCount: 0,
+          isNewUser, // user's first time using Nomii rewards in this restaurant
         };
   
         //update user

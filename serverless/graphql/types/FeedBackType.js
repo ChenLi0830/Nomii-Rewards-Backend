@@ -8,6 +8,7 @@ const graphql = require('graphql'),
     GraphQLInt = graphql.GraphQLInt,
     GraphQLFloat = graphql.GraphQLFloat,
     GraphQLList = graphql.GraphQLList,
+    GraphQLBoolean = graphql.GraphQLBoolean,
     GraphQLID = graphql.GraphQLID;
 
 const FeedBackType = new GraphQLObjectType({
@@ -28,6 +29,9 @@ const FeedBackType = new GraphQLObjectType({
     comment: {type: GraphQLString},
     userContactName: {type: GraphQLString},
     userContact: {type: GraphQLString},
+    isFirstTime: {type: GraphQLBoolean},
+    visitTimes: {type: GraphQLInt},
+    timePeriod: {type: GraphQLString},
   }),
 });
 
