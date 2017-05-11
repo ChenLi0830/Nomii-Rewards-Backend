@@ -4,6 +4,7 @@ const getUser = require('./CRUD/userGet');
 const getRestaurant = require('./CRUD/restaurantGet');
 const useRestaurantPIN = require('./restaurantPINUse');
 const createStampEvent = require('./CRUD/stampEventCreate');
+const userAwaitFeedbackAdd = require('./userAwaitFeedbackAdd');
 const updateUser = require('./CRUD/userUpdate');
 const api = require('../api');
 
@@ -60,6 +61,8 @@ const stampCard = (userId, cardId, PINCode) => {
                       visitedRestaurants.push(cardId);
                     }
                     
+                    const newCard = _.find(newCards, {id: cardId});
+                    
                     const stampEvent = {
                       restaurantId: cardId,
                       userId,
@@ -70,10 +73,19 @@ const stampCard = (userId, cardId, PINCode) => {
                       userName: user.fbName,
                     };
                     
+                    const awaitFeedback = {
+                      userId,
+                      restaurantId: cardId,
+                      stampCountOfCard: newCard.stampCount,
+                      employeeName: PIN.employeeName,
+                      isNewUser,
+                    };
+                    
                     return Promise.all([
                       updateUser(userId, {cards: newCards, visitedRestaurants, usedCards: user.usedCards}),
                       useRestaurantPIN(cardId, PINCode),
                       createStampEvent(stampEvent),
+                      userAwaitFeedbackAdd(awaitFeedback)
                     ])
                         .then(results => {
                           // console.log("results", results);

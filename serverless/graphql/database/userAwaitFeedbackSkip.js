@@ -8,7 +8,7 @@ const createSkippedFeedback = require('./CRUD/skippedFeedbackCreate');
 const userAwaitFeedbackSkip = (args) => {
   //args = {userId, feedbackId}
   const timeStamp = api.getTimeInSec();
-  console.log("userAwaitFeedbackAdd start");
+  console.log("userAwaitFeedbackSkip start");
   const {
     userId,
   } = args;

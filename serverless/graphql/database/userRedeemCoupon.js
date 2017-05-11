@@ -8,6 +8,7 @@ const useCoupon = require('./couponUse');
 const api = require('../api');
 const createStampEvent = require('./CRUD/stampEventCreate');
 const updateUser = require('./CRUD/userUpdate');
+const userAwaitFeedbackAdd = require('./userAwaitFeedbackAdd');
 
 const userRedeemedCouponBefore = (user, coupon) => {
   const usedCoupon = _.find(user.redeemedCoupons, {couponCode: coupon.code});
@@ -153,11 +154,20 @@ const userRedeemCoupon = (userId, code) => {
                                 isNewUser: true,
                                 couponCode: code,
                               };
+  
+                              const awaitFeedback = {
+                                userId,
+                                restaurantId: coupon.restaurantId,
+                                stampCountOfCard: 1,
+                                isNewUser: true,
+                                couponCode: code,
+                              };
                               
                               return Promise.all([
                                 updateUser(userId, newFields),
                                 useCoupon(coupon),
                                 createStampEvent(stampEvent),
+                                userAwaitFeedbackAdd(awaitFeedback)
                               ])
                                   .then(result => {
                                     // console.log("result", result);
