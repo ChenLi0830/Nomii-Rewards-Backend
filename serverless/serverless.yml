@@ -132,142 +132,143 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+
 resources:
   Resources:
-    UsersTable:
-      Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
-      Properties:
-        AttributeDefinitions:
-          -
-            AttributeName: id
-            AttributeType: S
-        KeySchema:
-          -
-            AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
-        TableName: 'Nomii-Rewards-Users'
-
-    RestaurantsTable:
-      Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
-      Properties:
-        AttributeDefinitions:
-          -
-            AttributeName: id
-            AttributeType: S
-        KeySchema:
-          -
-            AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 2
-        TableName: 'Nomii-Rewards-Restaurants'
-
-    CouponsTable:
-      Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
-      Properties:
-        AttributeDefinitions:
-          -
-            AttributeName: code
-            AttributeType: S
-        KeySchema:
-          -
-            AttributeName: code
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 2
-        TableName: 'Nomii-Rewards-Coupons'
-
-    StampEventsTable:
-      Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
-      Properties:
-        AttributeDefinitions:
-          -
-            AttributeName: restaurantId
-            AttributeType: S
-          -
-            AttributeName: stampedAt
-            AttributeType: N
-        KeySchema:
-          -
-            AttributeName: restaurantId
-            KeyType: HASH
-          -
-            AttributeName: stampedAt
-            KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 10
-          WriteCapacityUnits: 5
-        TableName: 'Nomii-Rewards-Stamp-Events'
-
-    FeedbackEventsTable:
-      Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
-      Properties:
-        AttributeDefinitions:
-          -
-            AttributeName: restaurantId
-            AttributeType: S
-          -
-            AttributeName: createdAt
-            AttributeType: N
-        KeySchema:
-          -
-            AttributeName: restaurantId
-            KeyType: HASH
-          -
-            AttributeName: createdAt
-            KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 10
-          WriteCapacityUnits: 5
-        TableName: 'Nomii-Rewards-Feedback-Events'
-
-    FeedbackTagsTable:
-      Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
-      Properties:
-        AttributeDefinitions:
-          -
-            AttributeName: id
-            AttributeType: S
-        KeySchema:
-          -
-            AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        TableName: 'Nomii-Rewards-Feedback-Tags'
-
-    SkippedFeedbackTable:
-      Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
-      Properties:
-        AttributeDefinitions:
-          -
-            AttributeName: restaurantId
-            AttributeType: S
-          -
-            AttributeName: userId
-            AttributeType: S
-        KeySchema:
-          -
-            AttributeName: restaurantId
-            KeyType: HASH
-          -
-            AttributeName: userId
-            KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        TableName: 'Nomii-Rewards-Skipped-Feedbacks'
+#    UsersTable:
+#      Type: 'AWS::DynamoDB::Table'
+#      DeletionPolicy: Retain
+#      Properties:
+#        AttributeDefinitions:
+#          -
+#            AttributeName: id
+#            AttributeType: S
+#        KeySchema:
+#          -
+#            AttributeName: id
+#            KeyType: HASH
+#        ProvisionedThroughput:
+#          ReadCapacityUnits: 5
+#          WriteCapacityUnits: 5
+#        TableName: 'Nomii-Rewards-Users'
+#
+#    RestaurantsTable:
+#      Type: 'AWS::DynamoDB::Table'
+#      DeletionPolicy: Retain
+#      Properties:
+#        AttributeDefinitions:
+#          -
+#            AttributeName: id
+#            AttributeType: S
+#        KeySchema:
+#          -
+#            AttributeName: id
+#            KeyType: HASH
+#        ProvisionedThroughput:
+#          ReadCapacityUnits: 5
+#          WriteCapacityUnits: 2
+#        TableName: 'Nomii-Rewards-Restaurants'
+#
+#    CouponsTable:
+#      Type: 'AWS::DynamoDB::Table'
+#      DeletionPolicy: Retain
+#      Properties:
+#        AttributeDefinitions:
+#          -
+#            AttributeName: code
+#            AttributeType: S
+#        KeySchema:
+#          -
+#            AttributeName: code
+#            KeyType: HASH
+#        ProvisionedThroughput:
+#          ReadCapacityUnits: 5
+#          WriteCapacityUnits: 2
+#        TableName: 'Nomii-Rewards-Coupons'
+#
+#    StampEventsTable:
+#      Type: 'AWS::DynamoDB::Table'
+#      DeletionPolicy: Retain
+#      Properties:
+#        AttributeDefinitions:
+#          -
+#            AttributeName: restaurantId
+#            AttributeType: S
+#          -
+#            AttributeName: stampedAt
+#            AttributeType: N
+#        KeySchema:
+#          -
+#            AttributeName: restaurantId
+#            KeyType: HASH
+#          -
+#            AttributeName: stampedAt
+#            KeyType: RANGE
+#        ProvisionedThroughput:
+#          ReadCapacityUnits: 10
+#          WriteCapacityUnits: 5
+#        TableName: 'Nomii-Rewards-Stamp-Events'
+#
+#    FeedbackEventsTable:
+#      Type: 'AWS::DynamoDB::Table'
+#      DeletionPolicy: Retain
+#      Properties:
+#        AttributeDefinitions:
+#          -
+#            AttributeName: restaurantId
+#            AttributeType: S
+#          -
+#            AttributeName: createdAt
+#            AttributeType: N
+#        KeySchema:
+#          -
+#            AttributeName: restaurantId
+#            KeyType: HASH
+#          -
+#            AttributeName: createdAt
+#            KeyType: RANGE
+#        ProvisionedThroughput:
+#          ReadCapacityUnits: 10
+#          WriteCapacityUnits: 5
+#        TableName: 'Nomii-Rewards-Feedback-Events'
+#
+#    FeedbackTagsTable:
+#      Type: 'AWS::DynamoDB::Table'
+#      DeletionPolicy: Retain
+#      Properties:
+#        AttributeDefinitions:
+#          -
+#            AttributeName: id
+#            AttributeType: S
+#        KeySchema:
+#          -
+#            AttributeName: id
+#            KeyType: HASH
+#        ProvisionedThroughput:
+#          ReadCapacityUnits: 1
+#          WriteCapacityUnits: 1
+#        TableName: 'Nomii-Rewards-Feedback-Tags'
+#
+#    SkippedFeedbackTable:
+#      Type: 'AWS::DynamoDB::Table'
+#      DeletionPolicy: Retain
+#      Properties:
+#        AttributeDefinitions:
+#          -
+#            AttributeName: userId
+#            AttributeType: S
+#          -
+#            AttributeName: visitedAt
+#            AttributeType: N
+#        KeySchema:
+#          -
+#            AttributeName: userId
+#            KeyType: HASH
+#          -
+#            AttributeName: visitedAt
+#            KeyType: RANGE
+#        ProvisionedThroughput:
+#          ReadCapacityUnits: 1
+#          WriteCapacityUnits: 1
+#        TableName: 'Nomii-Rewards-Skipped-Feedbacks'
 

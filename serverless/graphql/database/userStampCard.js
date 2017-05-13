@@ -81,16 +81,18 @@ const stampCard = (userId, cardId, PINCode) => {
                       isNewUser,
                     };
                     
-                    return Promise.all([
-                      updateUser(userId, {cards: newCards, visitedRestaurants, usedCards: user.usedCards}),
-                      useRestaurantPIN(cardId, PINCode),
-                      createStampEvent(stampEvent),
-                      userAwaitFeedbackAdd(awaitFeedback)
-                    ])
-                        .then(results => {
-                          // console.log("results", results);
-                          return results[0];
-                        });
+                    return userAwaitFeedbackAdd(awaitFeedback)
+                        .then(result => {
+                          return Promise.all([
+                            updateUser(userId, {cards: newCards, visitedRestaurants, usedCards: user.usedCards}),
+                            useRestaurantPIN(cardId, PINCode),
+                            createStampEvent(stampEvent),
+                          ])
+                              .then(results => {
+                                // console.log("results", results);
+                                return results[0];
+                              })
+                        })
                   })
             })
             .catch(error => {

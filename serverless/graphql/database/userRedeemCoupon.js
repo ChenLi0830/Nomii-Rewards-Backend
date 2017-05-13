@@ -162,17 +162,21 @@ const userRedeemCoupon = (userId, code) => {
                                 isNewUser: true,
                                 couponCode: code,
                               };
-                              
-                              return Promise.all([
-                                updateUser(userId, newFields),
-                                useCoupon(coupon),
-                                createStampEvent(stampEvent),
-                                userAwaitFeedbackAdd(awaitFeedback)
-                              ])
+  
+                              return userAwaitFeedbackAdd(awaitFeedback)
                                   .then(result => {
-                                    // console.log("result", result);
-                                    return result[0];//return new user
+                                    return Promise.all([
+                                      updateUser(userId, newFields),
+                                      useCoupon(coupon),
+                                      createStampEvent(stampEvent),
+                                    ])
+                                        .then(results => {
+                                          // console.log("results", results);
+                                          return results[0];
+                                        })
                                   })
+                              
+                              
                             });
                       })
                 }
