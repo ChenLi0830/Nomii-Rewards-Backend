@@ -35,13 +35,13 @@ const RestaurantType = new GraphQLObjectType({
       type: new GraphQLList(QuestionType),
     },
     statistics: {
-      type: RestaurantStatisticsType,
+      type: new GraphQLList(RestaurantStatisticsType),
       args: {
-        daysToCover: {type: GraphQLFloat},
+        daysToCoverList: {type: new GraphQLList(GraphQLFloat)},
         endTo: {type: GraphQLInt},
       },
       resolve(parentValue, args){
-        return db.restaurantStatisticsGet(parentValue.id, args.daysToCover, args.endTo)
+        return db.restaurantStatisticsGet(parentValue.id, args.daysToCoverList, args.endTo)
       }
     },
   }),

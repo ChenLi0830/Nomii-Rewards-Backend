@@ -21,7 +21,7 @@ const PINCountType = new GraphQLObjectType({
 const RestaurantStatisticsType = new GraphQLObjectType({
   name: "StatisticsOfRestaurant",
   fields: () => ({
-    id: {type: GraphQLID}, // restaurant's id
+    restaurantId: {type: GraphQLID}, // restaurant's id
     newUserCount: {type: GraphQLInt},
     returnUserCount: {type: GraphQLInt},
     newVisitCount: {type: GraphQLInt},
