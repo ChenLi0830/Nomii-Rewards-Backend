@@ -28,6 +28,8 @@ const UserType = require('./types/UserType');
 
 const StampEventType = require('./types/StampEventType');
 
+const RestaurantVisitStatisticsType = require('./types/RestaurantVisitStatisticsType');
+
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
@@ -67,6 +69,17 @@ const RootQuery = new GraphQLObjectType({
       },
       resolve: (parentValue, args) => {
         return db.stampEventGetDuringPeriod(args.restaurantId ,args.daysToCover, args.endTo);
+      }
+    },
+    RestaurantVisitStatistics: {
+      type: RestaurantVisitStatisticsType,
+      args: {
+        restaurantId: {type: GraphQLID},
+        daysToCover: {type: GraphQLFloat},
+        endTo: {type: GraphQLInt},
+      },
+      resolve: (parentValue, args) => {
+        return db.restaurantVisitStatisticsGet(args.restaurantId, args.daysToCover, args.endTo);
       }
     }
   }

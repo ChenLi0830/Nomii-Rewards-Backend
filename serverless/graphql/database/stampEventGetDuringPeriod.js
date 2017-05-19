@@ -28,12 +28,7 @@ const getStampEventDuringPeriod = (restaurantId, daysToCover = 30, endTo = api.g
         console.error("Unable to get the stampEvents. Error JSON:", JSON.stringify(err), err.stack);
         return reject(err);
       }
-      // console.log("data", data);
       let stampEvents = data.Items;
-      // console.log("stampEvents", stampEvents);
-      // console.log("user", user);
-      // if (!user) user = {};
-      // console.log("Scan restaurants succeeded:", JSON.stringify(restaurants));
       resolve(stampEvents);
     });
   });
