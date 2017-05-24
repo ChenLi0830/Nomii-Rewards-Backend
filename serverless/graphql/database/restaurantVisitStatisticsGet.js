@@ -25,7 +25,8 @@ const restaurantVisitStatisticsGet = (restaurantId, daysToCover, endTo = api.get
         const feedbackEvents = result[1];
       
         let stampEventUserSet = new Set();
-        let totalFeedbackUser = 0;
+        let returnFeedbackUser = 0;
+        let fisrtTimeFeedbackUser = 0;
       
         let actualVisit = stampEvents.length;
         let withoutNomiiVisit = 0;
@@ -36,15 +37,21 @@ const restaurantVisitStatisticsGet = (restaurantId, daysToCover, endTo = api.get
         });
       
         //Get how many visits would the restaurant get from users who filled visitFrequencyFeedback
+        
         feedbackEvents.forEach(feedbackEvent => {
+          if (feedbackEvent.isFirstTime) {
+            fisrtTimeFeedbackUser++;
+            withoutNomiiVisit++;
+          }
+          
           if (feedbackEvent.rating === 0 && !feedbackEvent.isFirstTime){
-            totalFeedbackUser++;
+            returnFeedbackUser++;
             withoutNomiiVisit += (daysToCover / getDaysOf(feedbackEvent.timePeriod)) * feedbackEvent.visitTimes;
           }
         });
       
         // Estimate how many visits would the restaurant get from all the users in stampEventUserSet
-        withoutNomiiVisit = withoutNomiiVisit * (stampEventUserSet.size / totalFeedbackUser);
+        withoutNomiiVisit = withoutNomiiVisit * (stampEventUserSet.size / (fisrtTimeFeedbackUser+returnFeedbackUser));
       
         const statisticsResult = {
           restaurantId,
