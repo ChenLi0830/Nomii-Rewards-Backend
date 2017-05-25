@@ -70,8 +70,11 @@ const calcNotificationAndUsers = (users) => {
         let discount = card.stampCount === 1 && "5%" || card.stampCount === 2 && "10%" || "stamp";
         // console.log("discount", discount);
         
-        let message = `${userFirstName.length ? userFirstName : "Hey"}, your ${discount} discount expires in ${expireInDays} ${expireInDays>1 ? "days" : "day"} ${String.fromCodePoint(128293)}`;
-        // console.log("message: ", message);
+        let emoji = expireInDays <= 3 ? String.fromCodePoint(128293) : String.fromCodePoint(128521);
+        
+        let message = `${userFirstName.length ? userFirstName + ", your" : "Your"} rewards at ${restaurant.name} expires in ${expireInDays} ${expireInDays>1 ? "days" : "day"} ${emoji}`;
+        // let message = `${userFirstName.length ? userFirstName : "Hey"}, your ${discount} discount expires in ${expireInDays} ${expireInDays>1 ? "days" : "day"} ${String.fromCodePoint(128293)}`;
+        console.log("message: ", message);
         
         user.pushTokens.forEach(pushToken => {
           // console.log("pushToken", pushToken);
