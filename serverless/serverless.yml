@@ -82,7 +82,7 @@ functions:
           cors: true
       - schedule:
 #          rate: rate(24 hours)
-          rate: cron(0 18 * * ? *) # schedule it to run everyday at 11:00 am, UTC 18:00 == PST 11:00
+          rate: cron(0 23 * * ? *) # schedule it to run everyday at 4:00 pm, UTC 23:00 == PST 16:00
           enabled: true
 
 #  createStampsByRedeemedCoupons:
