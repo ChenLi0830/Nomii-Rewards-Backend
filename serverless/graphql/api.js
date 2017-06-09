@@ -82,6 +82,20 @@ const userVisitedRestaurantBefore = (user, restaurantId) => {
   return _.includes(visitedRestaurants, restaurantId);
 };
 
+/**
+ * Get the profile picture of a user using id
+ * */
+const getUserPhotoURL = (id) => {
+  return fetch(`http://graph.facebook.com/v2.9/${id}/picture?redirect=false`)
+      .then((response)=>{
+        if (response.status >= 400) {
+          throw new Error("Bad response from server");
+        }
+        return response.json();
+      })
+      .then(result => result.data.url)
+};
+
 module.exports = {
   getTimeInSec,
   getUrgency,
@@ -90,4 +104,5 @@ module.exports = {
   getExpressionAttributeValues,
   removeInvalidArgs,
   userVisitedRestaurantBefore,
+  getUserPhotoURL,
 };
