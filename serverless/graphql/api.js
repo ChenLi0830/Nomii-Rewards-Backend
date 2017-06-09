@@ -89,7 +89,9 @@ const getUserPhotoURL = (id) => {
   return fetch(`http://graph.facebook.com/v2.9/${id}/picture?redirect=false`)
       .then((response)=>{
         if (response.status >= 400) {
-          throw new Error("Bad response from server");
+          // throw new Error("Bad response from server");
+          console.log("Bad response from server");
+          return {data: {}};
         }
         return response.json();
       })

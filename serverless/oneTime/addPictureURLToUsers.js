@@ -2,7 +2,8 @@
 const _ = require('lodash');
 const usersGetAll = require('../graphql/database/index').usersGetAll;
 const updateUser = require('../graphql/database/CRUD/userUpdate');
-const api = require('../api');
+const api = require('../graphql/api');
+require('isomorphic-fetch');
 
 let addURLToUserPromises = [];
 
@@ -14,7 +15,9 @@ const addPictureURLToUsers = (event, context, callback) => {
         for (let user of allUsers){
           addURLToUserPromises.push(
               api.getUserPhotoURL(user.id)
-                  .then(pictureURL => updateUser(user.id, {pictureURL}))
+                  .then(pictureURL => {
+                    if (pictureURL) updateUser(user.id, {pictureURL});
+                  })
           );
         }
         
