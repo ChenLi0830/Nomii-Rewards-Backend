@@ -95,6 +95,8 @@ functions:
 
   addPictureURLToUsers:
     handler: oneTime.addPictureURLToUsers
+    timeout: 60
+    memorySize: 1024
     events:
       - http:
           path: addPictureURLToUsers
