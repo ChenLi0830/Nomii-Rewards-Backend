@@ -86,12 +86,20 @@ functions:
           enabled: true
 
 #  createStampsByRedeemedCoupons:
-#    handler: scheduled.createStampEventsFromRedeemedCoupons
+#    handler: oneTime.createStampEventsFromRedeemedCoupons
 #    events:
 #      - http:
 #          path: createStampsByRedeemedCoupons
 #          method: get
 #          cors: true
+
+  addPirctureURLToUsers:
+    handler: oneTime.addPictureURLToUsers
+    events:
+      - http:
+          path: addPictureURLToUsers
+          method: get
+          cors: true
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
