@@ -1,21 +1,30 @@
 "use strict";
 
 const getStampEventDuringPeriod = require('./stampEventGetDuringPeriod');
+const feedbackEventGetDuringPeriod = require('./feedbackEventGetDuringPeriod');
 
 const restaurantStatisticsGet = (restaurantId, daysToCoverList, endTo) => {
   console.log("restaurantStatisticsGet start");
   let promises = [];
   for (let daysToCover of daysToCoverList){
     promises.push(
-        getStampEventDuringPeriod(restaurantId, daysToCover, endTo)
-            .then(stampEvents => {
+        Promise.all([
+          getStampEventDuringPeriod(restaurantId, daysToCover, endTo),
+          feedbackEventGetDuringPeriod(restaurantId, daysToCover, endTo),
+        ])
+            .then(result => {
+              let stampEvents = result[0];
+              let feedbackEvent = result[1];
               let newUserSet = new Set();
               let returnUserSet = new Set();
               let newVisitCount = 0;
               let returnVisitCount = 0;
               let PINsCount = {};
               let couponsCount = 0;
-          
+              let ratingTotal = 0;
+              let ratingCount = 0;
+              
+              // calc stats using stampEvents
               stampEvents.forEach(stampEvent => {
                 if (!stampEvent.isNewUser) {
                   returnUserSet.add(stampEvent.userId);
@@ -45,15 +54,24 @@ const restaurantStatisticsGet = (restaurantId, daysToCoverList, endTo) => {
                   count: PINsCount[employeeName],
                 }
               });
-          
+  
+              // calc stats using feedbackEvents
+              feedbackEvent.forEach(feedbackEvent => {
+                if (feedbackEvent.rating > 0) {
+                  ratingTotal += feedbackEvent.rating;
+                  ratingCount += 1;
+                }
+              });
+              
               const statisticsResult = {
                 restaurantId,
                 newUserCount: newUserSet.size,
                 returnUserCount: returnUserSet.size,
                 newVisitCount,
                 returnVisitCount,
-                PINsCount: PINsCountArray,
                 couponsCount,
+                averageRating: ratingCount > 0 ? ratingTotal / ratingCount : 0,
+                PINsCount: PINsCountArray,
               };
           
               console.log("statisticsResult", statisticsResult);

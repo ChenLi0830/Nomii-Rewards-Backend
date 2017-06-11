@@ -8,6 +8,7 @@ const graphql = require('graphql'),
     GraphQLInt = graphql.GraphQLInt,
     GraphQLID = graphql.GraphQLID,
     GraphQLList = graphql.GraphQLList,
+    GraphQLFloat = graphql.GraphQLFloat,
     GraphQLString = graphql.GraphQLString;
 
 const PINCountType = new GraphQLObjectType({
@@ -26,8 +27,9 @@ const RestaurantStatisticsType = new GraphQLObjectType({
     returnUserCount: {type: GraphQLInt},
     newVisitCount: {type: GraphQLInt},
     returnVisitCount: {type: GraphQLInt},
-    PINsCount: {type: new GraphQLList(PINCountType)},
     couponsCount: {type: GraphQLInt},
+    averageRating: {type: GraphQLFloat},
+    PINsCount: {type: new GraphQLList(PINCountType)},
   })
 });
 
