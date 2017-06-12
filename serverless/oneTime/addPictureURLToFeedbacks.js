@@ -8,7 +8,7 @@ require('isomorphic-fetch');
 
 let addURLToFeedbackPromises = [];
 
-const addPictureURLToFeedbackEvents = (event, context, callback) => {
+const addPictureURLToFeedbacks = (event, context, callback) => {
   feedbackEventGetAll()
       .then(allFeedbacks => {
         console.log("allFeedbacks has size", allFeedbacks.length);
@@ -42,4 +42,4 @@ const addPictureURLToFeedbackEvents = (event, context, callback) => {
       });
 };
 
-module.exports = addPictureURLToFeedbackEvents;
+module.exports = addPictureURLToFeedbacks;
