@@ -14,7 +14,7 @@ const restaurantStatisticsGet = (restaurantId, daysToCoverList, endTo) => {
         ])
             .then(result => {
               let stampEvents = result[0];
-              let feedbackEvent = result[1];
+              let feedbackEvents = result[1];
               let newUserSet = new Set();
               let returnUserSet = new Set();
               let newVisitCount = 0;
@@ -56,7 +56,7 @@ const restaurantStatisticsGet = (restaurantId, daysToCoverList, endTo) => {
               });
   
               // calc stats using feedbackEvents
-              feedbackEvent.forEach(feedbackEvent => {
+              feedbackEvents.forEach(feedbackEvent => {
                 if (feedbackEvent.rating > 0) {
                   ratingTotal += feedbackEvent.rating;
                   ratingCount += 1;
