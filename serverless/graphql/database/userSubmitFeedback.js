@@ -17,6 +17,7 @@ const userSubmitFeedback = (args) => {
           feedbackEventCreate({
             restaurantName: result[0].name,
             userName: result[1].fbName,
+            userPictureURL: result[1].pictureURL,
             restaurantId: args.restaurantId,
             userId: args.userId,
             userVisitedRestaurantAt: args.userVisitedRestaurantAt,
