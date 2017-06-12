@@ -103,15 +103,15 @@ functions:
 #          method: get
 #          cors: true
 
-  addPictureURLToFeedbacks:
-    handler: oneTime.addPictureURLToFeedbacks
-    timeout: 60
-    memorySize: 1024
-    events:
-      - http:
-          path: addPictureURLToFeedbacks
-          method: get
-          cors: true
+#  addPictureURLToFeedbacks:
+#    handler: oneTime.addPictureURLToFeedbacks
+#    timeout: 60
+#    memorySize: 1024
+#    events:
+#      - http:
+#          path: addPictureURLToFeedbacks
+#          method: get
+#          cors: true
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
