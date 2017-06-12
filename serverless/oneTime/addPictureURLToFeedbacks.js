@@ -17,7 +17,7 @@ const addPictureURLToFeedbacks = (event, context, callback) => {
           addURLToFeedbackPromises.push(
               userGet(feedback.userId)
                   .then(user => {
-                    feedbackEventUpdate(feedback.restaurantId, feedback.createdAt, {pictureURL: user.pictureURL});
+                    feedbackEventUpdate(feedback.restaurantId, feedback.createdAt, {userPictureURL: user.pictureURL});
                   })
           );
         }
