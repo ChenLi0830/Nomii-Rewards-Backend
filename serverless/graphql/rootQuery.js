@@ -30,6 +30,8 @@ const StampEventType = require('./types/StampEventType');
 
 const RestaurantVisitStatisticsType = require('./types/RestaurantVisitStatisticsType');
 
+const FeedBackType = require('./types/FeedBackType');
+
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
@@ -81,7 +83,18 @@ const RootQuery = new GraphQLObjectType({
       resolve: (parentValue, args) => {
         return db.restaurantVisitStatisticsGet(args.restaurantId, args.daysToCover, args.endTo);
       }
-    }
+    },
+    ratingFeedBacks:{
+      type: new GraphQLList(FeedBackType),
+      args:{
+        restaurantId: {type: GraphQLID},
+        daysToCover: {type: GraphQLFloat},
+        endTo: {type: GraphQLInt},
+      },
+      resolve: (parentValue, args) => {
+        return db.restaurantRatingFeedbacksGet(args.restaurantId, args.daysToCover, args.endTo);
+      }
+    },
   }
 });
 
