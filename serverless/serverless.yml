@@ -103,7 +103,7 @@ functions:
 #          method: get
 #          cors: true
 
-  addPictureURLToUsers:
+  addPictureURLToFeedbacks:
     handler: oneTime.addPictureURLToFeedbacks
     timeout: 60
     memorySize: 1024
