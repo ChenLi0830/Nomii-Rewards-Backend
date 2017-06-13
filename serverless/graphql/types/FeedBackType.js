@@ -33,6 +33,7 @@ const FeedBackType = new GraphQLObjectType({
     visitTimes: {type: GraphQLInt},
     timePeriod: {type: GraphQLString},
     userPictureURL: {type: GraphQLString},
+    isResolved: {type: GraphQLBoolean},
   }),
 });
 

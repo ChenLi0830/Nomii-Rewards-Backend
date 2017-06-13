@@ -39,6 +39,8 @@ const feedbackTagGetAll = require('./CRUD/feedbackTagGetAll');
 
 const feedbackEventGetAll = require('./CRUD/feedbackEventGetAll');
 const feedbackEventUpdate = require('./CRUD/feedbackEventUpdate');
+const feedbackResolve = require('./feedbackResolve');
+const feedbackUnresolve = require('./feedbackUnresolve');
 
 module.exports = {
   restaurantsGetAll,
@@ -76,4 +78,6 @@ module.exports = {
   feedbackTagGetAll,
   feedbackEventGetAll,
   feedbackEventUpdate,
+  feedbackResolve,
+  feedbackUnresolve,
 };

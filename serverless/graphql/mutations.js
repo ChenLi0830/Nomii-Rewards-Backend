@@ -247,6 +247,26 @@ const mutation = new GraphQLObjectType({
         return db.feedbackTagCreate(args);
       }
     },
+    feedbackEventResolve: {
+      type: FeedBackType,
+      args:{
+        restaurantId: {type: GraphQLID},
+        createdAt: {type: GraphQLInt}
+      },
+      resolve: (parentValue, args) => {
+        return db.feedbackResolve(args);
+      }
+    },
+    feedbackEventUnresolve: {
+      type: FeedBackType,
+      args:{
+        restaurantId: {type: GraphQLID},
+        createdAt: {type: GraphQLInt}
+      },
+      resolve: (parentValue, args) => {
+        return db.feedbackUnresolve(args);
+      }
+    }
   }
 });
 
