@@ -16,3 +16,4 @@ firebase-debug.log
 db.json
 shared-local-instance.db
 GraphiQL.js
+cron-lambda.sh
