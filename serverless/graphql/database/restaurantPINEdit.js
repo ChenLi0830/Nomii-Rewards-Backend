@@ -12,10 +12,6 @@ const restaurantPINEdit = (restaurantId, oldPIN, newPIN, employeeName) => {
   console.log("restaurantPINCreate start");
   return getRestaurant(restaurantId)
       .then(restaurant => {
-        // check duplicate
-        if (restaurantHasSamePIN(restaurant, newPIN)) {
-          return Promise.reject(new Error("Restaurant already has this PIN"));
-        }
         // calculate newPINs
         let newPINs = JSON.parse(JSON.stringify(restaurant.PINs));
         let PINRecord = _.find(newPINs, {code: oldPIN});
