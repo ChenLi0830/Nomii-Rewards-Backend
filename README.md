@@ -41,7 +41,5 @@ The DB data is in ./serverless/dev/db.json file. The hosted server can take stan
 
 After host these two servers locally, you can test your GraphQL layer locally at [localhost:4000/graphql](localhost:4000/graphql) 
 
-##To be continued...
-
 
 
